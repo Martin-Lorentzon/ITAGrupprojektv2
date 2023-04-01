@@ -2,11 +2,7 @@
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.GraphData",
     "m_ObjectId": "8faf6b6abeca410cb9194b7081ca749e",
-    "m_Properties": [
-        {
-            "m_Id": "d5cb2a0a3a184ea38ba29229d4002d19"
-        }
-    ],
+    "m_Properties": [],
     "m_Keywords": [],
     "m_Dropdowns": [],
     "m_CategoryData": [
@@ -623,11 +619,7 @@
     "m_Type": "UnityEditor.ShaderGraph.CategoryData",
     "m_ObjectId": "89111e0f55204a2d9b60c536babb74df",
     "m_Name": "",
-    "m_ChildObjectList": [
-        {
-            "m_Id": "d5cb2a0a3a184ea38ba29229d4002d19"
-        }
-    ]
+    "m_ChildObjectList": []
 }
 
 {
@@ -882,33 +874,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Smoothness"
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "d5cb2a0a3a184ea38ba29229d4002d19",
-    "m_Guid": {
-        "m_GuidSerialized": "ad572bdc-24d1-406d-897c-282dd2352e03"
-    },
-    "m_Name": "Gizmo Depth",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Gizmo Depth",
-    "m_DefaultReferenceName": "_Gizmo_Depth",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
 }
 
 {
