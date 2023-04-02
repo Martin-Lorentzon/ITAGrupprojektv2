@@ -318,7 +318,7 @@ MonoBehaviour:
   accelerationSpeed: 20
   retardationSpeed: 30
   mouseSensitivity: 2
-  lookAcceleration: 15
+  lookAcceleration: 20
   heightStepSize: 0.5
   heightSmoothTime: 0.1
   zoomStepSize: 2
