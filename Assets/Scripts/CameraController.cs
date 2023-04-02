@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
 
     private float height = 0f;
     private float targetHeight = 0f;
-    private float heightVelocity;   // Reference for height SmoothDamp
+    private float heightVelocity;   // Reference for Height SmoothDamp
 
     [Header("Zoom - Scroll wheel")]
     public float zoomStepSize;
@@ -35,11 +35,12 @@ public class CameraController : MonoBehaviour
 
     private float zoomPos = -20f;
     private float targetZoom = -20f;
-    private float zoomVelocity;     // Reference for zoom SmoothDamp
+    private float zoomVelocity;     // Reference for Zoom SmoothDamp
 
     [Header("Other")]
     public Transform cameraArm;
     public Transform mainCamera;
+    public MeshRenderer pivotGizmoMeshRenderer;
 
     private enum cameraState { Move, Look, Idle }
     private cameraState camState;
@@ -55,6 +56,9 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+            pivotGizmoMeshRenderer.enabled = !pivotGizmoMeshRenderer.enabled;   // Toggle Pivot Gizmo
+
         float threshold = Screen.height * 0.05f;    // Distance (in pixels) to the screen edge where the mouse starts moving the camera
         Vector3 moveVector = Vector3.zero;
         Vector2 lookVector = Vector2.zero;
@@ -105,7 +109,9 @@ public class CameraController : MonoBehaviour
                 break;
         }
 
+
         #region Handle Position
+        // Normalize Move Vector
         moveVector.Normalize();
 
         // Linear Acceleration/Braking
@@ -117,6 +123,7 @@ public class CameraController : MonoBehaviour
         // Apply Movement
         transform.position += moveSpeed * Time.deltaTime;
         #endregion
+
 
         #region Handle Orientation
         // Update Target Orientation
@@ -134,6 +141,7 @@ public class CameraController : MonoBehaviour
         transform.localEulerAngles = new Vector3(0f, yaw, 0f);
         cameraArm.localEulerAngles = new Vector3(pitch, 0f, 0f);
         #endregion
+
 
         // Scroll State Input
         if (Input.GetKey(KeyCode.LeftShift))
@@ -155,7 +163,9 @@ public class CameraController : MonoBehaviour
                 break;
         }
 
+
         #region Handle Camera Height
+        // SmoothDamp Camera Height
         height = Mathf.SmoothDamp(height, targetHeight, ref heightVelocity, heightSmoothTime);  // Pretty sure SmoothDamp takes care of deltaTime out of the box
 
         // Apply Camera Height
@@ -164,7 +174,9 @@ public class CameraController : MonoBehaviour
         cameraArm.position = tempObjectPos;
         #endregion
 
+
         #region Handle Camera Zoom
+        // SmoothDamp Camera Zoom
         zoomPos = Mathf.SmoothDamp(zoomPos, targetZoom, ref zoomVelocity, zoomSmoothTime);
         
         // Apply Camera Zoom
@@ -172,6 +184,5 @@ public class CameraController : MonoBehaviour
         tempCameraLocalPos.z = zoomPos;
         mainCamera.localPosition = tempCameraLocalPos;
         #endregion
-
     }
 }
