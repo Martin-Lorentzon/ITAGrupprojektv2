@@ -16,7 +16,10 @@ public class CameraController : MonoBehaviour
     public float mouseSensitivity;
     public float lookAcceleration;
 
-    private Vector3 lookSpeed;
+    private float targetYaw = 0f;       // Y Axis, target values will be clamped
+    private float targetPitch = 20f;    // X Axis
+    private float yaw = 0f;             // Non-target values will be lerped
+    private float pitch = 20f;
 
     [Header("Height - Scroll wheel")]
     public float heightStepSize;
@@ -54,7 +57,7 @@ public class CameraController : MonoBehaviour
     {
         float threshold = Screen.height * 0.05f;    // Distance (in pixels) to the screen edge where the mouse starts moving the camera
         Vector3 moveVector = Vector3.zero;
-        Vector3 lookVector = Vector3.zero;
+        Vector2 lookVector = Vector2.zero;
 
         switch (camState)
         {
@@ -81,7 +84,7 @@ public class CameraController : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
 
-                lookVector = new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0f);
+                lookVector = new Vector2(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * mouseSensitivity;
 
                 #region moveVector - WASD Inputs
                 // Allow for WASD inputs when in look-state
@@ -117,16 +120,20 @@ public class CameraController : MonoBehaviour
         #endregion
 
         #region Handle Orientation
-        // Lerp Look Speed
-        lookSpeed = Vector2.Lerp(lookSpeed, lookVector * mouseSensitivity, lookAcceleration * Time.deltaTime); // Occasionally Unstable (?)
+        // Update Target Orientation
+        targetYaw += lookVector.y;
+        targetPitch += lookVector.x;
 
-        // Individual Axis
-        float lookY = lookSpeed.y;  // Yaw
-        float lookX = -lookSpeed.x; // Pitch
+        // Clamp Pitch
+        targetPitch = Mathf.Clamp(targetPitch, -90f, 90f);
+
+        // Lerp Yaw and Pitch
+        yaw = Mathf.Lerp(yaw, targetYaw, lookAcceleration * Time.deltaTime);
+        pitch = Mathf.Lerp(pitch, targetPitch, lookAcceleration * Time.deltaTime);
 
         // Apply Rotation
-        transform.localEulerAngles += new Vector3(0f, lookY, 0f) * Time.deltaTime;
-        cameraArm.localEulerAngles += new Vector3(lookX, 0f, 0f) * Time.deltaTime;
+        transform.localEulerAngles = new Vector3(0f, yaw, 0f);
+        cameraArm.localEulerAngles = new Vector3(pitch, 0f, 0f);
         #endregion
 
         // Scroll State Input
@@ -150,7 +157,7 @@ public class CameraController : MonoBehaviour
         }
 
         #region Handle Camera Height
-        height = Mathf.SmoothDamp(height, targetHeight, ref heightVelocity, heightSmoothTime);
+        height = Mathf.SmoothDamp(height, targetHeight, ref heightVelocity, heightSmoothTime);  // Pretty sure SmoothDamp takes care of deltaTime out of the box
 
         // Apply Camera Height
         Vector3 tempObjectPos = cameraArm.position; // We're moving the camera-arm object to avoid overwriting the new position of this game object
