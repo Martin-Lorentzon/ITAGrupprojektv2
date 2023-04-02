@@ -65,14 +65,14 @@ public class CameraController : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
 
-                #region moveVector - Mouse Inputs
-                if (Input.mousePosition.x < threshold)                      // Move Left
+                #region moveVector - Mouse + WASD Inputs
+                if ((Input.mousePosition.x < threshold) || (Input.GetKey(KeyCode.A)))                      // Move Left
                     moveVector -= transform.right;
-                if (Input.mousePosition.x > (Screen.width - threshold))     // Move Right
+                if ((Input.mousePosition.x > (Screen.width - threshold)) || (Input.GetKey(KeyCode.D)))     // Move Right
                     moveVector += transform.right;
-                if (Input.mousePosition.y < threshold)                      // Move Back
+                if ((Input.mousePosition.y < threshold) || (Input.GetKey(KeyCode.S)))                      // Move Back
                     moveVector -= transform.forward;
-                if (Input.mousePosition.y > (Screen.height - threshold))    // Move Fwd
+                if ((Input.mousePosition.y > (Screen.height - threshold)) || (Input.GetKey(KeyCode.W)))    // Move Fwd
                     moveVector += transform.forward;
                 #endregion
 
@@ -87,7 +87,6 @@ public class CameraController : MonoBehaviour
                 lookVector = new Vector2(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * mouseSensitivity;
 
                 #region moveVector - WASD Inputs
-                // Allow for WASD inputs when in look-state
                 if (Input.GetKey(KeyCode.A))            // Move Left
                     moveVector -= transform.right;
                 if (Input.GetKey(KeyCode.D))            // Move Right
