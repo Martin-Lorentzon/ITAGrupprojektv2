@@ -325,6 +325,7 @@ MonoBehaviour:
   zoomSmoothTime: 0.1
   cameraArm: {fileID: 2108671808}
   mainCamera: {fileID: 963194228}
+  pivotGizmoMeshRenderer: {fileID: 80627238}
 --- !u!1 &366491267
 GameObject:
   m_ObjectHideFlags: 0
