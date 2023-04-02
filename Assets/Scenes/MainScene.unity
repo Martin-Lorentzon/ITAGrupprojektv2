@@ -320,9 +320,9 @@ MonoBehaviour:
   mouseSensitivity: 2
   lookAcceleration: 20
   heightStepSize: 0.5
-  heightSmoothTime: 0.25
+  heightSmoothTime: 0.1
   zoomStepSize: 2
-  zoomSmoothTime: 0.25
+  zoomSmoothTime: 0.1
   cameraArm: {fileID: 2108671808}
   mainCamera: {fileID: 963194228}
 --- !u!1 &366491267
