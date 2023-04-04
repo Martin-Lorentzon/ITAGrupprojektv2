@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class ObjectHandler : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (Input.GetKey(KeyCode.LeftShift))            // Add to selection
+                if (Input.GetKey(KeyCode.LeftShift))            // Add/Remove from selection
                 {
                     if (hit.transform.tag != "Immovable")
                     {
@@ -35,7 +36,7 @@ public class ObjectHandler : MonoBehaviour
                 }
                 else
                 {
-                    if (hit.transform.tag != "Immovable")       // Select single object
+                    if (hit.transform.tag != "Immovable")       // Select/Deselect single object
                     {
                         if (selectedObjects.Contains(hit.transform.gameObject))
                             selectedObjects.Remove(hit.transform.gameObject);
@@ -43,6 +44,14 @@ public class ObjectHandler : MonoBehaviour
                         {
                             selectedObjects.Clear();
                             selectedObjects.Add(hit.transform.gameObject);
+                            try
+                            {
+                                hit.transform.gameObject.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1.0f);
+                            }
+                            catch(Exception ex)
+                            {
+                                Debug.LogException(ex);
+                            }
                         }
                     }
                 }
