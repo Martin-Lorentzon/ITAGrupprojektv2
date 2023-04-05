@@ -832,7 +832,7 @@ GameObject:
   - component: {fileID: 8292716755077211234}
   - component: {fileID: 4952409721081539527}
   - component: {fileID: 7160311292879789837}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gizmo_Arrow_X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
