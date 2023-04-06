@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookAtIgnoreAxis : MonoBehaviour
+public class LookAtSingleAxis : MonoBehaviour
 {
     public enum axisEnum { x, y, z };
-    public axisEnum ignoreAxis;
+    public axisEnum axis;
 
     public Transform targetObject;
 
@@ -16,7 +16,7 @@ public class LookAtIgnoreAxis : MonoBehaviour
 
     void Update()
     {
-        switch (ignoreAxis)
+        switch (axis)
         {
             case axisEnum.x:
                 var lookPos = targetObject.position - transform.position;

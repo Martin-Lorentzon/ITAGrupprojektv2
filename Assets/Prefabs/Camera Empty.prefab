@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5253114650778950791}
   - component: {fileID: 1922777643550152551}
-  - component: {fileID: 2862392612331963134}
   - component: {fileID: 3698145139346812875}
   m_Layer: 0
   m_Name: Gizmo Camera
@@ -77,14 +76,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2862392612331963134
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3336049287315456516}
-  m_Enabled: 1
 --- !u!114 &3698145139346812875
 MonoBehaviour:
   m_ObjectHideFlags: 0

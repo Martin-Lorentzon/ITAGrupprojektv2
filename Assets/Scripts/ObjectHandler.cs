@@ -44,14 +44,6 @@ public class ObjectHandler : MonoBehaviour
                         {
                             selectedObjects.Clear();
                             selectedObjects.Add(hit.transform.gameObject);
-                            try
-                            {
-                                hit.transform.gameObject.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1.0f);
-                            }
-                            catch(Exception ex)
-                            {
-                                Debug.LogException(ex);
-                            }
                         }
                     }
                 }
