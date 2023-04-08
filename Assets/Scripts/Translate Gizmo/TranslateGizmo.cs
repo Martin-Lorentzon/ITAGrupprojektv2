@@ -35,35 +35,46 @@ public class TranslateGizmo : MonoBehaviour
         // Hover over arrow
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, arrowGizmoLayerMask))
         {
-            string axis = hit.transform.tag;
-            
+            // Mouse trap Hits
+            RaycastHit[] hits;
+            hits = Physics.RaycastAll(ray, Mathf.Infinity, mouseTrapLayerMask);
 
-            switch (axis)       // Enter Translate states
+            // Arrow Axis
+            string axis = hit.transform.tag;
+
+            switch (axis)   // Enter Translate states
             {
                 case "X":
                     if (Input.GetMouseButtonDown(0))
                     {
-                        // Mouse trap Hits
-                        RaycastHit[] mouseTrapHits;
-                        mouseTrapHits = Physics.RaycastAll(ray, Mathf.Infinity, mouseTrapLayerMask);
-
-                        gizmoState = translateGizmoState.translateX;
-                        foreach(RaycastHit mouseTrapHit in mouseTrapHits)
-                        {
+                        foreach (RaycastHit mouseTrapHit in hits)
                             if (mouseTrapHit.transform.tag == "X")
                                 previousPos = mouseTrapHit.point;
-                        }   
+
+                        gizmoState = translateGizmoState.translateX;
                     }
                     break;
 
                 case "Y":
                     if (Input.GetMouseButtonDown(0))
+                    {
+                        foreach (RaycastHit mouseTrapHit in hits)
+                            if (mouseTrapHit.transform.tag == "Y")
+                                previousPos = mouseTrapHit.point;
+
                         gizmoState = translateGizmoState.translateY;
+                    }
                     break;
 
                 case "Z":
                     if (Input.GetMouseButtonDown(0))
+                    {
+                        foreach (RaycastHit mouseTrapHit in hits)
+                            if (mouseTrapHit.transform.tag == "Z")
+                                previousPos = mouseTrapHit.point;
+
                         gizmoState = translateGizmoState.translateZ;
+                    }
                     break;
             }
         }
@@ -72,31 +83,21 @@ public class TranslateGizmo : MonoBehaviour
         switch (gizmoState)     // Translate gizmo States
         {
             case translateGizmoState.translateX:
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, mouseTrapLayerMask))  // Check for Mouse trap
-                {
-                    currentPos = hit.point;
-                    float distanceX = currentPos.x - previousPos.x;         // Get X Distance
-                    transform.position += new Vector3(distanceX, 0f, 0f);   // Move Translate gizmo
-                    previousPos = hit.point;
-                }
-                else
-                {
-                    Debug.LogError("Mouse trap did not catch mouse. Please report to developer.");
-                    gizmoState = translateGizmoState.idle;
-                }
+                Translate("X", new Vector3(1f, 0f, 0f));
 
                 if (Input.GetMouseButtonUp(0))
-                gizmoState = translateGizmoState.idle;
+                    gizmoState = translateGizmoState.idle;
                 break;
 
             case translateGizmoState.translateY:
+                Translate("Y", new Vector3(0f, 1f, 0f));
 
                 if (Input.GetMouseButtonUp(0))
                     gizmoState = translateGizmoState.idle;
                 break;
 
             case translateGizmoState.translateZ:
+                Translate("Z", new Vector3(0f, 0f, 1f));
 
                 if (Input.GetMouseButtonUp(0))
                     gizmoState = translateGizmoState.idle;
@@ -106,5 +107,35 @@ public class TranslateGizmo : MonoBehaviour
 
                 break;
         }
+    }
+
+
+    void Translate(string tag, Vector3 axis)
+    {
+        // Screen to World space Ray
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        // Mouse trap Hits
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(ray, Mathf.Infinity, mouseTrapLayerMask);
+
+        foreach (RaycastHit mouseTrapHit in hits)
+        {
+            if (mouseTrapHit.transform.tag == tag)
+            {
+                currentPos = mouseTrapHit.point;
+                Vector3 distance = currentPos - previousPos;            // Get Distance
+                transform.position += Vector3.Scale(distance, axis);    // Move Gizmo by Distance
+
+                foreach (GameObject obj in SceneInformation.selectedObjects)
+                    obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
+
+                previousPos = mouseTrapHit.point;
+                return;
+            }
+        }
+        Debug.LogError("Mouse trap did not catch mouse. Please report to developer.");
+        gizmoState = translateGizmoState.idle;
+        return;
     }
 }
