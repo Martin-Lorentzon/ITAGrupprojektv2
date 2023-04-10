@@ -20,6 +20,10 @@ public class DistanceScaling : MonoBehaviour
             targetTransform = GameObject.Find("Main Camera").transform;
 
         originalScale = transform.localScale;
+
+        float distance = Vector3.Distance(transform.position, targetTransform.position);
+        float scale = Mathf.Clamp(scaleAmount * distance + 1, 1, Mathf.Infinity);
+        transform.localScale = originalScale * scale * scaleOffset;
     }
 
     void Update()
