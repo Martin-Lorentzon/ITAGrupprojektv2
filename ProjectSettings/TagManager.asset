@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Plane
+  - X
+  - Y
+  - Z
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,6 @@ TagManager:
   - Water
   - UI
   - 
-  - Gizmos
   - 
   - 
   - 
@@ -23,6 +24,8 @@ TagManager:
   - 
   - 
   - 
+  - Arrow Gizmo
+  - Mouse Trap
   - 
   - 
   - 
@@ -30,8 +33,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Scene Asset
   - 
   - 
   - 
