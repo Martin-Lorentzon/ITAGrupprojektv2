@@ -41,7 +41,7 @@ public class MeshLibrary : MonoBehaviour
         // on click: instansiate mesh at mouse cursor position on a plane (the plane needs a plane tag).
         // offsets y position by half the mesh size, so that the object is placed on the planes surface.
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePosition);
