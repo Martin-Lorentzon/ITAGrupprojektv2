@@ -5,7 +5,7 @@ using UnityEngine;
 public class TranslateGizmo : MonoBehaviour
 {
 
-    public enum translateGizmoState { idle, translateX, translateY, translateZ };
+    public enum translateGizmoState { idle, translateX, translateY, translateZ, rotateY};
     public translateGizmoState gizmoState;
 
     private int arrowGizmoLayerMask;
@@ -13,6 +13,8 @@ public class TranslateGizmo : MonoBehaviour
 
     private Vector3 currentPos;
     private Vector3 previousPos;
+
+    private Vector3 lastMousePos = Vector3.zero;
 
     void Awake()
     {
@@ -79,6 +81,9 @@ public class TranslateGizmo : MonoBehaviour
             }
         }
 
+        if (Input.GetKey(KeyCode.R))
+            gizmoState = translateGizmoState.rotateY;
+
 
         switch (gizmoState)     // Translate gizmo States
         {
@@ -103,10 +108,27 @@ public class TranslateGizmo : MonoBehaviour
                     gizmoState = translateGizmoState.idle;
                 break;
 
+            case translateGizmoState.rotateY:
+                foreach (GameObject obj in SceneInformation.selectedObjects)
+                {
+                    SceneObject snap = obj.GetComponent<SceneObject>();
+                    snap.tempYRotation += ((lastMousePos.x - Input.mousePosition.x)/Screen.width) * 200f;
+                    Debug.Log(lastMousePos.x - Input.mousePosition.x);
+
+                    if (Input.GetKeyUp(KeyCode.R))
+                        gizmoState = translateGizmoState.idle;
+                }
+                break;
+
             case translateGizmoState.idle:
 
                 break;
         }
+    }
+
+    private void LateUpdate()
+    {
+        lastMousePos = Input.mousePosition;
     }
 
 
@@ -128,7 +150,11 @@ public class TranslateGizmo : MonoBehaviour
                 transform.position += Vector3.Scale(distance, axis);    // Move Gizmo by Distance
 
                 foreach (GameObject obj in SceneInformation.selectedObjects)
-                    obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
+                {
+                    SceneObject snap = obj.GetComponent<SceneObject>();
+                    snap.tempPosition += Vector3.Scale(distance, axis);
+                }
+                    //obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
 
                 previousPos = mouseTrapHit.point;
                 return;

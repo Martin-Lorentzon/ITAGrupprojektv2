@@ -61,11 +61,7 @@ public class ObjectHandler : MonoBehaviour
                 }
             }
         }
-        catch(Exception ex)
-        {
-
-        }
-        
+        catch(Exception ex) { Debug.LogException(ex); }
     }
 
     void ToggleSelectedObject(GameObject obj)
