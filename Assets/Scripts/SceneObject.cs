@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class SceneObject : MonoBehaviour
 {
-
-    [Header("Snap Values")]
-    public float moveSnapIncrement;
-    public float rotationSnapAngle;
-
-    [Header("Snap Settings")]
-    public float snapSpeed;
-
     [Header("Temporary Transform Values")]
     public Vector3 tempPosition;
     public float tempYRotation;
@@ -24,7 +16,7 @@ public class SceneObject : MonoBehaviour
 
     void Update()
     {
-        switch (moveSnapIncrement)
+        switch (SceneInformation.moveSnapIncrement)
         {
             case (0f):
                 transform.position = tempPosition;
@@ -33,18 +25,18 @@ public class SceneObject : MonoBehaviour
 
             default:
                 Vector3 roundPosition = Vector3.zero;
-                roundPosition.x = Mathf.Round(tempPosition.x / moveSnapIncrement) * moveSnapIncrement;
-                roundPosition.y = Mathf.Round(tempPosition.y / moveSnapIncrement) * moveSnapIncrement;
-                roundPosition.z = Mathf.Round(tempPosition.z / moveSnapIncrement) * moveSnapIncrement;
+                roundPosition.x = Mathf.Round(tempPosition.x / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;
+                roundPosition.y = Mathf.Round(tempPosition.y / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;
+                roundPosition.z = Mathf.Round(tempPosition.z / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;
 
-                transform.position = Vector3.Lerp(transform.position, roundPosition, snapSpeed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, roundPosition, SceneInformation.snapSpeed * Time.deltaTime);
 
 
                 float roundYRotation = 0f;
-                roundYRotation = Mathf.Round(tempYRotation / rotationSnapAngle) * rotationSnapAngle;
+                roundYRotation = Mathf.Round(tempYRotation / SceneInformation.rotationSnapIncrement) * SceneInformation.rotationSnapIncrement;
 
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
-                                                         Mathf.LerpAngle(transform.localEulerAngles.y, roundYRotation, snapSpeed * Time.deltaTime),
+                                                         Mathf.LerpAngle(transform.localEulerAngles.y, roundYRotation, SceneInformation.snapSpeed * Time.deltaTime),
                                                          transform.localEulerAngles.z);
 
                 break;

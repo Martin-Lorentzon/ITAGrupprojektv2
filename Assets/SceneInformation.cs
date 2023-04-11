@@ -5,4 +5,8 @@ using UnityEngine;
 public class SceneInformation
 {
     public static List<GameObject> selectedObjects;
+
+    public static float moveSnapIncrement;
+    public static float rotationSnapIncrement;
+    public static float snapSpeed;
 }

@@ -29,6 +29,10 @@ public class ObjectHandler : MonoBehaviour
     {
         translateGizmoInstance = Instantiate(translateGizmoPrefab, Vector3.zero, Quaternion.identity);
         translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+
+        SceneInformation.moveSnapIncrement = 0.5f;
+        SceneInformation.rotationSnapIncrement = 11.25f;
+        SceneInformation.snapSpeed = 60f;
     }
 
     void Update()
