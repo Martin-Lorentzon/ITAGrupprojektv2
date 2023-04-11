@@ -37,6 +37,17 @@ public class ObjectHandler : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
+        {
+            for (int t = 0; t < SceneInformation.selectedObjects.Count; t++)
+                Destroy(SceneInformation.selectedObjects[t]);
+
+            SceneInformation.selectedObjects.Clear();
+            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+
+            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
 
@@ -61,7 +72,7 @@ public class ObjectHandler : MonoBehaviour
                         ToggleSelectedObject(obj);
                     }
 
-                    OnSelectionChanged(hits[0]);
+                    OnSelectionChangedHit(hits[0]);
                 }
             }
         }
@@ -76,7 +87,7 @@ public class ObjectHandler : MonoBehaviour
             SceneInformation.selectedObjects.Add(obj);
     }
 
-    void OnSelectionChanged(RaycastHit hit)
+    void OnSelectionChangedHit(RaycastHit hit)
     {
         // Get all game objects in Scene Layer
         Collider[] colliders = Physics.OverlapSphere(hit.point, 20000.0f, sceneLayer);
@@ -100,6 +111,10 @@ public class ObjectHandler : MonoBehaviour
 
         translateGizmoInstance.transform.position = hit.transform.position;
         translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+    }
+
+    void OnSelectionChanged()
+    {
 
     }
 }
