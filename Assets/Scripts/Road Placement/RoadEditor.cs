@@ -23,7 +23,9 @@ public class RoadEditor : MonoBehaviour
     private LayerMask GroundLayerMask;
 
     public GameObject roadSegment;
+
     private GameObject newRoadSegment;
+    private GameObject newRoadContainer;
 
     void Start()
     {
@@ -64,9 +66,10 @@ public class RoadEditor : MonoBehaviour
             if (hits.Length > 0 && Input.GetMouseButtonDown(0))
             {
                 newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
+                newRoadContainer = new GameObject("Road Container");
 
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
-                anchor.position = hits[0].point;
+                anchor.position = hits[0].point + Vector3.up * 0.1f;
 
                 RoadEditState = State.point2;
             }
@@ -82,20 +85,37 @@ public class RoadEditor : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, GroundLayerMask);
 
+            newRoadSegment.transform.parent = newRoadContainer.transform;
+
             if (hits.Length > 0)
             {
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
                 Transform controlPoint = newRoadSegment.transform.Find("Control Point").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
-                endPoint.position = hits[0].point;
+                endPoint.position = hits[0].point + Vector3.up * 0.1f;
 
                 controlPoint.position = Vector3.Lerp(anchor.position, endPoint.position, 0.5f);
 
+                bool makeContinuous = Input.GetKey(KeyCode.LeftShift);
+
                 if (Input.GetMouseButtonDown(0))
-                    RoadEditState = State.point1;
+                {
+                    if (makeContinuous)
+                    {
+                        newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
+                        anchor = newRoadSegment.transform.Find("Anchor").transform;
+                        anchor.position = hits[0].point + Vector3.up * 0.1f;
+                    }
+                    else
+                    {
+                        RoadEditState = State.point1;
+                    }
+                }
             }
         }
     }
+
+
 
 
 

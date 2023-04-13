@@ -30,7 +30,7 @@ public class ObjectHandler : MonoBehaviour
 
     private void Start()
     {
-        SceneInformation.moveSnapIncrement = 0.5f;
+        SceneInformation.moveSnapIncrement = 0f;
         SceneInformation.rotationSnapIncrement = 11.25f;
         SceneInformation.snapSpeed = 60f;
     }
@@ -39,14 +39,21 @@ public class ObjectHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
         {
-            for (int t = 0; t < SceneInformation.selectedObjects.Count; t++)
-                Destroy(SceneInformation.selectedObjects[t]);
-
-            SceneInformation.selectedObjects.Clear();
-            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
-
-            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+            foreach (GameObject destroyObj in SceneInformation.selectedObjects)
+            {
+                switch (destroyObj.tag)
+                {
+                    case ("Road Point"):
+                        break;
+                    default:
+                        Destroy(destroyObj);
+                        break;
+                }
+                SceneInformation.selectedObjects.Clear();
+                translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+            }
         }
+
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
