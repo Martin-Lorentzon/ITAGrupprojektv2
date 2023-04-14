@@ -110,14 +110,10 @@ public class TranslateGizmo : MonoBehaviour
 
             case translateGizmoState.rotateY:
                 foreach (GameObject obj in SceneInformation.selectedObjects)
-                {
-                    SceneObject snap = obj.GetComponent<SceneObject>();
-                    snap.tempYRotation += ((lastMousePos.x - Input.mousePosition.x)/Screen.width) * 200f;
-                    Debug.Log(lastMousePos.x - Input.mousePosition.x);
+                    obj.transform.localEulerAngles += Vector3.up * ((lastMousePos.x - Input.mousePosition.x)/Screen.width) * 200f;
 
-                    if (Input.GetKeyUp(KeyCode.R))
-                        gizmoState = translateGizmoState.idle;
-                }
+                if (Input.GetKeyUp(KeyCode.R))
+                    gizmoState = translateGizmoState.idle;
                 break;
 
             case translateGizmoState.idle:
@@ -150,11 +146,7 @@ public class TranslateGizmo : MonoBehaviour
                 transform.position += Vector3.Scale(distance, axis);    // Move Gizmo by Distance
 
                 foreach (GameObject obj in SceneInformation.selectedObjects)
-                {
-                    SceneObject snap = obj.GetComponent<SceneObject>();
-                    snap.tempPosition += Vector3.Scale(distance, axis);
-                }
-                    //obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
+                    obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
 
                 previousPos = mouseTrapHit.point;
                 return;

@@ -7,6 +7,9 @@ TagManager:
   - X
   - Y
   - Z
+  - Road
+  - Road Point
+  - Plane
   layers:
   - Default
   - TransparentFX
@@ -34,7 +37,7 @@ TagManager:
   - 
   - 
   - Scene Asset
-  - 
+  - Ground
   - 
   - 
   - 
