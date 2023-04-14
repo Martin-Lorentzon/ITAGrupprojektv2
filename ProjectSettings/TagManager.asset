@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - X
+  - Y
+  - Z
+  - Road
+  - Road Point
   layers:
   - Default
   - TransparentFX
@@ -12,7 +17,6 @@ TagManager:
   - Water
   - UI
   - 
-  - Gizmos
   - 
   - 
   - 
@@ -22,6 +26,8 @@ TagManager:
   - 
   - 
   - 
+  - Arrow Gizmo
+  - Mouse Trap
   - 
   - 
   - 
@@ -29,9 +35,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Scene Asset
+  - Ground
   - 
   - 
   - 
