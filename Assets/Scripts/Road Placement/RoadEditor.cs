@@ -69,7 +69,9 @@ public class RoadEditor : MonoBehaviour
                 newRoadContainer = new GameObject("Road Container");
 
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
-                anchor.position = hits[0].point + Vector3.up * 0.1f;
+                Transform controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
+                anchor.position = controlPoint.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
 
                 RoadEditState = State.point2;
             }
@@ -104,7 +106,9 @@ public class RoadEditor : MonoBehaviour
                     {
                         newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
                         anchor = newRoadSegment.transform.Find("Anchor").transform;
-                        anchor.position = hits[0].point + Vector3.up * 0.1f;
+                        controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                        endPoint = newRoadSegment.transform.Find("End Point").transform;
+                        anchor.position = controlPoint.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
                     }
                     else
                     {
