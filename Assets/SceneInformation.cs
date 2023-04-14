@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SceneInformation
 {
+    public enum AppState { Select, Placement, RoadEdit };
+    public static AppState ApplicationState;
+
     public static List<GameObject> selectedObjects;
 
     public static float moveSnapIncrement;

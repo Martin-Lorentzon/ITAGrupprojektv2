@@ -23,14 +23,14 @@ public class ObjectHandler : MonoBehaviour
 
         // Block Layer contains what the user expects to block selections, usually user interface
         blockLayer = LayerMask.GetMask("Arrow Gizmo");
+
+        translateGizmoInstance = Instantiate(translateGizmoPrefab, Vector3.zero, Quaternion.identity);
+        translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
     }
 
     private void Start()
     {
-        translateGizmoInstance = Instantiate(translateGizmoPrefab, Vector3.zero, Quaternion.identity);
-        translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
-
-        SceneInformation.moveSnapIncrement = 0.5f;
+        SceneInformation.moveSnapIncrement = 0f;
         SceneInformation.rotationSnapIncrement = 11.25f;
         SceneInformation.snapSpeed = 60f;
     }
@@ -39,17 +39,26 @@ public class ObjectHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
         {
-            for (int t = 0; t < SceneInformation.selectedObjects.Count; t++)
-                Destroy(SceneInformation.selectedObjects[t]);
-
-            SceneInformation.selectedObjects.Clear();
-            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
-
-            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+            foreach (GameObject destroyObj in SceneInformation.selectedObjects)
+            {
+                switch (destroyObj.tag)
+                {
+                    case ("Road Point"):
+                        break;
+                    default:
+                        Destroy(destroyObj);
+                        break;
+                }
+                SceneInformation.selectedObjects.Clear();
+                translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+            }
         }
+
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        bool inSelectState = SceneInformation.ApplicationState == SceneInformation.AppState.Select;
 
         foreach (var hit in hits)
             if (blockLayer == (blockLayer | (1 << hit.transform.gameObject.layer)))
@@ -57,7 +66,7 @@ public class ObjectHandler : MonoBehaviour
 
         try
         {
-            if (Physics.Raycast(ray, out hits[0], Mathf.Infinity, sceneLayer))
+            if (inSelectState && Physics.Raycast(ray, out hits[0], Mathf.Infinity, sceneLayer))
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -76,7 +85,20 @@ public class ObjectHandler : MonoBehaviour
                 }
             }
         }
-        catch(Exception ex) { Debug.LogException(ex); }
+        catch(Exception ex)
+        {
+            //Debug.LogException(ex);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        bool inSelectState = SceneInformation.ApplicationState == SceneInformation.AppState.Select;
+
+        if (!inSelectState)
+            translateGizmoInstance.SetActive(false);
+        else
+            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
     }
 
     void ToggleSelectedObject(GameObject obj)
@@ -111,10 +133,5 @@ public class ObjectHandler : MonoBehaviour
 
         translateGizmoInstance.transform.position = hit.transform.position;
         translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
-    }
-
-    void OnSelectionChanged()
-    {
-
     }
 }
