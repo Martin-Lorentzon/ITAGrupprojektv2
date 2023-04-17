@@ -69,9 +69,10 @@ public class RoadEditor : MonoBehaviour
                 newRoadContainer = new GameObject("Road Container");
 
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
-                Transform controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
-                anchor.position = controlPoint.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
 
                 RoadEditState = State.point2;
             }
@@ -92,11 +93,13 @@ public class RoadEditor : MonoBehaviour
             if (hits.Length > 0)
             {
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
-                Transform controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
                 endPoint.position = hits[0].point + Vector3.up * 0.1f;
 
-                controlPoint.position = Vector3.Lerp(anchor.position, endPoint.position, 0.5f);
+                controlPoint1.position = Vector3.Lerp(anchor.position, endPoint.position, 0.33f);
+                controlPoint2.position = Vector3.Lerp(anchor.position, endPoint.position, 0.66f);
 
                 bool makeContinuous = Input.GetKey(KeyCode.LeftShift);
 
@@ -106,9 +109,10 @@ public class RoadEditor : MonoBehaviour
                     {
                         newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
                         anchor = newRoadSegment.transform.Find("Anchor").transform;
-                        controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                        controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
+                        controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                         endPoint = newRoadSegment.transform.Find("End Point").transform;
-                        anchor.position = controlPoint.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                        anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
                     }
                     else
                     {
