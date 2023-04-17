@@ -23,7 +23,8 @@ public class RoadSegment : MonoBehaviour
     void Update()
     {
         Transform anchor = transform.Find("Anchor").transform;
-        Transform controlPoint = transform.Find("Control Point").transform;
+        Transform controlPoint1 = transform.Find("Control Point").transform;
+        Transform controlPoint2 = transform.Find("Control Point 2").transform;
         Transform endPoint = transform.Find("End Point").transform;
 
         Vector3 previousPoint = anchor.position;
@@ -43,16 +44,19 @@ public class RoadSegment : MonoBehaviour
         float incr = 0.1f;
         for (var i = 1; i <= 10f; i++)
         {
-            Vector3 vecA = Vector3.Lerp(anchor.position, controlPoint.position, i * incr);
-            Vector3 vecB = Vector3.Lerp(controlPoint.position, endPoint.position, i * incr);
-            Vector3 vecC = Vector3.Lerp(vecA, vecB, i * incr);
+            Vector3 vecA = Vector3.Lerp(anchor.position, controlPoint1.position, i * incr);
+            Vector3 vecB = Vector3.Lerp(controlPoint1.position, controlPoint2.position, i * incr);
+            Vector3 vecC = Vector3.Lerp(controlPoint2.position, endPoint.position, i * incr);
+            Vector3 vecD = Vector3.Lerp(vecA, vecB, i * incr);
+            Vector3 vecE = Vector3.Lerp(vecB, vecC, i * incr);
+            Vector3 vecF = Vector3.Lerp(vecD, vecE, i * incr);
 
-            points.Add(vecC);
+            points.Add(vecF);
 
-            Vector3 dir = previousPoint - vecC;            // A vector pointing from pointA to pointB
+            Vector3 dir = previousPoint - vecF;            // A vector pointing from pointA to pointB
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
 
-            GameObject newTile = Instantiate(roadTile, vecC, rot);
+            GameObject newTile = Instantiate(roadTile, vecF, rot);
             newTile.transform.parent = gameObject.transform;
             
 
