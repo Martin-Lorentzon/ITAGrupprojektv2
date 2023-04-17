@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 2124903481139083404}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2124903481085555280}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a22f20e1fb39ba489e3fa40486c88bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallScale: {x: 0.25, y: 0.25, z: 0.25}
+  smallScale: {x: 0.17, y: 0.17, z: 0.17}
   bigScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &2124903481341220296
 GameObject:
@@ -368,7 +368,7 @@ Transform:
   m_GameObject: {fileID: 2124903481853501992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2124903480748512017}
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a22f20e1fb39ba489e3fa40486c88bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallScale: {x: 0.25, y: 0.25, z: 0.25}
+  smallScale: {x: 0.17, y: 0.17, z: 0.17}
   bigScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &2124903481867878436
 GameObject:
@@ -526,7 +526,7 @@ Transform:
   m_GameObject: {fileID: 2124903481993549646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2124903481867878435}
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a22f20e1fb39ba489e3fa40486c88bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallScale: {x: 0.25, y: 0.25, z: 0.25}
+  smallScale: {x: 0.17, y: 0.17, z: 0.17}
   bigScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &5936695514171503108
 GameObject:
@@ -638,7 +638,7 @@ Transform:
   m_GameObject: {fileID: 5936695514171503108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8592712487444942232}
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a22f20e1fb39ba489e3fa40486c88bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallScale: {x: 0.25, y: 0.25, z: 0.25}
+  smallScale: {x: 0.17, y: 0.17, z: 0.17}
   bigScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &8596972340831367121
 GameObject:
