@@ -15,6 +15,8 @@ public class RoadSegment2 : MonoBehaviour
 
     private Mesh mesh;
 
+    
+
 
 
     void Start()
@@ -30,11 +32,12 @@ public class RoadSegment2 : MonoBehaviour
 
 
         Transform anchor = transform.Find("Anchor").transform;
-        Transform controlPoint = transform.Find("Control Point").transform;
+        Transform controlPoint1 = transform.Find("Control Point").transform;
+        Transform controlPoint2 = transform.Find("Control Point 2").transform;
         Transform endPoint = transform.Find("End Point").transform;
 
-        Vector3 previousPoint = anchor.position;
-
+        Transform previousPoint;
+        Transform nextPoint;
 
         
 
@@ -44,36 +47,106 @@ public class RoadSegment2 : MonoBehaviour
         if (roadTiles.Count > 0)
             roadTiles.Clear();
 
-        List<Vector3> points = new List<Vector3>();
-        points.Add(anchor.position);
+        List<Transform> roadPoints = new List<Transform>();
+        roadPoints.Add(anchor);
 
         float incr = 0.1f;
         for (var i = 1; i <= 10f; i++)
         {
-            Vector3 vecA = Vector3.Lerp(anchor.position, controlPoint.position, i * incr);
-            Vector3 vecB = Vector3.Lerp(controlPoint.position, endPoint.position, i * incr);
-            Vector3 vecC = Vector3.Lerp(vecA, vecB, i * incr);
+            Vector3 vecA = Vector3.Lerp(anchor.position, controlPoint1.position, i * incr);
+            Vector3 vecB = Vector3.Lerp(controlPoint1.position, controlPoint2.position, i * incr);
+            Vector3 vecC = Vector3.Lerp(controlPoint2.position, endPoint.position, i * incr);
+            Vector3 vecD = Vector3.Lerp(vecA, vecB, i * incr);
+            Vector3 vecE = Vector3.Lerp(vecB, vecC, i * incr);
+            Vector3 vecF = Vector3.Lerp(vecD, vecE, i * incr);
 
-            points.Add(vecC);
+            Transform newPoint = new GameObject().transform;
+            newPoint.position = vecF;
+            newPoint.parent = gameObject.transform;
 
-            Vector3 dir = previousPoint - vecC;            // A vector pointing from pointA to pointB
-            Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+            roadPoints.Add(newPoint);
+        }
 
-            GameObject newTile = Instantiate(roadTile, vecC, rot);
-            newTile.transform.parent = gameObject.transform;
+        foreach (Transform point in roadPoints)
+        {
+            int thisIndex = roadPoints.IndexOf(point);
+            int lastIndex = roadPoints.Count - 1;
+
             
 
-            Vector3 newPoint = newTile.transform.position;
+            Vector3 dir;
+            Quaternion rot = Quaternion.identity;
 
-            newTile.transform.localScale = new Vector3(0.3f, 0.3f, Vector3.Distance(points[i], points[i-1]) /2f);
+            if (thisIndex == 0)
+            {
+                nextPoint = roadPoints[thisIndex + 1];
 
-            previousPoint = newPoint;
+                dir = point.position - nextPoint.position;
+                rot = Quaternion.LookRotation(dir, Vector3.up);
+            }
+            else if (thisIndex == lastIndex)
+            {
+                previousPoint = roadPoints[thisIndex - 1];
 
-            roadTiles.Add(newTile);
+                dir = previousPoint.position - point.position;
+                rot = Quaternion.LookRotation(dir, Vector3.up);
+            }
+            else
+            {
+                previousPoint = roadPoints[thisIndex - 1];
+                nextPoint = roadPoints[thisIndex + 1];
+
+                Vector3 dir0 = previousPoint.position - point.position;
+                Vector3 dir1 = point.position - nextPoint.position;
+                Vector3 averageDir = (dir0 + dir1) / 2f;
+
+                rot = Quaternion.LookRotation(averageDir, Vector3.up);
+            }
+
+            point.rotation = rot;
         }
-        
 
+        Vector3[] newVertices = new Vector3[roadPoints.Count * 2];      // Multiply by two for one vertex per side of the road
 
-        
+        foreach (Transform point in roadPoints)
+        {
+            newVertices[roadPoints.IndexOf(point)*2] = point.position + (point.right * 0.4f);
+            newVertices[roadPoints.IndexOf(point)*2+1] = point.position - (point.right * 0.4f);
+        }
+
+        mesh.vertices = newVertices;
+
+        int[] indices;
+        int numTriangles = newVertices.Length - 2;
+        indices = new int[numTriangles * 3];
+
+        for (int i = 0; i < numTriangles; i++)
+        {
+            if (i % 2 != 0)
+            {
+                indices[i * 3] = i;
+                indices[i * 3 + 1] = i + 1;
+                indices[i * 3 + 2] = i + 2;
+            }
+            else
+            {
+                indices[i * 3] = i + 1;
+                indices[i * 3 + 1] = i;
+                indices[i * 3 + 2] = i + 2;
+            }
+        }
+
+        mesh.triangles = indices;
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (Vector3 vert in mesh.vertices)
+        {
+            Gizmos.DrawSphere(vert, 0.2f);
+        }
     }
 }
