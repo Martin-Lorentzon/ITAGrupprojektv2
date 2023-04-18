@@ -27,12 +27,11 @@ public class RoadEditor : MonoBehaviour
     private GameObject newRoadSegment;
     private GameObject newRoadContainer;
 
+    private float roadHeight = 0.02f;
+
     void Start()
     {
-        Gizmos.color = Color.red;
-
         RoadEditState = State.point1;
-
         GroundLayerMask = LayerMask.GetMask("Ground");
     }
 
@@ -72,7 +71,7 @@ public class RoadEditor : MonoBehaviour
                 Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
                 Transform controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
-                anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * roadHeight;
 
                 RoadEditState = State.point2;
             }
@@ -96,7 +95,7 @@ public class RoadEditor : MonoBehaviour
                 Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
                 Transform controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
-                endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                endPoint.position = hits[0].point + Vector3.up * roadHeight;
 
                 controlPoint1.position = Vector3.Lerp(anchor.position, endPoint.position, 0.33f);
                 controlPoint2.position = Vector3.Lerp(anchor.position, endPoint.position, 0.66f);
@@ -112,7 +111,7 @@ public class RoadEditor : MonoBehaviour
                         controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
                         controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                         endPoint = newRoadSegment.transform.Find("End Point").transform;
-                        anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                        anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * roadHeight;
                     }
                     else
                     {

@@ -54,6 +54,12 @@ public class ObjectHandler : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneInformation.selectedObjects.Clear();
+            OnSelectionChangedHit(new RaycastHit());
+        }
+            
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
