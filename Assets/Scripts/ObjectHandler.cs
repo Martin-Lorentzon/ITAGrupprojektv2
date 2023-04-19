@@ -39,19 +39,22 @@ public class ObjectHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
         {
-            foreach (GameObject destroyObj in SceneInformation.selectedObjects)
+            List<GameObject> removeList = new List<GameObject>();
+            foreach (GameObject removeObj in SceneInformation.selectedObjects)
             {
-                switch (destroyObj.tag)
+                switch (removeObj.tag)
                 {
                     case ("Road Point"):
                         break;
                     default:
-                        Destroy(destroyObj);
+                        removeList.Add(removeObj);
                         break;
                 }
-                SceneInformation.selectedObjects.Clear();
-                translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
             }
+            foreach (GameObject destroyObj in removeList)
+                Destroy(destroyObj);
+            SceneInformation.selectedObjects.Clear();
+            translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -109,10 +112,61 @@ public class ObjectHandler : MonoBehaviour
 
     void ToggleSelectedObject(GameObject obj)
     {
-        if (SceneInformation.selectedObjects.Contains(obj))
-            SceneInformation.selectedObjects.Remove(obj);
-        else
-            SceneInformation.selectedObjects.Add(obj);
+        switch (obj.tag)
+        {
+            case ("Road"):
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (SceneInformation.selectedObjects.Contains(obj))
+                        SceneInformation.selectedObjects.Remove(obj);
+                    else
+                        SceneInformation.selectedObjects.Add(obj);
+                    return;
+                }
+                else
+                {
+                    Transform parent = obj.transform.parent;
+                    Transform[] children = parent.GetComponentsInChildren<Transform>();     // Get all road prefab instances
+
+                    bool allSelected = true;
+                    foreach (Transform child in children)
+                        if (!SceneInformation.selectedObjects.Contains(child.gameObject))
+                            allSelected = false;
+
+
+                    if (SceneInformation.selectedObjects.Contains(obj))
+                    {
+                        if (allSelected)
+                            foreach (Transform child in children)
+                            {
+                                if (child.tag == "Road")
+                                    SceneInformation.selectedObjects.Remove(child.gameObject);
+                            }
+                                
+                        else
+                            foreach (Transform child in children)
+                            {
+                                if (child.tag == "Road")
+                                    SceneInformation.selectedObjects.Add(child.gameObject);
+                            }
+                                
+                    }
+                    else
+                        foreach (Transform child in children)
+                        {
+                            if (child.tag == "Road")
+                                SceneInformation.selectedObjects.Add(child.gameObject);
+                        }
+                }
+                
+                break;
+            default:
+                if (SceneInformation.selectedObjects.Contains(obj))
+                    SceneInformation.selectedObjects.Remove(obj);
+                else
+                    SceneInformation.selectedObjects.Add(obj);
+                break;
+        }
     }
 
     void OnSelectionChangedHit(RaycastHit hit)

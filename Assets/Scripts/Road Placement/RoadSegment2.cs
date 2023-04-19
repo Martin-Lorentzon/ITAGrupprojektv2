@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System;
+
+
 public class RoadSegment2 : MonoBehaviour
 {
     public int roadResolution;
 
     public GameObject roadTile;
 
-    public List<GameObject> roadTiles;
+
 
 
     //|||||||||||||||||||||||
+
+    public List<Transform> roadPoints;
 
     private Mesh mesh;
 
@@ -41,17 +46,17 @@ public class RoadSegment2 : MonoBehaviour
 
         
 
-        foreach (GameObject tile in roadTiles)
-            Destroy(tile);
+        foreach (Transform point in roadPoints)
+            Destroy(point.gameObject);
 
-        if (roadTiles.Count > 0)
-            roadTiles.Clear();
+        if (roadPoints.Count > 0)
+            roadPoints.Clear();
 
-        List<Transform> roadPoints = new List<Transform>();
-        roadPoints.Add(anchor);
+        //List<Transform> roadPoints = new List<Transform>();
+        //roadPoints.Add(anchor);
 
         float incr = 0.1f;
-        for (var i = 1; i <= 10f; i++)
+        for (var i = 0; i <= 10f; i++)
         {
             Vector3 vecA = Vector3.Lerp(anchor.position, controlPoint1.position, i * incr);
             Vector3 vecB = Vector3.Lerp(controlPoint1.position, controlPoint2.position, i * incr);
@@ -61,7 +66,7 @@ public class RoadSegment2 : MonoBehaviour
             Vector3 vecF = Vector3.Lerp(vecD, vecE, i * incr);
 
             Transform newPoint = new GameObject().transform;
-            newPoint.position = vecF;
+            newPoint.position = transform.InverseTransformPoint(vecF);
             newPoint.parent = gameObject.transform;
 
             roadPoints.Add(newPoint);
@@ -114,15 +119,33 @@ public class RoadSegment2 : MonoBehaviour
             newVertices[roadPoints.IndexOf(point)*2+1] = point.position - (point.right * 0.4f);
         }
 
+        mesh.Clear(false);
         mesh.vertices = newVertices;
 
+        mesh.triangles = GenerateTriangleStrip(newVertices, true);
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (Vector3 vert in mesh.vertices)
+        {
+            Gizmos.DrawSphere(vert, 0.2f);
+        }
+    }
+
+    int[] GenerateTriangleStrip(Vector3[] vertices, bool flip = false)
+    {
         int[] indices;
-        int numTriangles = newVertices.Length - 2;
+        int numTriangles = vertices.Length - 2;
         indices = new int[numTriangles * 3];
 
         for (int i = 0; i < numTriangles; i++)
         {
-            if (i % 2 != 0)
+            if (i % 2f == Convert.ToInt32(flip))
             {
                 indices[i * 3] = i;
                 indices[i * 3 + 1] = i + 1;
@@ -135,18 +158,6 @@ public class RoadSegment2 : MonoBehaviour
                 indices[i * 3 + 2] = i + 2;
             }
         }
-
-        mesh.triangles = indices;
-        mesh.RecalculateNormals();
-        mesh.RecalculateBounds();
-        mesh.RecalculateTangents();
-    }
-
-    private void OnDrawGizmos()
-    {
-        foreach (Vector3 vert in mesh.vertices)
-        {
-            Gizmos.DrawSphere(vert, 0.2f);
-        }
+        return indices;
     }
 }

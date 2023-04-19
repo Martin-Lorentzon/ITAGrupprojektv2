@@ -216,12 +216,13 @@ GameObject:
   - component: {fileID: 5016093471187148553}
   - component: {fileID: 7534763042785319539}
   - component: {fileID: 8282899543614071165}
-  m_Layer: 0
+  - component: {fileID: 7508729794287181483}
+  m_Layer: 25
   m_Name: Road Segment
-  m_TagString: Untagged
+  m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2124903481341220311
 Transform:
@@ -307,7 +308,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadResolution: 0
   roadTile: {fileID: 0}
-  roadTiles: []
+  roadPoints: []
+--- !u!64 &7508729794287181483
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124903481341220296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &2124903481447743939
 GameObject:
   m_ObjectHideFlags: 0
