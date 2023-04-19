@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class MeshLibrary : MonoBehaviour
 {
-
     public GameObject meshContainer;
     public List<Mesh> meshList;
     public MeshFilter meshFilter;
@@ -27,11 +26,20 @@ public class MeshLibrary : MonoBehaviour
     {
         meshFilter = meshContainer.GetComponent<MeshFilter>();
         renderer = meshContainer.GetComponent<MeshRenderer>();
+
+        if (meshFilter == null)
+        {
+            meshContainer = meshContainer.transform.GetChild(0).gameObject;
+            meshFilter = meshContainer.GetComponent<MeshFilter>();
+            renderer = meshContainer.GetComponent<MeshRenderer>();
+        }
+
         originPointOffset = meshFilter.mesh.bounds.size.y / 2;
         renderer.enabled = false;
         pos = (button.GetComponent<RectTransform>().position);
         SetThumbnail();
 
+        if (cameraObj == null) cameraObj = Camera.main;
     }
 
 
