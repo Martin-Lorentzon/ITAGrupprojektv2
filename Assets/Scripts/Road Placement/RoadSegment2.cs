@@ -20,19 +20,34 @@ public class RoadSegment2 : MonoBehaviour
 
     private Mesh mesh;
 
-    
+    public float roadWidth;
 
 
 
     void Start()
     {
         mesh = GetComponent<MeshFilter>().mesh;
+        roadWidth = 1f;
     }
 
     void Update()
     {
         //Vector3[] vertices = mesh.vertices;
         //Vector3[] normals = mesh.normals;
+        
+        // Road Width Update
+        if (Input.GetKeyDown(KeyCode.L) && SceneInformation.selectedObjects.Contains(gameObject))
+        {
+            roadWidth -= 0.1f;
+        }
+        
+
+        if (Input.GetKeyDown(KeyCode.K) && SceneInformation.selectedObjects.Contains(gameObject))
+        {
+            roadWidth += 0.1f;
+        }
+            
+        //roadWidth = Mathf.Clamp(roadWidth, 0.2f, 1f);
 
 
 
@@ -115,8 +130,8 @@ public class RoadSegment2 : MonoBehaviour
 
         foreach (Transform point in roadPoints)
         {
-            newVertices[roadPoints.IndexOf(point)*2] = point.position + (point.right * 0.4f);
-            newVertices[roadPoints.IndexOf(point)*2+1] = point.position - (point.right * 0.4f);
+            newVertices[roadPoints.IndexOf(point)*2] = point.position + (point.right * roadWidth);
+            newVertices[roadPoints.IndexOf(point)*2+1] = point.position - (point.right * roadWidth);
         }
 
         mesh.Clear(false);

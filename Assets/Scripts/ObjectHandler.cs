@@ -130,7 +130,7 @@ public class ObjectHandler : MonoBehaviour
 
                     bool allSelected = true;
                     foreach (Transform child in children)
-                        if (!SceneInformation.selectedObjects.Contains(child.gameObject))
+                        if (!SceneInformation.selectedObjects.Contains(child.gameObject) && child.tag == "Road")
                             allSelected = false;
 
 
@@ -149,7 +149,6 @@ public class ObjectHandler : MonoBehaviour
                                 if (child.tag == "Road")
                                     SceneInformation.selectedObjects.Add(child.gameObject);
                             }
-                                
                     }
                     else
                         foreach (Transform child in children)

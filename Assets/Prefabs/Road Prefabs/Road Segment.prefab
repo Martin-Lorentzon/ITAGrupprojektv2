@@ -309,6 +309,7 @@ MonoBehaviour:
   roadResolution: 0
   roadTile: {fileID: 0}
   roadPoints: []
+  roadWidth: 0.4
 --- !u!64 &7508729794287181483
 MeshCollider:
   m_ObjectHideFlags: 0
