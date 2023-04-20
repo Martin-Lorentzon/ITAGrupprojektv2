@@ -85,7 +85,7 @@ public class RoadEditor : MonoBehaviour
 
         if (inRoadEditState)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
             RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, GroundLayerMask);
 
             newRoadSegment.transform.parent = newRoadContainer.transform;
