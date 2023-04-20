@@ -27,12 +27,11 @@ public class RoadEditor : MonoBehaviour
     private GameObject newRoadSegment;
     private GameObject newRoadContainer;
 
+    private float roadHeight = 0.02f;
+
     void Start()
     {
-        Gizmos.color = Color.red;
-
         RoadEditState = State.point1;
-
         GroundLayerMask = LayerMask.GetMask("Ground");
     }
 
@@ -65,13 +64,14 @@ public class RoadEditor : MonoBehaviour
 
             if (hits.Length > 0 && Input.GetMouseButtonDown(0))
             {
-                newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
+                newRoadSegment = Instantiate(roadSegment, hits[0].point, Quaternion.identity);
                 newRoadContainer = new GameObject("Road Container");
 
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
-                Transform controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
-                anchor.position = controlPoint.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * roadHeight;
 
                 RoadEditState = State.point2;
             }
@@ -84,7 +84,7 @@ public class RoadEditor : MonoBehaviour
 
         if (inRoadEditState)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
             RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, GroundLayerMask);
 
             newRoadSegment.transform.parent = newRoadContainer.transform;
@@ -92,11 +92,13 @@ public class RoadEditor : MonoBehaviour
             if (hits.Length > 0)
             {
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
-                Transform controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
+                Transform controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                 Transform endPoint = newRoadSegment.transform.Find("End Point").transform;
-                endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                endPoint.position = hits[0].point + Vector3.up * roadHeight;
 
-                controlPoint.position = Vector3.Lerp(anchor.position, endPoint.position, 0.5f);
+                controlPoint1.position = Vector3.Lerp(anchor.position, endPoint.position, 0.33f);
+                controlPoint2.position = Vector3.Lerp(anchor.position, endPoint.position, 0.66f);
 
                 bool makeContinuous = Input.GetKey(KeyCode.LeftShift);
 
@@ -104,11 +106,12 @@ public class RoadEditor : MonoBehaviour
                 {
                     if (makeContinuous)
                     {
-                        newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
+                        newRoadSegment = Instantiate(roadSegment, hits[0].point, Quaternion.identity);
                         anchor = newRoadSegment.transform.Find("Anchor").transform;
-                        controlPoint = newRoadSegment.transform.Find("Control Point").transform;
+                        controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
+                        controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
                         endPoint = newRoadSegment.transform.Find("End Point").transform;
-                        anchor.position = controlPoint.position = endPoint.position = hits[0].point + Vector3.up * 0.1f;
+                        anchor.position = controlPoint1.position = controlPoint2.position = endPoint.position = hits[0].point + Vector3.up * roadHeight;
                     }
                     else
                     {

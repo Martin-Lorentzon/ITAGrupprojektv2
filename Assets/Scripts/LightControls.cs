@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 
 
@@ -21,7 +21,8 @@ public class LightControls : MonoBehaviour
     public GameObject cam;
     public GameObject northArrow;
     RectTransform arrowTransform;
-
+    public Slider sunCycleSlider;
+    public Slider northSlider;
 
     void Start()
     {
@@ -30,6 +31,12 @@ public class LightControls : MonoBehaviour
         nightExposure = 0.2f;
         north = sun.transform.right;
         sunOffset = sun.transform.eulerAngles.y;
+        sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset + 180, 0f);
+        sunOffset = sun.transform.eulerAngles.y;
+        sunCycleSlider.onValueChanged.AddListener(delegate { CycleSun(); });
+        northSlider.onValueChanged.AddListener(delegate { OffsetNorth(); });
+        
+        northSlider.value = sunOffset;
         
         arrowTransform = northArrow.GetComponent<RectTransform>();
     }
@@ -48,7 +55,6 @@ public class LightControls : MonoBehaviour
             CycleSun();
         }       
           
-
         if (Input.GetKey(KeyCode.Y))
         {
             OffsetNorth();
@@ -68,23 +74,25 @@ public class LightControls : MonoBehaviour
     // Rotates sun around y, sets new north direction 
     void OffsetNorth()
     {
-        sunOffset = sunOffset + 1;
-        sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset + 180f, 0f);
+        
 
-        if (sunOffset > 359)
-        {
-            sunOffset = 0;
-            sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset + 180f, 0f);
-        }
+        sunOffset = northSlider.value;
+        sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset + 180 , 0f);
+
+        //if (sunOffset > 359)
+        //{
+        //    sunOffset = 0;
+        //    sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset + 180f, 0f);
+        //}
 
         north =  sun.transform.right;
     }
 
-    // Cycles sun through day and night
+    // Sets directional light to slider value
 
     void CycleSun()
     {
-        sunAngle = sunAngle + 1;
+        sunAngle = sunCycleSlider.value;
         sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset, 0f);
 
         if (sunAngle < -15f || sunAngle > 185f)
@@ -92,11 +100,6 @@ public class LightControls : MonoBehaviour
             RenderSettings.skybox.SetFloat("_Exposure", nightExposure);
             sun.SetActive(false);
 
-            if (sunAngle > 200)
-            {
-                sunAngle = -30;
-                sun.transform.eulerAngles = new Vector3(sunAngle, sunOffset, 0f);
-            }
         }
         else
         {

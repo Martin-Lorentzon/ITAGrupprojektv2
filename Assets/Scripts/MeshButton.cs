@@ -25,7 +25,6 @@ public class MeshButton : MonoBehaviour
     void SetMesh()
     {
         meshLibrary.ChangeMesh(buttonIdx);
-        Debug.Log(buttonIdx);
     }
 
 }
