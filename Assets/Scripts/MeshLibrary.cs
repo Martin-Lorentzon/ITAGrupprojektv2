@@ -14,9 +14,11 @@ public class MeshLibrary : MonoBehaviour
     private MeshRenderer renderer;
     private int index = 0;
     private float originPointOffset;
+
     public List<Texture2D> thumbnails;
     public List<GameObject> buttons;
     public List<Sprite> sprites;
+
     public GameObject button;
     private Vector3 pos;
     public GameObject UIpanel;
@@ -74,6 +76,7 @@ public class MeshLibrary : MonoBehaviour
     {
         for (int i = 0; i < meshList.Count; i++)
         {
+            Debug.Log("thumbnail");
             GameObject buttonInstance = Instantiate(button);
             buttons.Add(buttonInstance);
             buttonInstance.GetComponent<RectTransform>().position = pos;
