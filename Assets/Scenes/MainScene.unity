@@ -1169,6 +1169,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5545512507388059244, guid: 59b7b8e8c882212489ca2ab82e603c2f, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6720e6c5622aba8428649168aab46fb7, type: 2}
     - target: {fileID: 6338080138998480825, guid: 59b7b8e8c882212489ca2ab82e603c2f, type: 3}
       propertyPath: m_Name
       value: DomenKonferens
@@ -1226,6 +1230,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7811793083550149249, guid: 82dfd7556bdd8654391e56be09889b64, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b865cda5a10d6b041a597b1f9a90b418, type: 2}
+    - target: {fileID: 7811793083550149249, guid: 82dfd7556bdd8654391e56be09889b64, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2da94349505e9b41b91063fbd5b2500, type: 2}
     - target: {fileID: 8617784726673017822, guid: 82dfd7556bdd8654391e56be09889b64, type: 3}
       propertyPath: m_RootOrder
       value: 3
