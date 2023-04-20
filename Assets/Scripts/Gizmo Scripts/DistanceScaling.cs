@@ -26,7 +26,7 @@ public class DistanceScaling : MonoBehaviour
         transform.localScale = originalScale * scale * scaleOffset;
     }
 
-    void Update()
+    void LateUpdate()
     {
         float distance = Vector3.Distance(transform.position, targetTransform.position);
         float scale = Mathf.Clamp(scaleAmount * distance + 1, 1, Mathf.Infinity);
