@@ -4,46 +4,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 
-[Serializable]
-public struct Objects
+public static class ObjectList
 {
-    [SerializeField]
-    string name;
-    [SerializeField]
-    GameObject obj;
-    [SerializeField]
-    public Button button;
-    public GameObject GetObj { get { return obj; } }
-
-    public void SetButton(Button _button)
-    {
-        button = _button;
-    }
-    //public Button Button { get { return button; } set { if (button == null) button = value; } }
-}
-
-public class PlaceObjList : MonoBehaviour
-{
-    Controlling cont;
-    [SerializeField]
-    GameObject panel;
-    [SerializeField]
-    Button button;
-    [SerializeField]
-    List<Objects> buttons;
-
-    public GameObject Panel { get { return panel; } set { panel = value; } }
-
-    void Start()
-    {
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            GameObject placing = Instantiate(buttons[i].button.gameObject);
-            buttons[i].SetButton(Instantiate(button));
-
-            //buttons[i].GetButton.onClick.AddListener();
-            placing.transform.SetParent(panel.transform);
-            placing.transform.localPosition = Vector3.zero;
-        }
-    }
+    public static List<GameObject> sceneObjects;
 }
