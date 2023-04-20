@@ -64,7 +64,7 @@ public class RoadEditor : MonoBehaviour
 
             if (hits.Length > 0 && Input.GetMouseButtonDown(0))
             {
-                newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
+                newRoadSegment = Instantiate(roadSegment, hits[0].point, Quaternion.identity);
                 newRoadContainer = new GameObject("Road Container");
 
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
@@ -106,7 +106,7 @@ public class RoadEditor : MonoBehaviour
                 {
                     if (makeContinuous)
                     {
-                        newRoadSegment = Instantiate(roadSegment, Vector3.zero, Quaternion.identity);
+                        newRoadSegment = Instantiate(roadSegment, hits[0].point, Quaternion.identity);
                         anchor = newRoadSegment.transform.Find("Anchor").transform;
                         controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;
                         controlPoint2 = newRoadSegment.transform.Find("Control Point 2").transform;
