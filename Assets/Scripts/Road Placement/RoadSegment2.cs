@@ -27,7 +27,7 @@ public class RoadSegment2 : MonoBehaviour
     void Start()
     {
         mesh = GetComponent<MeshFilter>().mesh;
-        roadWidth = 1f;
+        roadWidth = 0.4f;
     }
 
     void Update()
@@ -38,13 +38,13 @@ public class RoadSegment2 : MonoBehaviour
         // Road Width Update
         if (Input.GetKeyDown(KeyCode.L) && SceneInformation.selectedObjects.Contains(gameObject))
         {
-            roadWidth -= 0.1f;
+            roadWidth += 0.1f;
         }
         
 
         if (Input.GetKeyDown(KeyCode.K) && SceneInformation.selectedObjects.Contains(gameObject))
         {
-            roadWidth += 0.1f;
+            roadWidth -= 0.1f;
         }
             
         //roadWidth = Mathf.Clamp(roadWidth, 0.2f, 1f);
