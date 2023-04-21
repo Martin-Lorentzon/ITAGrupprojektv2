@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using System;
-
+using Unity.VisualScripting;
 
 public class RoadSegment2 : MonoBehaviour
 {
     public int roadResolution;
 
     public GameObject roadTile;
-
-
 
 
     //|||||||||||||||||||||||
@@ -30,11 +29,20 @@ public class RoadSegment2 : MonoBehaviour
         roadWidth = 0.4f;
     }
 
+
+    public void SetWidth(float sliderValue) 
+    {
+        roadWidth = sliderValue;
+        Debug.Log(sliderValue);
+    }
+
     void Update()
     {
         //Vector3[] vertices = mesh.vertices;
         //Vector3[] normals = mesh.normals;
         
+
+
         // Road Width Update
         if (Input.GetKeyDown(KeyCode.L) && SceneInformation.selectedObjects.Contains(gameObject))
         {
