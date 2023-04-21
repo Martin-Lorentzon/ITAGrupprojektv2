@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: bfe7129bb0e627349829644d88e6661c
+=======
+guid: 64173e2413d8bcd4089e84d7bf460aff
+>>>>>>> elmer-branch
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
