@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,26 @@ public class GetModel : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Delete))
         {
-            Debug.Log(ParseVertices(GUIUtility.systemCopyBuffer)[0]);
-            Debug.Log(ParseVertices(GUIUtility.systemCopyBuffer)[1]);
-            Debug.Log(ParseVertices(GUIUtility.systemCopyBuffer)[2]);
+            string vertexData = FetchData(GUIUtility.systemCopyBuffer, "VERTICES", "ENDVERTICES");
+            Debug.Log(vertexData);
+            Debug.Log(ParseVertices(vertexData));
+
+            //Debug.Log("TEST");
         }
+    }
+
+    string FetchData(string str, string key, string ending)
+    {
+        char[] newLineChars = Environment.NewLine.ToCharArray();
+        string data;
+        str = str.TrimEnd('\r', '\n');
+        str = str.TrimStart('\r', '\n');
+        int pos1 = str.IndexOf(key) + key.Length;
+        int pos2 = str.IndexOf(ending);
+        data = str.Substring(pos1, pos2 - pos1);
+        return data;
     }
 
 
