@@ -84,7 +84,7 @@ public class MeshLibrary : MonoBehaviour
             sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 128f, 128f), new Vector2(0f, 0f));
             buttons[i].GetComponent<Image>().sprite = sprites[i];
 
-            pos = pos + new Vector3(100, 0, 0);
+            pos = pos + new Vector3(70, 0, 0);
             buttonInstance.transform.SetParent(UIpanel.transform);
 
         }
