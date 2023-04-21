@@ -7,25 +7,26 @@ public class GetModel : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Delete))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             string vertexData = FetchData(GUIUtility.systemCopyBuffer, "VERTICES", "ENDVERTICES");
             Debug.Log(vertexData);
-            Debug.Log(ParseVertices(vertexData));
+            //Debug.Log(ParseVertices(vertexData)[0]);
 
             //Debug.Log("TEST");
         }
     }
 
-    string FetchData(string str, string key, string ending)
+    string FetchData(string str, string key, string ending, bool trimNewLines = true)
     {
         char[] newLineChars = Environment.NewLine.ToCharArray();
         string data;
-        str = str.TrimEnd('\r', '\n');
-        str = str.TrimStart('\r', '\n');
         int pos1 = str.IndexOf(key) + key.Length;
         int pos2 = str.IndexOf(ending);
         data = str.Substring(pos1, pos2 - pos1);
+        if (trimNewLines)
+            data = data.Trim(newLineChars);
+
         return data;
     }
 
