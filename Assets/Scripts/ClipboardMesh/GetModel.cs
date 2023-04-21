@@ -9,11 +9,17 @@ public class GetModel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            string vertexData = FetchData(GUIUtility.systemCopyBuffer, "VERTICES", "ENDVERTICES");
-            Debug.Log(vertexData);
-            //Debug.Log(ParseVertices(vertexData)[0]);
+            string clipboard = GUIUtility.systemCopyBuffer;
 
-            //Debug.Log("TEST");
+            string vertexData = FetchData(clipboard, "VERTICES", "ENDVERTICES");
+            Vector3[] vertices = ParseVertices(vertexData);
+
+            string triangleData = FetchData(clipboard, "TRIANGLES", "ENDTRIANGLES");
+
+
+            //Debug.Log(vertexData);
+            //Debug.Log(vertices[0]);
+            Debug.Log(triangleData);
         }
     }
 
@@ -31,7 +37,7 @@ public class GetModel : MonoBehaviour
     }
 
 
-    Vector3[] ParseVertices(string str)
+    Vector3[] ParseVertices(string str)     // Should also work for vertex normals and vertex color(?)
     {
         string inputString = str;
         string[] rows = inputString.Split('\n');
