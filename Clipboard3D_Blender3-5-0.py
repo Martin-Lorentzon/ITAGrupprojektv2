@@ -41,13 +41,18 @@ class CL3D_Panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        properties = scene.properties
+        my_props = scene.myProperties
+        
+        
+        
+        obj = bpy.context.view_layer.objects.active
         
         col = layout.column()
-        col.operator("cl3d.copy")
+        col.enabled = len(bpy.context.selected_objects) != 0 and obj.type == "MESH"
+        col.operator("cl3d.copy", icon = "COPYDOWN")
         
         box = col.box()
-        box.label(icon = "OUTLINER_OB_LIGHT", text="Copies data to clipboard")
+        box.label(icon = "OUTLINER_OB_LIGHT", text = "Result will be triangulated")
         
         
         
@@ -111,11 +116,11 @@ def round_to_multiple(number, multiple):
 
 class CL3D_Copy(bpy.types.Operator):
     bl_idname = "cl3d.copy"
-    bl_label = "Get Model"
+    bl_label = "Copy Model"
     bl_description = "Copies the active mesh object as CL3D data to the clipboard"
     
     def execute(self, context):
-        #my_props = context.scene.properties     # Properties
+        #my_props = context.scene.myProperties     # Properties
         
         # Get the active object
         obj = bpy.context.view_layer.objects.active
@@ -128,7 +133,7 @@ class CL3D_Copy(bpy.types.Operator):
         # Triangulate the BMesh
         bmesh.ops.triangulate(bm, faces=bm.faces[:])
         
-
+        
         data = "CL3D"
         
         data += "\n" + "VERTICES"
@@ -145,6 +150,7 @@ class CL3D_Copy(bpy.types.Operator):
         
         # Get rid of the last space among the indices
         data = data[:-1]
+        
         data += "\n" + "ENDTRIANGLES"
         
         
@@ -167,13 +173,13 @@ def register():
     for cls in classes:
         bpy.utils.register_class(cls)
         
-    bpy.types.Scene.properties = bpy.props.PointerProperty(type=MyPropertyGroup)
+    bpy.types.Scene.myProperties = bpy.props.PointerProperty(type=MyPropertyGroup)
         
     
 def unregister():
     for cls in classes:
         bpy.utils.unregister_class(cls)
-    del bpy.types.Scene.properties
+    del bpy.types.Scene.myProperties
     
 
 
