@@ -43,16 +43,33 @@ class CL3D_Panel(bpy.types.Panel):
         scene = context.scene
         my_props = scene.myProperties
         
+        # Active Object Information
+        alive = len(context.selected_objects) != 0
         
+        if alive:
+            obj = bpy.context.view_layer.objects.active
+            mesh = obj.data
         
-        obj = bpy.context.view_layer.objects.active
         
         col = layout.column()
-        col.enabled = len(bpy.context.selected_objects) != 0 and obj.type == "MESH"
-        col.operator("cl3d.copy", icon = "COPYDOWN")
         
-        box = col.box()
-        box.label(icon = "OUTLINER_OB_LIGHT", text = "Result will be triangulated")
+        # Copy Model Operator
+        row = col.row()
+        row.enabled = False
+        
+        if alive and obj.type == "MESH":
+            row.enabled = True
+            
+        row.operator("cl3d.copy", icon = "COPYDOWN")
+        
+        
+        # Triangulation Warning
+        row = col.row()
+        
+        if alive and obj.type == "MESH":
+            if not mesh_only_triangles(mesh):
+                box = row.box()
+                box.label(icon = "OUTLINER_OB_LIGHT", text = "Mesh will be triangulated")
         
         
         
@@ -109,7 +126,15 @@ class CL3D_Panel(bpy.types.Panel):
 
 def round_to_multiple(number, multiple):
     return multiple * round(number / multiple)  #Avrundning till närmsta X av nummer
-    
+
+def mesh_only_triangles(mesh):
+    """
+    Returns True if the given mesh contains only triangles, False otherwise.
+    """
+    for polygon in mesh.polygons:
+        if len(polygon.vertices) != 3:
+            return False
+    return True
 # ------------------------------------------------------------------------
 #    Klasser
 # ------------------------------------------------------------------------
@@ -130,11 +155,12 @@ class CL3D_Copy(bpy.types.Operator):
         bm = bmesh.new()
         bm.from_mesh(mesh)
         
-        # Triangulate the BMesh
-        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        # Triangulate the BMesh if necessary
+        if mesh_only_triangles(mesh) == False:
+            bmesh.ops.triangulate(bm, faces=bm.faces[:])
         
         
-        data = "CL3D"
+        data = "CL3D_KEY"
         
         data += "\n" + "VERTICES"
         for vert in bm.verts:
@@ -148,18 +174,13 @@ class CL3D_Copy(bpy.types.Operator):
             for vert in tri.verts:
                 data += str(vert.index) + " "
         
-        # Get rid of the last space among the indices
+        # Trim the trailing space from the string
         data = data[:-1]
         
         data += "\n" + "ENDTRIANGLES"
         
         
-        
         bpy.context.window_manager.clipboard = data;
-        print(data)
-        
-        
-        
         return{"FINISHED"}
 
 # ------------------------------------------------------------------------
