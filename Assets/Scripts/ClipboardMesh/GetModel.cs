@@ -12,14 +12,16 @@ public class GetModel : MonoBehaviour
             string clipboard = GUIUtility.systemCopyBuffer;
 
             string vertexData = FetchData(clipboard, "VERTICES", "ENDVERTICES");
-            Vector3[] vertices = ParseVertices(vertexData);
-
             string triangleData = FetchData(clipboard, "TRIANGLES", "ENDTRIANGLES");
 
+            Vector3[] vertices = ParseVertices(vertexData);
+            int[] triangles = ParseIndices(triangleData);
 
-            //Debug.Log(vertexData);
-            //Debug.Log(vertices[0]);
+
+            Debug.Log(vertexData);
+            Debug.Log(vertices[0]);
             Debug.Log(triangleData);
+            Debug.Log(triangles[3]);
         }
     }
 
@@ -37,10 +39,22 @@ public class GetModel : MonoBehaviour
     }
 
 
-    Vector3[] ParseVertices(string str)     // Should also work for vertex normals and vertex color(?)
+    int[] ParseIndices(string str)
     {
-        string inputString = str;
-        string[] rows = inputString.Split('\n');
+        string[] indices = str.Split(' ');
+        int[] intArray = new int[indices.Length];
+
+        for (int i = 0; i < indices.Length; i++)
+        {
+            intArray[i] = int.Parse(indices[i]);
+        }
+        return intArray;
+    }
+
+
+    Vector3[] ParseVertices(string str)
+    {
+        string[] rows = str.Split('\n');
         Vector3[] vectorArray = new Vector3[rows.Length];
 
         for (int i = 0; i < rows.Length; i++)
