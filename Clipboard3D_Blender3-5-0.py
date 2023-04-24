@@ -16,7 +16,7 @@ import numpy as np
 #    Properties
 # ------------------------------------------------------------------------
 
-class MyPropertyGroup(bpy.types.PropertyGroup):
+class CL3D_Properties(bpy.types.PropertyGroup):
     
     """
     decimals : bpy.props.IntProperty(name = "", min=0, soft_max=4)
@@ -26,11 +26,11 @@ class MyPropertyGroup(bpy.types.PropertyGroup):
     include_rotation : bpy.props.BoolProperty(name = "Rotation")
     include_scale : bpy.props.BoolProperty(name = "Scale")
     """
-    conversion_matrix : bpy.props.EnumProperty(
-        name="Coordinate Space",
+    target_space : bpy.props.EnumProperty(
+        name="Target Coordinate Space",
         items=[("BLENDER", "Blender", "Right-handed, Z is up"),
-               ("UNITY", "Unity", "Left-handed, Y is up"),
-               ("EMPTY", "Empty Matrix", "")],
+               ("UNITY"  , "Unity"  , "Left-handed, Y is up"),
+               ("EMPTY"  , "Empty Matrix", "")],
         default="BLENDER"
     )
     
@@ -50,7 +50,7 @@ class CL3D_Panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        my_props = scene.myProperties
+        my_props = scene.cl3d_props
         
         # Active Object Information
         alive = len(context.selected_objects) != 0
@@ -67,7 +67,7 @@ class CL3D_Panel(bpy.types.Panel):
         space_col = space_box.column()
         
         space_col.label(text = "Target Coordinate Space")
-        space_col.prop(my_props, "conversion_matrix", expand = True)
+        space_col.prop(my_props, "target_space", expand = True)
         
         
         # Copy Model Operator
@@ -88,58 +88,6 @@ class CL3D_Panel(bpy.types.Panel):
                 box = row.box()
                 box.label(icon = "OUTLINER_OB_LIGHT", text = "Mesh will be triangulated")
         
-        row = panel_col.row()
-        row.prop(my_props, "metadata")
-        row.scale_y = 2.0
-        
-        
-        
-        """
-        row = layout.row()
-        row.label(text = "Snap To")
-        
-        row = layout.row()
-        row.prop(properties, "snapping_mode", expand=True, text = " ")
-        
-        if properties.snapping_mode == "decimal":
-            box = layout.box()
-            split = box.split(factor=0.5)
-            split.scale_y = 2
-            col = split.column()
-            col.label(text = "Precision")
-            col = split.column()
-            col.prop(properties, "decimals")
-            
-        elif properties.snapping_mode == "multiple_of":
-            box = layout.box()
-            split = box.split(factor=0.5)
-            split.scale_y = 2
-            col = split.column()
-            col.label(text = "Value")
-            
-            col = split.column()
-            col.prop(properties, "multiple")
-        
-        box = layout.box()
-        row = layout.row()
-        box.label(text = "Affect")
-        
-        col = box.column(align = True)
-        col.prop(properties, "include_location", icon = "OBJECT_ORIGIN")
-        col.prop(properties, "include_rotation", icon = "ORIENTATION_GIMBAL")
-        col.prop(properties, "include_scale", icon = "EMPTY_ARROWS")
-        
-        row = layout.row()
-        row.scale_y = 2
-        row.operator("object.snap_selected")
-        
-        row = layout.row()
-        
-        if properties.active_snapping: icon = "SNAP_ON"
-        else: icon = "SNAP_OFF"
-            
-        #row.prop(properties, "active_snapping", icon = icon)
-        """
 
 # ------------------------------------------------------------------------
 #    Functions
@@ -158,7 +106,7 @@ def mesh_only_triangles(mesh):
     return True
 
 # ------------------------------------------------------------------------
-#    Klasser
+#    Classes
 # ------------------------------------------------------------------------
 
 class CL3D_Copy(bpy.types.Operator):
@@ -167,8 +115,8 @@ class CL3D_Copy(bpy.types.Operator):
     bl_description = "Copies the active mesh object as CL3D data to the clipboard"
     
     def execute(self, context):
-        my_props = context.scene.myProperties     # Properties
-        matrix = my_props.conversion_matrix
+        my_props = context.scene.cl3d_props     # Properties
+        target_space = my_props.target_space
         
         # Get the active object
         obj = bpy.context.view_layer.objects.active
@@ -187,24 +135,24 @@ class CL3D_Copy(bpy.types.Operator):
         
         data += "\n" + "VERTICES"
         for vert in bm.verts:
-            if matrix == "BLENDER":
+            if target_space == "BLENDER":
                 data += "\n" + str(vert.co.x) + " " + str(vert.co.y) + " " + str(vert.co.z)
-            elif matrix == "UNITY":
+            elif target_space == "UNITY":
                 point = np.array([vert.co.x, vert.co.y, vert.co.z])
-                t_matrix = np.array([[1, 0, 0], [0, 0, 1], [0, 1, 0]])
-                new_point = t_matrix.dot(point)
-            
+                transform_matrix = np.array([[1, 0, 0], [0, 0, 1], [0, 1, 0]])
+                new_point = transform_matrix.dot(point)
                 data += "\n" + str(new_point[0]) + " " + str(new_point[1]) + " " + str(new_point[2])
+        
         data += "\n" + "ENDVERTICES"
         
         
         data += "\n" + "TRIANGLES"
         data += "\n"
         for tri in bm.faces:
-            if matrix == "BLENDER":
+            if target_space == "BLENDER":
                 for vert in tri.verts:
                     data += str(vert.index) + " "
-            if matrix == "UNITY":
+            elif target_space == "UNITY":
                 for vert in reversed(tri.verts):
                     data += str(vert.index) + " "
         
@@ -218,27 +166,27 @@ class CL3D_Copy(bpy.types.Operator):
         
         
         bpy.context.window_manager.clipboard = data
+        
         return{"FINISHED"}
 
 # ------------------------------------------------------------------------
-#    Registrering
+#    Registration
 # ------------------------------------------------------------------------
 
-classes = [MyPropertyGroup, CL3D_Panel, CL3D_Copy]
+classes = [CL3D_Properties, CL3D_Panel, CL3D_Copy]
 
 
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
         
-    bpy.types.Scene.myProperties = bpy.props.PointerProperty(type=MyPropertyGroup)
-        
-    
+    bpy.types.Scene.cl3d_props = bpy.props.PointerProperty(type=CL3D_Properties)
+  
+
 def unregister():
     for cls in classes:
         bpy.utils.unregister_class(cls)
-    del bpy.types.Scene.myProperties
-    
+    del bpy.types.Scene.cl3d_props
 
 
 if __name__ == "__main__":
