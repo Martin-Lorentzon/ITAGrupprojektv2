@@ -9,6 +9,7 @@ bl_info = {
 
 import bpy
 import bmesh
+import numpy as np
 #from math import radians, degrees
 
 # ------------------------------------------------------------------------
@@ -25,7 +26,15 @@ class MyPropertyGroup(bpy.types.PropertyGroup):
     include_rotation : bpy.props.BoolProperty(name = "Rotation")
     include_scale : bpy.props.BoolProperty(name = "Scale")
     """
+    conversion_matrix : bpy.props.EnumProperty(
+        name="Coordinate Space",
+        items=[("BLENDER", "Blender", "Right-handed, Z is up"),
+               ("UNITY", "Unity", "Left-handed, Y is up"),
+               ("EMPTY", "Empty Matrix", "")],
+        default="BLENDER"
+    )
     
+    metadata : bpy.props.StringProperty(name="Metadata", default="")
 
 # ------------------------------------------------------------------------
 #    Panel
@@ -50,11 +59,19 @@ class CL3D_Panel(bpy.types.Panel):
             obj = bpy.context.view_layer.objects.active
             mesh = obj.data
         
+        # Column
+        panel_col = layout.column()
         
-        col = layout.column()
+        # Space Box Column
+        space_box = panel_col.box()
+        space_col = space_box.column()
+        
+        space_col.label(text = "Target Coordinate Space")
+        space_col.prop(my_props, "conversion_matrix", expand = True)
+        
         
         # Copy Model Operator
-        row = col.row()
+        row = panel_col.row()
         row.enabled = False
         
         if alive and obj.type == "MESH":
@@ -64,12 +81,16 @@ class CL3D_Panel(bpy.types.Panel):
         
         
         # Triangulation Warning
-        row = col.row()
+        row = panel_col.row()
         
         if alive and obj.type == "MESH":
             if not mesh_only_triangles(mesh):
                 box = row.box()
                 box.label(icon = "OUTLINER_OB_LIGHT", text = "Mesh will be triangulated")
+        
+        row = panel_col.row()
+        row.prop(my_props, "metadata")
+        row.scale_y = 2.0
         
         
         
@@ -135,6 +156,7 @@ def mesh_only_triangles(mesh):
         if len(polygon.vertices) != 3:
             return False
     return True
+
 # ------------------------------------------------------------------------
 #    Klasser
 # ------------------------------------------------------------------------
@@ -145,7 +167,8 @@ class CL3D_Copy(bpy.types.Operator):
     bl_description = "Copies the active mesh object as CL3D data to the clipboard"
     
     def execute(self, context):
-        #my_props = context.scene.myProperties     # Properties
+        my_props = context.scene.myProperties     # Properties
+        matrix = my_props.conversion_matrix
         
         # Get the active object
         obj = bpy.context.view_layer.objects.active
@@ -164,23 +187,37 @@ class CL3D_Copy(bpy.types.Operator):
         
         data += "\n" + "VERTICES"
         for vert in bm.verts:
-            data += "\n" + str(vert.co.x) + " " + str(vert.co.y) + " " + str(vert.co.z)
+            if matrix == "BLENDER":
+                data += "\n" + str(vert.co.x) + " " + str(vert.co.y) + " " + str(vert.co.z)
+            elif matrix == "UNITY":
+                point = np.array([vert.co.x, vert.co.y, vert.co.z])
+                t_matrix = np.array([[1, 0, 0], [0, 0, 1], [0, 1, 0]])
+                new_point = t_matrix.dot(point)
+            
+                data += "\n" + str(new_point[0]) + " " + str(new_point[1]) + " " + str(new_point[2])
         data += "\n" + "ENDVERTICES"
         
         
         data += "\n" + "TRIANGLES"
         data += "\n"
         for tri in bm.faces:
-            for vert in tri.verts:
-                data += str(vert.index) + " "
+            if matrix == "BLENDER":
+                for vert in tri.verts:
+                    data += str(vert.index) + " "
+            if matrix == "UNITY":
+                for vert in reversed(tri.verts):
+                    data += str(vert.index) + " "
         
         # Trim the trailing space from the string
         data = data[:-1]
-        
         data += "\n" + "ENDTRIANGLES"
         
+        data += "\n" + "METADATA"
         
-        bpy.context.window_manager.clipboard = data;
+        data += "\n" + "ENDMETADATA"
+        
+        
+        bpy.context.window_manager.clipboard = data
         return{"FINISHED"}
 
 # ------------------------------------------------------------------------
