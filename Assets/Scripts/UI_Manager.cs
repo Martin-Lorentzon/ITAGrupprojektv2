@@ -13,9 +13,9 @@ public class UI_Manager : MonoBehaviour
     public GameObject workPanel;
     public Button viewModeButton;
     public Button workModeButton;
-    bool inViewMode = false;
+
     public Button[] toolDrawerButtons;
-    enum Modes {models, materials, roads};
+    enum Modes {models, materials, roads, scatter};
     public GameObject[] toolPanels;
     public Button lightsButton;
     public GameObject lightsPanel;
@@ -41,6 +41,8 @@ public class UI_Manager : MonoBehaviour
         toolDrawerButtons[(int)Modes.models].onClick.AddListener(delegate { ModelMode(); });
         toolDrawerButtons[(int)Modes.materials].onClick.AddListener(delegate { MaterialMode(); });
         toolDrawerButtons[(int)Modes.roads].onClick.AddListener(delegate { RoadMode(); });
+        toolDrawerButtons[(int)Modes.scatter].onClick.AddListener(delegate { ScatterMode(); });
+
         roadWidth.onValueChanged.AddListener(delegate { SetRoadWidth(); });
         addRoadButton.onClick.AddListener(delegate { RoadBuild(); });
         roadEditButton.onClick.AddListener(delegate { RoadEdit(); });
@@ -115,7 +117,6 @@ public class UI_Manager : MonoBehaviour
 
     void GoToWorkMode() 
     {
-        inViewMode = false;
         workPanel.SetActive(true);
         viewPanel.SetActive(false);
     }
@@ -128,10 +129,9 @@ public class UI_Manager : MonoBehaviour
         }
         toolPanels[(int)Modes.models].SetActive(true);
         
-        if(SceneInformation.ApplicationState == SceneInformation.AppState.RoadEdit)
-        {
-            SceneInformation.ApplicationState = SceneInformation.AppState.Select;
-        }
+
+        SceneInformation.ApplicationState = SceneInformation.AppState.Select;
+
     }
 
     void MaterialMode()
@@ -142,10 +142,9 @@ public class UI_Manager : MonoBehaviour
         }
         toolPanels[(int)Modes.materials].SetActive(true);
 
-        if (SceneInformation.ApplicationState == SceneInformation.AppState.RoadEdit)
-        {
-            SceneInformation.ApplicationState = SceneInformation.AppState.Select;
-        }
+
+        SceneInformation.ApplicationState = SceneInformation.AppState.Select;
+
     }
 
     void RoadMode()
@@ -155,11 +154,25 @@ public class UI_Manager : MonoBehaviour
             panel.SetActive(false);
         }
         toolPanels[(int)Modes.roads].SetActive(true);
+
+        SceneInformation.ApplicationState = SceneInformation.AppState.RoadEdit;
+    }
+
+    void ScatterMode()
+    {
+        foreach (GameObject panel in toolPanels)
+        {
+            panel.SetActive(false);
+        }
+        toolPanels[(int)Modes.scatter].SetActive(true);
+
+
+            SceneInformation.ApplicationState = SceneInformation.AppState.Scatter;
+
     }
 
     void GoToViewMode()
     {
-        inViewMode= true;
         workPanel.SetActive(false);
         viewPanel.SetActive(true);
     }
