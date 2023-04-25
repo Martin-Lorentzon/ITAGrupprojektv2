@@ -15,18 +15,32 @@ public class GetModel : MonoBehaviour
         {
             MeshFilter meshFilter = GetComponent<MeshFilter>();
             MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-            Mesh mesh;
-            string name;
+            Mesh mesh;      // Mesh
+            string name;    // Not used for anything
 
+            // Paste Mesh Data
             CL3D.PasteModel(clipboard, out mesh, out name);
 
+            // Update Mesh Filter
             meshFilter.mesh = mesh;
             meshFilter.mesh.RecalculateNormals();
             meshFilter.mesh.RecalculateBounds();
 
+            // Set Material
             meshRenderer.material = material;
 
-            gameObject.transform.localScale = new Vector3(1f, 1f, 1f) * 0.1f;
+            // Update Mesh Collider
+            MeshCollider meshCollider;
+            try
+            {
+                meshCollider = GetComponent<MeshCollider>();
+                Destroy(meshCollider);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            meshCollider = gameObject.AddComponent<MeshCollider>();
         }
     }
 }

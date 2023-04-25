@@ -34,6 +34,12 @@ class CL3D_Properties(bpy.types.PropertyGroup):
         default="BLENDER"
     )
     
+    target_scale: bpy.props.FloatVectorProperty(
+        name="Target Scale",
+        default=(1.0, 1.0, 1.0),
+        subtype='XYZ'
+    )
+    
     metadata : bpy.props.StringProperty(name="Metadata", default="")
 
 # ------------------------------------------------------------------------
@@ -88,6 +94,12 @@ class CL3D_Panel(bpy.types.Panel):
                 box = row.box()
                 box.label(icon = "OUTLINER_OB_LIGHT", text = "Mesh will be triangulated")
         
+        panel_col.label(text = "Target Scale")
+        scale_col = panel_col.column(align=True)
+        scale_col.prop(my_props, "target_scale", index=0, text="X")
+        scale_col.prop(my_props, "target_scale", index=1, text="Y")
+        scale_col.prop(my_props, "target_scale", index=2, text="Z")
+        
 
 # ------------------------------------------------------------------------
 #    Functions
@@ -117,6 +129,7 @@ class CL3D_Copy(bpy.types.Operator):
     def execute(self, context):
         my_props = context.scene.cl3d_props     # Properties
         target_space = my_props.target_space
+        target_scale = my_props.target_scale
         
         # Get the active object
         obj = bpy.context.view_layer.objects.active
@@ -125,6 +138,13 @@ class CL3D_Copy(bpy.types.Operator):
         # Create a BMesh from the mesh data
         bm = bmesh.new()
         bm.from_mesh(mesh)
+        
+        bmesh.ops.scale(
+            bm,
+            vec=target_scale,        # Scale factor for each axis
+            space=obj.matrix_world,     # Transformation matrix
+            verts=bm.verts,             # Optional list of vertices to scale
+        )
         
         # Triangulate the BMesh if necessary
         if mesh_only_triangles(mesh) == False:
