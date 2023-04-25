@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - X
+  - Y
+  - Z
+  - Road
+  - Road Point
+  - Plane
+  - ScatterObject
   layers:
   - Default
   - TransparentFX
@@ -21,6 +28,8 @@ TagManager:
   - 
   - 
   - 
+  - Arrow Gizmo
+  - Mouse Trap
   - 
   - 
   - 
@@ -28,10 +37,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Scene Asset
+  - Ground
   - 
   - 
   - 
