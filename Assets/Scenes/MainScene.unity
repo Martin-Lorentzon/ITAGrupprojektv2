@@ -1040,7 +1040,7 @@ PrefabInstance:
     - target: {fileID: 2210883198192929212, guid: 3aa066e361c23a34f91aae1bcd1e75fb, type: 3}
       propertyPath: cameraTransform
       value: 
-      objectReference: {fileID: 318542638}
+      objectReference: {fileID: 2108671808}
     - target: {fileID: 2210883198192929212, guid: 3aa066e361c23a34f91aae1bcd1e75fb, type: 3}
       propertyPath: cliboardObjectPrefab
       value: 

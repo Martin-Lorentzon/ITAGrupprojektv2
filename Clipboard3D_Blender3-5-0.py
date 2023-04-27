@@ -168,21 +168,21 @@ class CL3D_Copy(bpy.types.Operator):
         
         
         data += "TRIANGLES" + "\n"
-        for tri in bm.faces:
+        for face in bm.faces:
             if target_space == "BLENDER":
-                for vert in tri.verts:
-                    data += str(vert.index) + " "
+                verts = [str(v.index) for v in face.verts]
             elif target_space == "UNITY":
-                for vert in reversed(tri.verts):
-                    data += str(vert.index) + " "
+                verts = [str(v.index) for v in reversed(face.verts)]
+            verts_str = " ".join(verts)
+            data += verts_str + " "
         
         # Trim the trailing space from the string
         data = data[:-1]
-        data += "\n" + "ENDTRIANGLES"
+        data += "ENDTRIANGLES" + "\n"
         
-        data += "\n" + "METADATA"
+        data += "METADATA" + "\n"
         
-        data += "\n" + "ENDMETADATA"
+        data += "ENDMETADATA"
         
         
         bpy.context.window_manager.clipboard = data
@@ -201,7 +201,7 @@ def register():
         bpy.utils.register_class(cls)
         
     bpy.types.Scene.cl3d_props = bpy.props.PointerProperty(type=CL3D_Properties)
-  
+
 
 def unregister():
     for cls in classes:
