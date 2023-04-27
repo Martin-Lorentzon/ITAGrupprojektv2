@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class ObjectHandler : MonoBehaviour
@@ -42,11 +43,17 @@ public class ObjectHandler : MonoBehaviour
 
     void Update()
     {
-        string clipboard = GUIUtility.systemCopyBuffer;
+        
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SceneManager.LoadScene("StreetViewScene");
+        }
+
         bool paste = Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V);
 
         if (paste)
         {
+            string clipboard = GUIUtility.systemCopyBuffer;
             if (clipboard.StartsWith("CL3D_KEY"))
             {
                 GameObject newObj = Instantiate(cliboardObjectPrefab, cameraTransform.position, Quaternion.identity);
@@ -54,12 +61,13 @@ public class ObjectHandler : MonoBehaviour
                 MeshFilter meshFilter = newObj.GetComponent<MeshFilter>();
                 MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
 
-                Mesh mesh;      // Mesh
+                Mesh mesh = new Mesh();      // Mesh
                 string name;    // Not used for anything
+                
 
                 // Paste Mesh Data
-                CL3D.PasteModel(clipboard, out mesh, out name);
-
+                CL3D.PasteModel(clipboard, true, out mesh, out name);
+                
                 // Update Mesh Filter
                 meshFilter.mesh = mesh;
                 meshFilter.mesh.RecalculateNormals();
