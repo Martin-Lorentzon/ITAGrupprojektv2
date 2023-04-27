@@ -1098,6 +1098,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4558863980920959228, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863980993138152, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863981150365294, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863981255610353, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863981355082734, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863981453586239, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863981623187114, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863981742512837, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982012226557, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982196473061, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982377547036, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982431878175, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982487901187, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982490497529, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982511144482, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 4558863982546644649, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
       propertyPath: m_Name
       value: Reflection Probe Group
@@ -1145,6 +1205,10 @@ PrefabInstance:
     - target: {fileID: 4558863982546644654, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558863982806876520, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
