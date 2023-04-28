@@ -22,6 +22,8 @@ public class AppManager : MonoBehaviour
             SceneInformation.ApplicationState = SceneInformation.AppState.Placement;
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SceneInformation.ApplicationState = SceneInformation.AppState.RoadEdit;
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            SceneInformation.ApplicationState = SceneInformation.AppState.Scatter;
 
         //Debug.Log(SceneInformation.ApplicationState);
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3897125912257012490}
   - component: {fileID: 1292999386499667904}
   - component: {fileID: 445924219185202977}
+  - component: {fileID: 6502640286737433973}
   m_Layer: 25
   m_Name: ChalmersHouseVer1
   m_TagString: Untagged
@@ -98,3 +99,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4975432878652479192, guid: 5687eb310a4ab144b860e815615deedc, type: 3}
+--- !u!114 &6502640286737433973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788504212495660565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
