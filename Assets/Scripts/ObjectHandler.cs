@@ -13,6 +13,8 @@ public class ObjectHandler : MonoBehaviour
     private LayerMask sceneLayer;
     private LayerMask blockLayer;
 
+    public TimeSlider timeSlider;
+
     void Awake()
     {
         if (SceneInformation.selectedObjects == null)
@@ -33,6 +35,8 @@ public class ObjectHandler : MonoBehaviour
         SceneInformation.moveSnapIncrement = 0f;
         SceneInformation.rotationSnapIncrement = 11.25f;
         SceneInformation.snapSpeed = 60f;
+
+        timeSlider = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
     }
 
     void Update()
@@ -164,7 +168,10 @@ public class ObjectHandler : MonoBehaviour
                     SceneInformation.selectedObjects.Remove(obj);
                 else
                     SceneInformation.selectedObjects.Add(obj);
+                    timeSlider.printCurrentNumber(obj);
                 break;
+
+                
         }
     }
 
