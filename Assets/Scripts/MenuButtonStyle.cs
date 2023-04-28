@@ -25,7 +25,14 @@ public class MenuButtonStyle : MonoBehaviour, ISelectHandler
         buttonSelectColor = colorBlock.selectedColor;
     }
 
-
+    void Awake()
+    {
+        button = gameObject.GetComponent<Button>();
+        uiManager = GameObject.Find("UI Manager").GetComponent<UI_Manager>();
+        colorBlock = button.colors;
+        buttonBaseColor = colorBlock.normalColor;
+        buttonSelectColor = colorBlock.selectedColor;
+    }
 
     public void OnSelect(BaseEventData eventData)
     {

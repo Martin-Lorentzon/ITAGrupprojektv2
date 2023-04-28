@@ -25,7 +25,16 @@ public class ButtonStyle : MonoBehaviour, ISelectHandler /*IDeselectHandler */
         buttonSelectColor = colorBlock.selectedColor;
     }
 
-
+    void Awake()
+    {
+        button = gameObject.GetComponent<Button>();
+        icon = gameObject.transform.Find("Image").gameObject.GetComponent<Image>();
+        baseColor = icon.color;
+        uiManager = GameObject.Find("UI Manager").GetComponent<UI_Manager>();
+        colorBlock = button.colors;
+        buttonBaseColor = colorBlock.normalColor;
+        buttonSelectColor = colorBlock.selectedColor;
+    }
 
     public void OnSelect(BaseEventData eventData)
     {
