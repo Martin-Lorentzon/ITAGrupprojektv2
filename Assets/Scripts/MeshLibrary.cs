@@ -76,7 +76,6 @@ public class MeshLibrary : MonoBehaviour
     {
         for (int i = 0; i < prefabs.Count; i++)
         {
-            Debug.Log("thumbnail");
             GameObject buttonInstance = Instantiate(button);
             buttons.Add(buttonInstance);
             buttonInstance.GetComponent<RectTransform>().position = pos;
@@ -92,7 +91,27 @@ public class MeshLibrary : MonoBehaviour
 
         }
     }
-    
+
+    public void AddThumbnail(GameObject _tex = null)
+    {
+        for (int i = 0; i < SceneInformation.selectedObjects.Count; i++)
+        {
+            GameObject buttonInstance = Instantiate(button);
+            buttons.Add(buttonInstance);
+            buttonInstance.GetComponent<RectTransform>().position = pos;
+            _tex.transform.SetParent(buttonInstance.transform);
+            _tex.transform.localPosition = Vector3.zero;
+
+            thumbnails.Add(null);
+            sprites.Add(null);
+            thumbnails[i] = AssetPreview.GetAssetPreview(prefabs[i]);
+            sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 128f, 128f), new Vector2(0f, 0f));
+            buttons[i].GetComponent<Image>().sprite = sprites[i];
+
+            pos = pos + new Vector3(70, 0, 0);
+            buttonInstance.transform.SetParent(UIpanel.transform);
+        }
+    }
 
     // sätter material vid instansiering. Sätter material med namnet glass till ett eget material
     public void SetMaterial()
@@ -136,6 +155,4 @@ public class MeshLibrary : MonoBehaviour
         originPointOffset = prefab.GetComponent<MeshFilter>().sharedMesh.bounds.size.y / 2;
 
     }
-
-
 }
