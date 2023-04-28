@@ -9,10 +9,12 @@ public class GetModel : MonoBehaviour
 
     void Update()
     {
-        string clipboard = GUIUtility.systemCopyBuffer;
+        
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            string clipboard = GUIUtility.systemCopyBuffer;
+
             MeshFilter meshFilter = GetComponent<MeshFilter>();
             MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
             Mesh mesh;      // Mesh
@@ -41,6 +43,13 @@ public class GetModel : MonoBehaviour
 
             }
             meshCollider = gameObject.AddComponent<MeshCollider>();
+            /*
+            
+            string vtx_data = CL3D.FetchData(clipboard, "VERTICES", "ENDVERTICES");
+            string tri_data = CL3D.FetchData(clipboard, "TRIANGLES", "ENDTRIANGLES");
+            Debug.Log(CL3D.ParseVertices(vtx_data));
+            //Debug.Log(CL3D.ParseIndices(tri_data));
+            */
         }
     }
 }

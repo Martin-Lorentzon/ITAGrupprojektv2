@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class CL3D : MonoBehaviour
@@ -51,16 +52,23 @@ public class CL3D : MonoBehaviour
     public static Vector3[] ParseVertices(string str)
     {
         string[] rows = str.Split('\n');
-        Vector3[] vectorArray = new Vector3[rows.Length];
 
+        foreach(string s in rows)
+        {
+            Debug.Log(s);
+        }
+        
+        Vector3[] vectorArray = new Vector3[rows.Length];
+        
         for (int i = 0; i < rows.Length; i++)
         {
             string[] values = rows[i].Split(' ');
-            float x = float.Parse(values[0]);
-            float y = float.Parse(values[1]);
-            float z = float.Parse(values[2]);
+            float x = float.Parse(values[0], CultureInfo.InvariantCulture);
+            float y = float.Parse(values[1], CultureInfo.InvariantCulture);
+            float z = float.Parse(values[2], CultureInfo.InvariantCulture);
             vectorArray[i] = new Vector3(x, y, z);
         }
+        
         return vectorArray;
     }
 }

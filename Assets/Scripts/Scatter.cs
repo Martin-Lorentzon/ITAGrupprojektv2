@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 
@@ -26,20 +27,23 @@ public class Scatter : MonoBehaviour
     public Slider densitySlider;
     public Slider brushSizeSlider;
 
-
+    public Material decalMat;
+    public Color scatterColor;
+    public Color eraseColor;
 
     public Button scatterPlacementButton;
     public Button singelPlacementButton;
     public Button eraseButton;
     List<GameObject> removeList;
+    public GameObject defaultActiveSettingsButton;
 
-    enum Modes { scatter, singlePlacement, erase}
+    enum Modes { scatter, singlePlacement, erase, idle}
     int mode;
 
 
     void Start()
     {
-
+        decalMat= GetComponent<DecalProjector>().material;
         activeModel = models[0];
         brushSize = brushSizeSlider.value;
         density = densitySlider.value;  
@@ -75,6 +79,12 @@ public class Scatter : MonoBehaviour
     {
         mode = (int)Modes.erase;
     }
+    void SetIdle()
+    {
+
+        decal.enabled = false;
+        mode = (int)Modes.scatter;
+    }
  
         
     void SetBrushSize()
@@ -95,16 +105,20 @@ public class Scatter : MonoBehaviour
 
         if (SceneInformation.ApplicationState == SceneInformation.AppState.Scatter)
         {
+            decal.enabled = true;
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
             Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mousePosition);
 
             RaycastHit hit;
             Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f);
             gameObject.transform.position = hit.point;
+            
 
             switch (mode)
             {
                 case (int)Modes.scatter:
+
+                    decalMat.SetColor("_Color", scatterColor);
           
                     float opacity = Mathf.Lerp(0.05f, 0.95f, density);
                     gameObject.transform.localScale = new Vector3(brushSize, brushSize, brushSize) * 2;
@@ -130,6 +144,7 @@ public class Scatter : MonoBehaviour
                    
                 case (int)Modes.erase:                  
                     decal.fadeFactor = 0.95f;
+                    decalMat.SetColor("_Color", eraseColor);
                     gameObject.transform.localScale = new Vector3(brushSize, brushSize, brushSize) * 2;
 
                     if (Input.GetMouseButton(0))
@@ -156,6 +171,10 @@ public class Scatter : MonoBehaviour
             }
                                
         }
+        else
+        {
+            SetIdle();
+        }
     }
 
 
@@ -169,10 +188,18 @@ public class Scatter : MonoBehaviour
 
 
         float pivotOffset = activeModel.GetComponent<MeshRenderer>().bounds.size.y / 2;
+        
+        if(activeModel.tag == "BottomOrigin")
+        {
+            pivotOffset = 0f;
+        }
+
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mousePosition);
         float randomX = UnityEngine.Random.Range(-brushSize, brushSize);
         float randomZ = UnityEngine.Random.Range(-brushSize, brushSize);
+        float randomScale = UnityEngine.Random.Range(0.75f, 1.25f); 
+        float randomRotation = UnityEngine.Random.Range(1,359);
 
         RaycastHit hit;
         Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f);
@@ -180,7 +207,12 @@ public class Scatter : MonoBehaviour
         {
             if (hit.collider.tag == "Plane")
             {
-                GameObject instance = Instantiate(activeModel, hit.point + new Vector3(randomX, pivotOffset, randomZ), hit.collider.transform.rotation);
+                GameObject instance = Instantiate(activeModel, hit.point, hit.collider.transform.rotation);
+                Vector3 instanceScale = instance.transform.localScale;
+                instance.transform.localScale= instanceScale * randomScale;
+                instance.transform.position = hit.point + new Vector3(randomX, pivotOffset, randomZ);
+                instance.transform.eulerAngles = new Vector3(instance.transform.eulerAngles.x, randomRotation, instance.transform.eulerAngles.z);
+
                 instance.tag = "ScatterObject";
             }
         }

@@ -11,6 +11,7 @@ TagManager:
   - Road Point
   - Plane
   - ScatterObject
+  - BottomOrigin
   layers:
   - Default
   - TransparentFX
