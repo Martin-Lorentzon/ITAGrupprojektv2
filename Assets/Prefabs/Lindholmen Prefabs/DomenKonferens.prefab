@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7715063599005772454}
   - component: {fileID: 5545512507388059244}
   - component: {fileID: 6571890537604087392}
+  - component: {fileID: 4130385547816974725}
   m_Layer: 25
   m_Name: DomenKonferens
   m_TagString: Untagged
@@ -100,3 +101,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8724309726266893113, guid: c9053186b0e420649b47977fd1cd10ad, type: 3}
+--- !u!114 &4130385547816974725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338080138998480825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

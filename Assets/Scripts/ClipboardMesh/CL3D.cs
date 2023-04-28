@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class CL3D : MonoBehaviour
 {
-    public static void PasteModel(string str, out Mesh mesh, out string name)
+    public static void PasteModel(string str, bool UInt32, out Mesh mesh, out string name)
     {
         string vertexData = FetchData(str, "VERTICES", "ENDVERTICES");
         string triangleData = FetchData(str, "TRIANGLES", "ENDTRIANGLES");
 
         mesh = new Mesh();
+        if (UInt32)
+            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+
         Vector3[] vertices = ParseVertices(vertexData);
         int[] triangles = ParseIndices(triangleData);
 
