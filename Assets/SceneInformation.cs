@@ -9,6 +9,8 @@ public class SceneInformation : MonoBehaviour
 
     public static List<GameObject> selectedObjects;
 
+    public static Vector3 focusPoint;
+
     public static List<GameObject> highlightedObjects;
     public static List<GameObject> markers;
 

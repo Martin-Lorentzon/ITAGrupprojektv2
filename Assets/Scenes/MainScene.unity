@@ -849,6 +849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road Editor
       objectReference: {fileID: 0}
+    - target: {fileID: 613859534231513669, guid: 0a7f6183d5060f34592b414c7f400d4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 613859534231513675, guid: 0a7f6183d5060f34592b414c7f400d4f, type: 3}
       propertyPath: m_RootOrder
       value: 12

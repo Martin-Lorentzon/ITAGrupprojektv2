@@ -15,15 +15,30 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
+    private bool isStart;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        isStart = true;
+        groundMask = LayerMask.GetMask("Ground", "Scene Asset");
+        Debug.Log(SceneInformation.focusPoint);
+
+
+
+        transform.position = SceneInformation.focusPoint;
+
+        isStart = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (isStart)
+            return;
+
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)

@@ -43,7 +43,9 @@ public class ObjectHandler : MonoBehaviour
 
     void Update()
     {
-        
+        SceneInformation.focusPoint = cameraTransform.position + (Vector3.up * 0.2f);
+
+
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             SceneManager.LoadScene("StreetViewScene");

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FPSCamera : MonoBehaviour
 {
@@ -16,11 +17,18 @@ public class FPSCamera : MonoBehaviour
         //hide and lock the cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+            SceneManager.LoadScene("MainScene");
+
+
         // get mouse input
         float inputX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float inputY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
