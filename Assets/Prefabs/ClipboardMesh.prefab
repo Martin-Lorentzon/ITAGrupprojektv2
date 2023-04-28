@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3288889845646826512}
   - component: {fileID: 3288889845646826513}
   - component: {fileID: 3288889845646826518}
-  - component: {fileID: 3288889845646826515}
-  m_Layer: 0
+  - component: {fileID: 8470459715762064196}
+  m_Layer: 25
   m_Name: ClipboardMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f1fdacee161fdb042ae6c8cb08883c91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3288889845646826515
+--- !u!114 &8470459715762064196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,7 +93,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3288889845646826516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fa1f9a84ef31684b8d606591806b581, type: 3}
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: f1fdacee161fdb042ae6c8cb08883c91, type: 2}

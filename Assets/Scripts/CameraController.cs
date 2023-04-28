@@ -59,7 +59,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
             pivotGizmoMeshRenderer.enabled = !pivotGizmoMeshRenderer.enabled;   // Toggle Pivot Gizmo
 
-        float threshold = Screen.height * 0.05f;    // Distance (in pixels) to the screen edge where the mouse starts moving the camera
+        float threshold = 2;    // Distance (in pixels) to the screen edge where the mouse starts moving the camera
         Vector3 moveVector = Vector3.zero;
         Vector2 lookVector = Vector2.zero;
 

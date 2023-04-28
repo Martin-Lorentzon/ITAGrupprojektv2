@@ -3,12 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class ObjectHandler : MonoBehaviour
 {
+    public Transform cameraTransform;
 
     public GameObject translateGizmoPrefab;
     private GameObject translateGizmoInstance;
+
+
+    public GameObject cliboardObjectPrefab;
 
     private LayerMask sceneLayer;
     private LayerMask blockLayer;
@@ -21,7 +27,7 @@ public class ObjectHandler : MonoBehaviour
             SceneInformation.selectedObjects = new List<GameObject>();
 
         // Scene Layer contains what is selectable
-        sceneLayer = LayerMask.GetMask("Scene Asset");
+        sceneLayer = LayerMask.GetMask("Scene Asset", "Outlined");
 
         // Block Layer contains what the user expects to block selections, usually user interface
         blockLayer = LayerMask.GetMask("Arrow Gizmo");
@@ -41,6 +47,45 @@ public class ObjectHandler : MonoBehaviour
 
     void Update()
     {
+        SceneInformation.focusPoint = cameraTransform.position + (Vector3.up * 0.2f);
+
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SceneManager.LoadScene("StreetViewScene");
+        }
+
+        bool paste = Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V);
+
+        if (paste)
+        {
+            string clipboard = GUIUtility.systemCopyBuffer;
+            if (clipboard.StartsWith("CL3D_KEY"))
+            {
+                GameObject newObj = Instantiate(cliboardObjectPrefab, cameraTransform.position, Quaternion.identity);
+
+                MeshFilter meshFilter = newObj.GetComponent<MeshFilter>();
+                MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
+
+                Mesh mesh = new Mesh();      // Mesh
+                string name;    // Not used for anything
+                
+
+                // Paste Mesh Data
+                CL3D.PasteModel(clipboard, true, out mesh, out name);
+                
+                // Update Mesh Filter
+                meshFilter.mesh = mesh;
+                meshFilter.mesh.RecalculateNormals();
+                meshFilter.mesh.RecalculateBounds();
+
+                // Add Mesh Collider
+                MeshCollider meshCollider = newObj.AddComponent<MeshCollider>();
+                meshCollider.sharedMesh = null;
+                meshCollider.sharedMesh = mesh;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
         {
             List<GameObject> removeList = new List<GameObject>();
@@ -187,13 +232,15 @@ public class ObjectHandler : MonoBehaviour
 
             if (SceneInformation.selectedObjects.Contains(obj))
             {
-                try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
-                catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                obj.layer = 28;
+                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
+                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
             }
             else
             {
-                try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
-                catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                obj.layer = 25;
+                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
+                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
             }
         }
 

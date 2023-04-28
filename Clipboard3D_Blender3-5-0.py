@@ -65,15 +65,25 @@ class CL3D_Panel(bpy.types.Panel):
             obj = bpy.context.view_layer.objects.active
             mesh = obj.data
         
+        
         # Column
         panel_col = layout.column()
         
-        # Space Box Column
+        
+        # Target Coordinate Space Column
         space_box = panel_col.box()
         space_col = space_box.column()
         
         space_col.label(text = "Target Coordinate Space")
         space_col.prop(my_props, "target_space", expand = True)
+        
+        
+        # Target Scale Column
+        panel_col.label(text = "Target Scale")
+        scale_col = panel_col.column(align=True)
+        scale_col.prop(my_props, "target_scale", index=0, text="X")
+        scale_col.prop(my_props, "target_scale", index=1, text="Y")
+        scale_col.prop(my_props, "target_scale", index=2, text="Z")
         
         
         # Copy Model Operator
@@ -94,13 +104,7 @@ class CL3D_Panel(bpy.types.Panel):
                 box = row.box()
                 box.label(icon = "OUTLINER_OB_LIGHT", text = "Mesh will be triangulated")
         
-        panel_col.label(text = "Target Scale")
-        scale_col = panel_col.column(align=True)
-        scale_col.prop(my_props, "target_scale", index=0, text="X")
-        scale_col.prop(my_props, "target_scale", index=1, text="Y")
-        scale_col.prop(my_props, "target_scale", index=2, text="Z")
         
-
 # ------------------------------------------------------------------------
 #    Functions
 # ------------------------------------------------------------------------
@@ -141,48 +145,44 @@ class CL3D_Copy(bpy.types.Operator):
         
         bmesh.ops.scale(
             bm,
-            vec=target_scale,        # Scale factor for each axis
+            vec=target_scale,           # Scale factor for each axis
             space=obj.matrix_world,     # Transformation matrix
             verts=bm.verts,             # Optional list of vertices to scale
         )
         
         # Triangulate the BMesh if necessary
-        if mesh_only_triangles(mesh) == False:
+        if not mesh_only_triangles(mesh):
             bmesh.ops.triangulate(bm, faces=bm.faces[:])
         
         
-        data = "CL3D_KEY"
+        data = "CL3D_KEY" + "\n"
         
-        data += "\n" + "VERTICES"
-        for vert in bm.verts:
+        data += "VERTICES" + "\n"
+        if target_space == "BLENDER":
+            for vert in bm.verts:
+                data += f"{vert.co.x} {vert.co.y} {vert.co.z}\n"
+        if target_space == "UNITY":
+            for vert in bm.verts:
+                data += f"{vert.co.x} {vert.co.z} {vert.co.y}\n"
+        data += "ENDVERTICES" + "\n"
+        
+        
+        data += "TRIANGLES" + "\n"
+        for face in bm.faces:
             if target_space == "BLENDER":
-                data += "\n" + str(vert.co.x) + " " + str(vert.co.y) + " " + str(vert.co.z)
+                verts = [str(v.index) for v in face.verts]
             elif target_space == "UNITY":
-                point = np.array([vert.co.x, vert.co.y, vert.co.z])
-                transform_matrix = np.array([[1, 0, 0], [0, 0, 1], [0, 1, 0]])
-                new_point = transform_matrix.dot(point)
-                data += "\n" + str(new_point[0]) + " " + str(new_point[1]) + " " + str(new_point[2])
-        
-        data += "\n" + "ENDVERTICES"
-        
-        
-        data += "\n" + "TRIANGLES"
-        data += "\n"
-        for tri in bm.faces:
-            if target_space == "BLENDER":
-                for vert in tri.verts:
-                    data += str(vert.index) + " "
-            elif target_space == "UNITY":
-                for vert in reversed(tri.verts):
-                    data += str(vert.index) + " "
+                verts = [str(v.index) for v in reversed(face.verts)]
+            verts_str = " ".join(verts)
+            data += verts_str + " "
         
         # Trim the trailing space from the string
         data = data[:-1]
-        data += "\n" + "ENDTRIANGLES"
+        data += "ENDTRIANGLES" + "\n"
         
-        data += "\n" + "METADATA"
+        data += "METADATA" + "\n"
         
-        data += "\n" + "ENDMETADATA"
+        data += "ENDMETADATA"
         
         
         bpy.context.window_manager.clipboard = data
@@ -201,7 +201,7 @@ def register():
         bpy.utils.register_class(cls)
         
     bpy.types.Scene.cl3d_props = bpy.props.PointerProperty(type=CL3D_Properties)
-  
+
 
 def unregister():
     for cls in classes:
