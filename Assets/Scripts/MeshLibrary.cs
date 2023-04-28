@@ -92,15 +92,14 @@ public class MeshLibrary : MonoBehaviour
         }
     }
 
-    public void AddThumbnail(GameObject _tex = null)
+    public void AddThumbnail()
     {
         for (int i = 0; i < SceneInformation.selectedObjects.Count; i++)
         {
+            Debug.Log("making button");
             GameObject buttonInstance = Instantiate(button);
             buttons.Add(buttonInstance);
             buttonInstance.GetComponent<RectTransform>().position = pos;
-            _tex.transform.SetParent(buttonInstance.transform);
-            _tex.transform.localPosition = Vector3.zero;
 
             thumbnails.Add(null);
             sprites.Add(null);
@@ -110,6 +109,7 @@ public class MeshLibrary : MonoBehaviour
 
             pos = pos + new Vector3(70, 0, 0);
             buttonInstance.transform.SetParent(UIpanel.transform);
+
         }
     }
 

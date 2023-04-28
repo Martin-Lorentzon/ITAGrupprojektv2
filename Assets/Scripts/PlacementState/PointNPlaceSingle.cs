@@ -102,6 +102,7 @@ public class PointNPlaceSingle : MonoBehaviour
             something = null;
 
             SceneInformation.ApplicationState = SceneInformation.AppState.Select;
+            Debug.Log(SceneInformation.ApplicationState);
             return true;
         }
         return false;
