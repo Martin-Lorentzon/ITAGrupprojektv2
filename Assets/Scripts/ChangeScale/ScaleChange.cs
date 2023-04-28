@@ -8,8 +8,9 @@ public class ScaleChange : MonoBehaviour
     [SerializeField]CameraController camCon;
 
     void Start()
-    {
-        
+    {        
+        if (camCon == null)
+            camCon = GetComponent<CameraController>();
     }
 
     void Update()

@@ -9,6 +9,8 @@ public class MeshButton : MonoBehaviour
     public MeshLibrary meshLibrary;
     private int buttonIdx;
 
+    public int GetButtonIdx { get { return buttonIdx; } }
+
     void Start()
     {
         meshLibrary = GameObject.Find("MeshChanger").GetComponent<MeshLibrary>();
@@ -26,5 +28,4 @@ public class MeshButton : MonoBehaviour
     {
         meshLibrary.ChangeMesh(buttonIdx);
     }
-
 }
