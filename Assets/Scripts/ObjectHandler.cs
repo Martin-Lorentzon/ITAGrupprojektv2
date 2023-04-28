@@ -19,7 +19,7 @@ public class ObjectHandler : MonoBehaviour
             SceneInformation.selectedObjects = new List<GameObject>();
 
         // Scene Layer contains what is selectable
-        sceneLayer = LayerMask.GetMask("Scene Asset");
+        sceneLayer = LayerMask.GetMask("Scene Asset", "Outlined");
 
         // Block Layer contains what the user expects to block selections, usually user interface
         blockLayer = LayerMask.GetMask("Arrow Gizmo");
@@ -180,13 +180,15 @@ public class ObjectHandler : MonoBehaviour
 
             if (SceneInformation.selectedObjects.Contains(obj))
             {
-                try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
-                catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                obj.layer = 28;
+                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
+                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
             }
             else
             {
-                try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
-                catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                obj.layer = 25;
+                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
+                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
             }
         }
 
