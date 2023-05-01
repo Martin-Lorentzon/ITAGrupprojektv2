@@ -39,6 +39,7 @@ public class Scatter : MonoBehaviour
 
     enum Modes { scatter, singlePlacement, erase, idle}
     int mode;
+    int sceneAssetLayer;
 
 
     void Start()
@@ -54,6 +55,7 @@ public class Scatter : MonoBehaviour
         scatterPlacementButton.onClick.AddListener(SetScatterPlacement);
         singelPlacementButton.onClick.AddListener(SetSinglePlacement);
         eraseButton.onClick.AddListener(SetErase);
+        sceneAssetLayer = LayerMask.NameToLayer("Scene Asset");
 
 
         //for (int i = 0; models.Count > i; i++)
@@ -137,8 +139,9 @@ public class Scatter : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         float pivotOffset = activeModel.GetComponent<MeshRenderer>().bounds.size.y / 2;
-                        GameObject instance = Instantiate(activeModel, hit.point + new Vector3(0, pivotOffset, 0), hit.collider.transform.rotation);
+                        GameObject instance = Instantiate(activeModel, hit.point, hit.collider.transform.rotation);
                         instance.tag = "ScatterObject";
+                        instance.layer = sceneAssetLayer;
                     }
                     break;
                    
@@ -189,10 +192,10 @@ public class Scatter : MonoBehaviour
 
         float pivotOffset = activeModel.GetComponent<MeshRenderer>().bounds.size.y / 2;
         
-        if(activeModel.tag == "BottomOrigin")
-        {
-            pivotOffset = 0f;
-        }
+        //if(activeModel.tag == "BottomOrigin")
+        //{
+        //    pivotOffset = 0f;
+        //}
 
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mousePosition);
@@ -210,10 +213,15 @@ public class Scatter : MonoBehaviour
                 GameObject instance = Instantiate(activeModel, hit.point, hit.collider.transform.rotation);
                 Vector3 instanceScale = instance.transform.localScale;
                 instance.transform.localScale= instanceScale * randomScale;
-                instance.transform.position = hit.point + new Vector3(randomX, pivotOffset, randomZ);
+                instance.transform.position = hit.point + new Vector3(randomX, 1, randomZ);
+                Vector3 pos = instance.transform.position;
+                RaycastHit downHit;
+                Physics.Raycast(pos, Vector3.down, out downHit, 100f);
+                instance.transform.position = downHit.point;
                 instance.transform.eulerAngles = new Vector3(instance.transform.eulerAngles.x, randomRotation, instance.transform.eulerAngles.z);
 
                 instance.tag = "ScatterObject";
+                instance.layer = sceneAssetLayer;
             }
         }
     }
