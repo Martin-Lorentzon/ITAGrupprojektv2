@@ -36,7 +36,7 @@ public class UI_Manager : MonoBehaviour
     [Header("Others (do not set in inspector)")]
     public Image lightsIcon;
 
-    enum Modes {models, materials, roads, scatter};
+    enum Modes {models, materials, roads, scatter, terrain};
     enum Settings { roads, numTags };
 
     bool lightPanelOn = false;
@@ -62,6 +62,7 @@ public class UI_Manager : MonoBehaviour
         toolDrawerButtons[(int)Modes.materials].onClick.AddListener(delegate { MaterialMode(); });
         toolDrawerButtons[(int)Modes.roads].onClick.AddListener(delegate { RoadMode(); });
         toolDrawerButtons[(int)Modes.scatter].onClick.AddListener(delegate { ScatterMode(); });
+        toolDrawerButtons[(int)Modes.terrain].onClick.AddListener(delegate { TerrainMode(); });
         roadWidth.onValueChanged.AddListener(delegate { SetRoadWidth(); });
         addRoadButton.onClick.AddListener(delegate { RoadBuild(); });
         roadEditButton.onClick.AddListener(delegate { RoadEdit(); });
@@ -97,7 +98,8 @@ public class UI_Manager : MonoBehaviour
                     // show timeline tag settings if non-road object is selected and auto activate the input field 
                     settingsPanels[(int)Settings.roads].SetActive(false);
                     settingsPanels[(int)Settings.numTags].SetActive(true);
-                    timeSliderScript.userInput.ActivateInputField();
+                    //timeSliderScript.userInput.ActivateInputField();
+                                          
                 }
             }
 
@@ -247,6 +249,18 @@ public class UI_Manager : MonoBehaviour
         ToolButtonStyle toolButtonStyle = addRoadButton.gameObject.GetComponent<ToolButtonStyle>();
         toolButtonStyle.ManualSelect();
         
+    }
+
+    void TerrainMode()
+    {
+        foreach (GameObject panel in toolPanels)
+        {
+            panel.SetActive(false);
+        }
+        toolPanels[(int)Modes.terrain].SetActive(true);
+
+        SceneInformation.ApplicationState = SceneInformation.AppState.Select;
+
     }
 
     void RoadBuild()
