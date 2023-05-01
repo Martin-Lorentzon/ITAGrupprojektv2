@@ -27,7 +27,7 @@ public class RoadEditor : MonoBehaviour
     private GameObject newRoadSegment;
     private GameObject newRoadContainer;
 
-    private float roadHeight = 0.02f;
+    private float roadHeight = 0.1f;
 
     void Start()
     {
