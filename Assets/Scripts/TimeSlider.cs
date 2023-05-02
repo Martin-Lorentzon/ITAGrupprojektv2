@@ -25,6 +25,7 @@ public class TimeSlider : MonoBehaviour
         slider.onValueChanged.AddListener(delegate { SetVisibility(); });
         currentNumberText.text = "-";
         userInput.onSubmit.AddListener(delegate { SetTag(int.Parse(userInput.text)); });
+        //userInput.onValueChanged.AddListener(delegate { CheckInput(); });
         removeButton.GetComponent<Button>().onClick.AddListener( delegate { RemoveTag(); });
     }
 
@@ -204,4 +205,9 @@ public class TimeSlider : MonoBehaviour
                 pair.Key.SetActive(true);            
         }
     }
+
+    //void CheckInput()
+    //{
+    //    if (userInput.text. )
+    //}
 }

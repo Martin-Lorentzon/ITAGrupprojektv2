@@ -142,6 +142,18 @@ public class RoadSegment2 : MonoBehaviour
             newVertices[roadPoints.IndexOf(point)*2+1] = point.position - (point.right * roadWidth);
         }
 
+        for (int i = 0; i < newVertices.Length; i++)
+        {
+            Ray ray = new Ray(transform.TransformPoint(newVertices[i]) + Vector3.up * 1000f, Vector3.down);
+            RaycastHit groundHit;
+            LayerMask groundMask = LayerMask.GetMask("Ground");
+
+            if (Physics.Raycast(ray, out groundHit, Mathf.Infinity, groundMask))
+            {
+                newVertices[i].y = transform.InverseTransformPoint(groundHit.point).y + 0.1f;
+            }
+        }
+
         mesh.Clear(false);
         mesh.vertices = newVertices;
 

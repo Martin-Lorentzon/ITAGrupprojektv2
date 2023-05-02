@@ -45,44 +45,46 @@ public class ObjectHandler : MonoBehaviour
         timeSlider = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
     }
 
+    public void Paste()
+    {
+        string clipboard = GUIUtility.systemCopyBuffer;
+        GameObject newObj = Instantiate(cliboardObjectPrefab, cameraTransform.position, Quaternion.identity);
+
+        MeshFilter meshFilter = newObj.GetComponent<MeshFilter>();
+        MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
+
+        Mesh mesh = new Mesh();      // Mesh
+        string name;    // Not used for anything
+
+
+        // Paste Mesh Data
+        CL3D.PasteModel(clipboard, true, out mesh, out name);
+
+        // Update Mesh Filter
+        meshFilter.mesh = mesh;
+        meshFilter.mesh.RecalculateNormals();
+        meshFilter.mesh.RecalculateBounds();
+
+        // Add Mesh Collider
+        MeshCollider meshCollider = newObj.AddComponent<MeshCollider>();
+        meshCollider.sharedMesh = null;
+        meshCollider.sharedMesh = mesh;
+    }
+
     void Update()
     {
         SceneInformation.focusPoint = cameraTransform.position + (Vector3.up * 0.2f);
-
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            SceneManager.LoadScene("StreetViewScene");
-        }
 
         bool paste = Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V);
 
         if (paste)
         {
+
+
             string clipboard = GUIUtility.systemCopyBuffer;
             if (clipboard.StartsWith("CL3D_KEY"))
             {
-                GameObject newObj = Instantiate(cliboardObjectPrefab, cameraTransform.position, Quaternion.identity);
-
-                MeshFilter meshFilter = newObj.GetComponent<MeshFilter>();
-                MeshRenderer meshRenderer = newObj.GetComponent<MeshRenderer>();
-
-                Mesh mesh = new Mesh();      // Mesh
-                string name;    // Not used for anything
-                
-
-                // Paste Mesh Data
-                CL3D.PasteModel(clipboard, true, out mesh, out name);
-                
-                // Update Mesh Filter
-                meshFilter.mesh = mesh;
-                meshFilter.mesh.RecalculateNormals();
-                meshFilter.mesh.RecalculateBounds();
-
-                // Add Mesh Collider
-                MeshCollider meshCollider = newObj.AddComponent<MeshCollider>();
-                meshCollider.sharedMesh = null;
-                meshCollider.sharedMesh = mesh;
+                Paste();
             }
         }
 

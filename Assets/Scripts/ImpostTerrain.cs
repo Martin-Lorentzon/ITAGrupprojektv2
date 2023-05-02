@@ -10,7 +10,7 @@ public class ImpostTerrain : MonoBehaviour
     public bool platauEnabled;
     public float platauHeight = 0.05f;
 
-    private Terrain t;
+    public Terrain t;
     public TerrainData tData;
     float[,] heights;
 
@@ -49,6 +49,7 @@ public class ImpostTerrain : MonoBehaviour
         {
             UpdateMap(map.width + 0, map.height + 0);
         }
+        UpdateObjectPosition.UpdatePosition();
     }
 
     public void Import(Texture2D rMap)
