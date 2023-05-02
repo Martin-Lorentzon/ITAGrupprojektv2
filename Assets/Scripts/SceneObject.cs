@@ -27,7 +27,7 @@ public class SceneObject : MonoBehaviour
                 Vector3 roundPosition = Vector3.zero;
                 roundPosition.x = Mathf.Round(tempPosition.x / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;
                 roundPosition.y = Mathf.Round(tempPosition.y / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;
-                roundPosition.z = Mathf.Round(tempPosition.z / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;                
+                roundPosition.z = Mathf.Round(tempPosition.z / SceneInformation.moveSnapIncrement) * SceneInformation.moveSnapIncrement;
 
                 transform.position = Vector3.Lerp(transform.position, roundPosition, SceneInformation.snapSpeed * Time.deltaTime);
 

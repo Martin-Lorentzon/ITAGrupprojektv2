@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2933310418626398281}
   - component: {fileID: 1103875594329603203}
   - component: {fileID: 1770007702340063652}
-  - component: {fileID: 2738791923601121790}
   m_Layer: 25
   m_Name: SciencePark
   m_TagString: Untagged
@@ -99,15 +98,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4246055405612910614, guid: 12f91bb336489dc46ac390fe916fa40c, type: 3}
---- !u!114 &2738791923601121790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464018909724319062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

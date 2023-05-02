@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class TimeSlider : MonoBehaviour
 {
@@ -10,75 +9,45 @@ public class TimeSlider : MonoBehaviour
     public List<KeyValuePair<GameObject,int>> taggedObjects;
     int tagNum;
     int sliderMax;
-    public TMP_InputField userInput;
-    public TMP_Text currentNumberText;
-    public GameObject removeButton;
-    public TMP_Text slidertext;
-    
 
     void Start()
     {
-        
         tagNum = 0;
         taggedObjects = new List<KeyValuePair<GameObject,int>>();
         sliderMax = 1;
         slider.onValueChanged.AddListener(delegate { SetVisibility(); });
-        currentNumberText.text = "-";
-        userInput.onSubmit.AddListener(delegate { SetTag(int.Parse(userInput.text)); });
-        removeButton.GetComponent<Button>().onClick.AddListener( delegate { RemoveTag(); });
     }
 
-    
 
     void Update()
     {
-
-
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            tagNum = 7;
+            SetTag();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            tagNum= 8;
+            SetTag();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            tagNum = 9;
+            SetTag();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            RemoveTag();
+        }
     }
 
-    
-    public void printCurrentNumber(GameObject activeObject)
-    {
-        List<GameObject> existingKeys = new List<GameObject>();       
-
-        foreach (KeyValuePair<GameObject, int> pair in taggedObjects)
-            {
-                existingKeys.Add(pair.Key);
-            }
-
-        if (existingKeys.Contains(activeObject))
-        {
-
-                foreach (KeyValuePair<GameObject, int> pair in taggedObjects)
-                {
-                    if (pair.Key == activeObject)
-                    {
-                    currentNumberText.text = pair.Value.ToString();
-                         
-                    }
-                }
-
-        }
-        else
-        {
-            currentNumberText.text = "-";
-        }
-        existingKeys.Clear();
-        
-
-    }
 
     // makes a key value pair of the selected object(s) and an int representing in which phase they will be visible
     // if an object is already matched with an int this function will update the current int 
-    void SetTag(int tagNum) 
+    void SetTag() 
     {
-        if (tagNum <= 0) 
-        { 
-            RemoveTag();
-        }
-        else {
         List<GameObject> existingKeys = new List<GameObject>();
-
         List< KeyValuePair<GameObject, int>> removeList = new List<KeyValuePair<GameObject, int>>();
 
         foreach (KeyValuePair<GameObject, int> pair in taggedObjects)
@@ -105,15 +74,11 @@ public class TimeSlider : MonoBehaviour
             }
 
             taggedObjects.Add(new KeyValuePair<GameObject, int>(obj, tagNum));
-            printCurrentNumber(obj);
         }
 
-        
         existingKeys.Clear();
         removeList.Clear();
         SetSliderMax();
-         userInput.text= "";
-        }
     }
 
 
@@ -146,7 +111,6 @@ public class TimeSlider : MonoBehaviour
                 taggedObjects.Remove(pair);
             }
 
-            printCurrentNumber(obj);
         }
 
         existingKeys.Clear();
@@ -162,7 +126,7 @@ public class TimeSlider : MonoBehaviour
         {
             if(pair.Value > sliderMax)
             {
-                sliderMax = pair.Value;
+                sliderMax = pair.Value + 1;
             }
         }
 
@@ -179,7 +143,7 @@ public class TimeSlider : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, int> pair in taggedObjects)
         {
-            if (pair.Value > slider.value)
+            if (pair.Value >= slider.value)
             {
                 pair.Key.SetActive(false);
                 if (SceneInformation.selectedObjects.Contains(pair.Key))
@@ -192,16 +156,6 @@ public class TimeSlider : MonoBehaviour
                 pair.Key.SetActive(true);
             }
         }
-
-        slidertext.text = slider.value.ToString();
     }
     
-    public void SetAllVisible()
-    {
-        foreach (KeyValuePair<GameObject, int> pair in taggedObjects)
-        {
-           
-                pair.Key.SetActive(true);            
-        }
-    }
 }

@@ -217,7 +217,6 @@ GameObject:
   - component: {fileID: 7534763042785319539}
   - component: {fileID: 8282899543614071165}
   - component: {fileID: 7508729794287181483}
-  - component: {fileID: 1814888414987199232}
   m_Layer: 25
   m_Name: Road Segment
   m_TagString: Road
@@ -325,18 +324,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &1814888414987199232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2124903481341220296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2124903481447743939
 GameObject:
   m_ObjectHideFlags: 0

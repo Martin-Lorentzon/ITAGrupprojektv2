@@ -127,9 +127,9 @@ public class TranslateGizmo : MonoBehaviour
         lastMousePos = Input.mousePosition;
     }
 
+
     void Translate(string tag, Vector3 axis)
     {
-        
         // Screen to World space Ray
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -141,25 +141,12 @@ public class TranslateGizmo : MonoBehaviour
         {
             if (mouseTrapHit.transform.tag == tag)
             {
-                
-
                 currentPos = mouseTrapHit.point;
                 Vector3 distance = currentPos - previousPos;            // Get Distance
                 transform.position += Vector3.Scale(distance, axis);    // Move Gizmo by Distance
 
                 foreach (GameObject obj in SceneInformation.selectedObjects)
-                {
                     obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
-
-                    RaycastHit hit;
-                    if (Physics.Raycast(obj.transform.position + new Vector3(0,5000,0),Vector3.down, out hit, 10000, LayerMask.GetMask("Ground")))
-                    {                       
-                        if (tag != "Y")
-                        {
-                            obj.transform.position = new Vector3(obj.transform.position.x, hit.point.y, obj.transform.position.z);
-                        }
-                    }
-                }
 
                 previousPos = mouseTrapHit.point;
                 return;

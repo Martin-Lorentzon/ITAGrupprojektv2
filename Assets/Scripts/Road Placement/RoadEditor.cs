@@ -66,7 +66,6 @@ public class RoadEditor : MonoBehaviour
             {
                 newRoadSegment = Instantiate(roadSegment, hits[0].point, Quaternion.identity);
                 newRoadContainer = new GameObject("Road Container");
-                newRoadContainer.AddComponent<DontDestroyOnLoad>();
 
                 Transform anchor = newRoadSegment.transform.Find("Anchor").transform;
                 Transform controlPoint1 = newRoadSegment.transform.Find("Control Point").transform;

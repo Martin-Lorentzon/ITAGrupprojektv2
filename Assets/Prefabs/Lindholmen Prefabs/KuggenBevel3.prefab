@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8565878786467604875}
   - component: {fileID: 5838048400316325185}
   - component: {fileID: 5099622578915428192}
-  - component: {fileID: 2691426045792467136}
   m_Layer: 25
   m_Name: KuggenBevel3
   m_TagString: Untagged
@@ -101,15 +100,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8314571269056883277, guid: bcd1a6ee356af9246a4c40f06380fc3d, type: 3}
---- !u!114 &2691426045792467136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5333412488418163860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
