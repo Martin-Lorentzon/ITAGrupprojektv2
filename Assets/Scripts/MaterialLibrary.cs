@@ -16,9 +16,12 @@ public class MaterialLibrary : MonoBehaviour
    
         foreach(GameObject button in materialButtons)
         {
+            //int i = 0;
             MaterialButtons mb = button.GetComponent<MaterialButtons>();
-            mb.SetIdx();
-            
+            mb.SetIdx();   
+           //Color buttonColor = button.GetComponent<Color>();
+           // buttonColor = materials[i].GetColor("_BaseColor");
+           //     i++;
         }
     }
 
