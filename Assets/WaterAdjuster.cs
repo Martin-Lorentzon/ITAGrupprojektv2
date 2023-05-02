@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class WaterAdjuster : MonoBehaviour
 {
-
+    float ad;
+    float st;
     ImpostTerrain ip;
     private void Start()
     {
         ip = FindObjectOfType<ImpostTerrain>();
+        st = ip.strength;
+    }
+    public void Readjust()
+    {
+        st = ip.strength;
+        transform.position = new Vector3(0, (ad * st * 200) - 1.01f, 0);
     }
 
-    public void setHeight(float adjust)
+    public void SetHeight(float adjust)
     {
-        transform.position = new Vector3(0, (adjust * ip.strength *200) - 1.01f, 0);
+        ad = adjust;
+        transform.position = new Vector3(0, (ad * st *200) - 1.01f, 0);
     }
 }

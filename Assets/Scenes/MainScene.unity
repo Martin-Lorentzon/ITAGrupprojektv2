@@ -1237,7 +1237,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 444867316}
         m_TargetAssemblyTypeName: WaterAdjuster, Assembly-CSharp
-        m_MethodName: setHeight
+        m_MethodName: SetHeight
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2530,9 +2530,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7749190889125995871}
     - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7749190889125995871}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 444867316}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Readjust
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: WaterAdjuster, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032223320098075518, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6032223320319050002, guid: 4a15db3c6583ecd4ebd19dd5731374c5, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -3066,6 +3094,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 6340763397660816685, guid: 9b95aa9945388e541b3880a642c278ca, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4317b92f78e1f944f9ef601c03067605, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b95aa9945388e541b3880a642c278ca, type: 3}
 --- !u!114 &6931264827728377160 stripped
