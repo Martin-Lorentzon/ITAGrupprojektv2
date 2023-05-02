@@ -75,12 +75,6 @@ public class ObjectHandler : MonoBehaviour
     {
         SceneInformation.focusPoint = cameraTransform.position + (Vector3.up * 0.2f);
 
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            SceneManager.LoadScene("StreetViewScene");
-        }
-
         bool paste = Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V);
 
         if (paste)

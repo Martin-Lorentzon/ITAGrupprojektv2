@@ -16,6 +16,7 @@ public class AppManager : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SceneInformation.ApplicationState = SceneInformation.AppState.Select;
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -24,7 +25,7 @@ public class AppManager : MonoBehaviour
             SceneInformation.ApplicationState = SceneInformation.AppState.RoadEdit;
         if (Input.GetKeyDown(KeyCode.Alpha4))
             SceneInformation.ApplicationState = SceneInformation.AppState.Scatter;
-
+        */
         //Debug.Log(SceneInformation.ApplicationState);
     }
 }
