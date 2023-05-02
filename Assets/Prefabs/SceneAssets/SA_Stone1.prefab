@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5493334152554441146}
   - component: {fileID: 8904713620450469407}
   - component: {fileID: 6662814592656773845}
-  - component: {fileID: 5493334152554441145}
+  - component: {fileID: 6869197818188911908}
   m_Layer: 25
   m_Name: SA_Stone1
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5493334152554441145
+--- !u!64 &6869197818188911908
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
