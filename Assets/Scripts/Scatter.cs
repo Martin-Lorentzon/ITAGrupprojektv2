@@ -40,7 +40,9 @@ public class Scatter : MonoBehaviour
     enum Modes { scatter, singlePlacement, erase, idle}
     int mode;
     int sceneAssetLayer;
-
+    int groundLayer;
+    int UIandGround;
+    int UILayer;
 
     void Start()
     {
@@ -56,6 +58,9 @@ public class Scatter : MonoBehaviour
         singelPlacementButton.onClick.AddListener(SetSinglePlacement);
         eraseButton.onClick.AddListener(SetErase);
         sceneAssetLayer = LayerMask.NameToLayer("Scene Asset");
+        groundLayer = LayerMask.GetMask("Ground");
+
+
 
 
         //for (int i = 0; models.Count > i; i++)
@@ -112,7 +117,7 @@ public class Scatter : MonoBehaviour
             Vector3 mouseWorldPos = cam.ScreenToWorldPoint(mousePosition);
 
             RaycastHit hit;
-            Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f);
+            Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f, groundLayer);
             gameObject.transform.position = hit.point;
             
 
@@ -126,8 +131,9 @@ public class Scatter : MonoBehaviour
                     gameObject.transform.localScale = new Vector3(brushSize, brushSize, brushSize) * 2;
                     decal.fadeFactor = opacity;
 
-                    if (Input.GetMouseButton(0) && runCorutine == true)
+                    if (Input.GetMouseButton(0) && runCorutine == true && UILayerCheck.uiHover == false)
                     {
+                        Debug.Log(hit.transform.gameObject.layer);
                         StartCoroutine(ScatterObjects(Mathf.Lerp(0.2f/brushSize, 0.0005f/brushSize, density)));
                     }
                     break;
@@ -136,7 +142,7 @@ public class Scatter : MonoBehaviour
 
                     decal.fadeFactor = 0f;
 
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && UILayerCheck.uiHover == false)
                     {
                         float pivotOffset = activeModel.GetComponent<MeshRenderer>().bounds.size.y / 2;
                         GameObject instance = Instantiate(activeModel, hit.point, activeModel.transform.rotation);
@@ -206,7 +212,7 @@ public class Scatter : MonoBehaviour
         float randomRotation = UnityEngine.Random.Range(1,359);
 
         RaycastHit hit;
-        Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f);
+        Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f, groundLayer);
         if (hit.collider != null)
         {
             if (hit.collider.tag == "Plane")
@@ -217,9 +223,12 @@ public class Scatter : MonoBehaviour
                 instance.transform.position = hit.point + new Vector3(randomX, 1, randomZ);
                 Vector3 pos = instance.transform.position;
                 RaycastHit downHit;
-                Physics.Raycast(pos, Vector3.down, out downHit, 100f);
-                instance.transform.position = downHit.point;
-                instance.transform.eulerAngles = new Vector3(instance.transform.eulerAngles.x, randomRotation, instance.transform.eulerAngles.z);
+                Physics.Raycast(pos, Vector3.down, out downHit, 100f, groundLayer);
+                if (downHit.collider.tag == "Plane")
+                {
+                    instance.transform.position = downHit.point;
+                    instance.transform.eulerAngles = new Vector3(instance.transform.eulerAngles.x, randomRotation, instance.transform.eulerAngles.z);
+                }
 
                 instance.tag = "ScatterObject";
                 instance.layer = sceneAssetLayer;
