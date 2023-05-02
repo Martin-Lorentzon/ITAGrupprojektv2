@@ -139,7 +139,7 @@ public class Scatter : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         float pivotOffset = activeModel.GetComponent<MeshRenderer>().bounds.size.y / 2;
-                        GameObject instance = Instantiate(activeModel, hit.point, hit.collider.transform.rotation);
+                        GameObject instance = Instantiate(activeModel, hit.point, activeModel.transform.rotation);
                         instance.tag = "ScatterObject";
                         instance.layer = sceneAssetLayer;
                         instance.AddComponent<DontDestroyOnLoad>();
@@ -211,7 +211,7 @@ public class Scatter : MonoBehaviour
         {
             if (hit.collider.tag == "Plane")
             {
-                GameObject instance = Instantiate(activeModel, hit.point, hit.collider.transform.rotation);
+                GameObject instance = Instantiate(activeModel, hit.point, activeModel.transform.rotation);
                 Vector3 instanceScale = instance.transform.localScale;
                 instance.transform.localScale= instanceScale * randomScale;
                 instance.transform.position = hit.point + new Vector3(randomX, 1, randomZ);
