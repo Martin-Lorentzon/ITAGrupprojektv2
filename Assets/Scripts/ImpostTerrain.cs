@@ -49,6 +49,7 @@ public class ImpostTerrain : MonoBehaviour
         {
             UpdateMap(map.width + 0, map.height + 0);
         }
+        UpdateObjectPosition.UpdatePosition();
     }
 
     public void Import(Texture2D rMap)
