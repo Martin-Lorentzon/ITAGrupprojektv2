@@ -152,14 +152,6 @@ public class RoadSegment2 : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
-    private void OnDrawGizmos()
-    {
-        foreach (Vector3 vert in mesh.vertices)
-        {
-            Gizmos.DrawSphere(vert, 0.2f);
-        }
-    }
-
     int[] GenerateTriangleStrip(Vector3[] vertices, bool flip = false)
     {
         int[] indices;
