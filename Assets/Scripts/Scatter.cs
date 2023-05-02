@@ -118,7 +118,7 @@ public class Scatter : MonoBehaviour
 
             RaycastHit hit;
             Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f, groundLayer);
-            gameObject.transform.position = hit.point;
+            gameObject.transform.position = hit.point + new Vector3(0,10,0);
             
 
             switch (mode)
