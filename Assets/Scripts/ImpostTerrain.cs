@@ -10,7 +10,7 @@ public class ImpostTerrain : MonoBehaviour
     public bool platauEnabled;
     public float platauHeight = 0.05f;
 
-    private Terrain t;
+    public Terrain t;
     public TerrainData tData;
     float[,] heights;
 
