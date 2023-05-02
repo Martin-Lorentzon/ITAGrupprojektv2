@@ -61,6 +61,7 @@ public class MeshLibrary : MonoBehaviour
                     instance = Instantiate(prefab, hit.point + new Vector3(0, originPointOffset, 0), prefab.transform.rotation);
                     SetMaterial();
                     instance.layer = sceneAssetLayer;
+                    prefab.AddComponent<DontDestroyOnLoad>();
 
                 }
             }

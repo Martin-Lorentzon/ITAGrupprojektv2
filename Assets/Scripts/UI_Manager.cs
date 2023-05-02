@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //using UnityEngine.UIElements;
@@ -24,6 +25,7 @@ public class UI_Manager : MonoBehaviour
     public Button lightsButton;
     public Button roadEditButton;
     public Button addRoadButton;
+    public Button streetViewButton;
 
     [Header("Sliders")]
     public Slider roadWidth;
@@ -66,6 +68,7 @@ public class UI_Manager : MonoBehaviour
         roadWidth.onValueChanged.AddListener(delegate { SetRoadWidth(); });
         addRoadButton.onClick.AddListener(delegate { RoadBuild(); });
         roadEditButton.onClick.AddListener(delegate { RoadEdit(); });
+        streetViewButton.onClick.AddListener(delegate { SceneManager.LoadScene("StreetViewScene"); });
 
         timeSliderScript = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
         lightsIcon = lightsButton.transform.Find("Image").gameObject.GetComponent<Image>();

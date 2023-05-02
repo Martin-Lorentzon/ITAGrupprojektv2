@@ -142,6 +142,7 @@ public class Scatter : MonoBehaviour
                         GameObject instance = Instantiate(activeModel, hit.point, hit.collider.transform.rotation);
                         instance.tag = "ScatterObject";
                         instance.layer = sceneAssetLayer;
+                        instance.AddComponent<DontDestroyOnLoad>();
                     }
                     break;
                    
@@ -222,6 +223,8 @@ public class Scatter : MonoBehaviour
 
                 instance.tag = "ScatterObject";
                 instance.layer = sceneAssetLayer;
+                instance.AddComponent<DontDestroyOnLoad>();
+   
             }
         }
     }
