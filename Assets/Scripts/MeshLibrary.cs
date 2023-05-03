@@ -79,11 +79,11 @@ public class MeshLibrary : MonoBehaviour
             buttons.Add(buttonInstance);
             buttonInstance.GetComponent<RectTransform>().position = pos;
 
-            thumbnails.Add(null);
-            sprites.Add(null);
-            thumbnails[i] = AssetPreview.GetAssetPreview(prefabs[i]);
-            sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 128f, 128f), new Vector2(0f, 0f));
-            buttons[i].GetComponent<Image>().sprite = sprites[i];
+            //thumbnails.Add(null);
+            //sprites.Add(null);
+            //thumbnails[i] = AssetPreview.GetAssetPreview(prefabs[i]);
+            //sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 128f, 128f), new Vector2(0f, 0f));
+            //buttons[i].GetComponent<Image>().sprite = sprites[i];
 
             pos = pos + new Vector3(70, 0, 0);
             buttonInstance.transform.SetParent(UIpanel.transform);
