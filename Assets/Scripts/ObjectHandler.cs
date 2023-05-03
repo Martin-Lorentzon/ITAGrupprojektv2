@@ -89,8 +89,6 @@ public class ObjectHandler : MonoBehaviour
 
         if (paste)
         {
-
-
             string clipboard = GUIUtility.systemCopyBuffer;
             if (clipboard.StartsWith("CL3D_KEY"))
             {

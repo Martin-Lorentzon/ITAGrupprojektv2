@@ -179,7 +179,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebabbdc403d806b4387eb782a381fd59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowMeshFilters:
+  - {fileID: 5222400073288321525}
+  - {fileID: 919806711665797652}
+  - {fileID: 919806712713509341}
+  gizmoMeshes:
+  - {fileID: 421072414253715829, guid: 12dd1967ef354224494f0268d1ec3679, type: 3}
+  - {fileID: -2064325536060487369, guid: 2a9743fdbb73fd3479e2ec38cac71b08, type: 3}
   gizmoState: 0
+  gizmoMode: 0
 --- !u!1 &919806711107968384
 GameObject:
   m_ObjectHideFlags: 0

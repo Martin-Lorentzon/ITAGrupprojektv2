@@ -146,7 +146,7 @@ public class RoadSegment2 : MonoBehaviour
         {
             Ray ray = new Ray(transform.TransformPoint(newVertices[i]) + Vector3.up * 1000f, Vector3.down);
             RaycastHit groundHit;
-            LayerMask groundMask = LayerMask.GetMask("Ground");
+            LayerMask groundMask = LayerMask.GetMask("Ground", "Water");
 
             if (Physics.Raycast(ray, out groundHit, Mathf.Infinity, groundMask))
             {

@@ -5,8 +5,17 @@ using UnityEngine;
 public class TranslateGizmo : MonoBehaviour
 {
 
-    public enum translateGizmoState { idle, translateX, translateY, translateZ, rotateY};
+    // For Visuals
+    public MeshFilter[] arrowMeshFilters;
+    public Mesh[] gizmoMeshes;
+
+
+    // For Functionality
+    public enum translateGizmoState {idle, translateX, translateY, translateZ, rotateY};
     public translateGizmoState gizmoState;
+
+    public enum translateGizmoMode { move, scale};
+    public translateGizmoMode gizmoMode;
 
     private int arrowGizmoLayerMask;
     private int mouseTrapLayerMask;
@@ -19,16 +28,29 @@ public class TranslateGizmo : MonoBehaviour
     void Awake()
     {
         gizmoState = translateGizmoState.idle;
+        gizmoMode = translateGizmoMode.move;
 
         // Arrow gizmo Layer mask
         arrowGizmoLayerMask = LayerMask.GetMask("Arrow Gizmo");
 
         // Mouse trap Layer mask
         mouseTrapLayerMask = LayerMask.GetMask("Mouse Trap");
+
+        
+
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (gizmoMode == translateGizmoMode.move)
+                gizmoMode = translateGizmoMode.scale;
+            else
+                gizmoMode = translateGizmoMode.move;
+        }
+
+
         // Screen to World space Ray
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -125,6 +147,15 @@ public class TranslateGizmo : MonoBehaviour
     private void LateUpdate()
     {
         lastMousePos = Input.mousePosition;
+
+        //For Visuals
+        foreach (MeshFilter filt in arrowMeshFilters)
+        {
+            if (gizmoMode == translateGizmoMode.move)
+                filt.sharedMesh = gizmoMeshes[0];
+            else
+                filt.sharedMesh = gizmoMeshes[1];
+        }
     }
 
     void Translate(string tag, Vector3 axis)
@@ -145,20 +176,38 @@ public class TranslateGizmo : MonoBehaviour
 
                 currentPos = mouseTrapHit.point;
                 Vector3 distance = currentPos - previousPos;            // Get Distance
-                transform.position += Vector3.Scale(distance, axis);    // Move Gizmo by Distance
+
+                if (gizmoMode == translateGizmoMode.move)
+                    transform.position += Vector3.Scale(distance, axis);    // Move Gizmo by Distance
 
                 foreach (GameObject obj in SceneInformation.selectedObjects)
                 {
-                    obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
 
-                    RaycastHit hit;
-                    if (Physics.Raycast(obj.transform.position + new Vector3(0,5000,0),Vector3.down, out hit, 10000, LayerMask.GetMask("Ground")))
-                    {                       
-                        if (tag != "Y")
-                        {
-                            obj.transform.position = new Vector3(obj.transform.position.x, hit.point.y, obj.transform.position.z);
-                        }
+                    switch (gizmoMode)
+                    {
+                        case translateGizmoMode.move:
+                            obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
+
+                            RaycastHit hit;
+                            if (Physics.Raycast(obj.transform.position + new Vector3(0, 5000, 0), Vector3.down, out hit, 10000, LayerMask.GetMask("Ground")))
+                            {
+                                if (tag != "Y")
+                                {
+                                    obj.transform.position = new Vector3(obj.transform.position.x, hit.point.y, obj.transform.position.z);
+                                }
+                            }
+                            break;
+                        case translateGizmoMode.scale:
+
+
+                            //axis = Quaternion.Euler(0, , 0), 0) * Vector3.forward;
+                            Vector3 v = Quaternion.AngleAxis(Mathf.DeltaAngle(obj.transform.eulerAngles.y, 0f), Vector3.up) * axis;
+
+                            obj.transform.localScale += Vector3.Scale(Vector3.Scale(distance, axis) * 1f, new Vector3(-1f, 1f, -1f));
+                            break;
                     }
+
+                    
                 }
 
                 previousPos = mouseTrapHit.point;

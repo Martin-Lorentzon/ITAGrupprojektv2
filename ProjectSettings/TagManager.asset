@@ -12,6 +12,7 @@ TagManager:
   - Plane
   - ScatterObject
   - BottomOrigin
+  - DLight
   layers:
   - Default
   - TransparentFX
