@@ -49,10 +49,12 @@ public class UI_Manager : MonoBehaviour
     static GameObject activeToolButton;
 
     TimeSlider timeSliderScript;
-
+    ObjectHandler objectHandler;
 
     void Start()
     {
+        objectHandler = FindAnyObjectByType<ObjectHandler>();
+
         viewPanel.SetActive(false);
         lightsPanel.SetActive(false);
 
@@ -69,7 +71,7 @@ public class UI_Manager : MonoBehaviour
         roadWidth.onValueChanged.AddListener(delegate { SetRoadWidth(); });
         addRoadButton.onClick.AddListener(delegate { RoadBuild(); });
         roadEditButton.onClick.AddListener(delegate { RoadEdit(); });
-        streetViewButton.onClick.AddListener(delegate { SceneManager.LoadScene("StreetViewScene"); });
+        streetViewButton.onClick.AddListener(delegate { SceneManager.LoadScene("StreetViewScene"); objectHandler.ClearSelected(); });
 
         timeSliderScript = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
         lightsIcon = lightsButton.transform.Find("Image").gameObject.GetComponent<Image>();
@@ -313,6 +315,7 @@ public class UI_Manager : MonoBehaviour
     // sets scene to presentation/view mode. Sets state to select. Sets timeline slider to max value so that everything is visible.
     void GoToViewMode()
     {
+        objectHandler.ClearSelected();
         workPanel.SetActive(false);
         viewPanel.SetActive(true);
         TimeSlider timeSliderScript = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
