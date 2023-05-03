@@ -150,7 +150,7 @@ public class ObjectHandler : MonoBehaviour
                         ToggleSelectedObject(obj);
                     }
 
-                    OnSelectionChangedHit(hits[0].point);
+                    OnSelectionChangedHit(hits[0].transform.position);
                 }
             }
         }
