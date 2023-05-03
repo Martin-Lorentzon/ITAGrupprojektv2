@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 2124903481139083415}
   m_Layer: 0
   m_Name: End Point Visual
-  m_TagString: Untagged
+  m_TagString: Road Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 2124903481853502003}
   m_Layer: 0
   m_Name: Anchor Visual
-  m_TagString: Untagged
+  m_TagString: Road Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 2124903481993549641}
   m_Layer: 0
   m_Name: Control Point Visual
-  m_TagString: Untagged
+  m_TagString: Road Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -705,7 +705,7 @@ GameObject:
   - component: {fileID: 3437620122695477582}
   m_Layer: 0
   m_Name: Control Point Visual
-  m_TagString: Untagged
+  m_TagString: Road Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

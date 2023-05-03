@@ -50,6 +50,7 @@ public class UI_Manager : MonoBehaviour
 
     TimeSlider timeSliderScript;
     ObjectHandler objectHandler;
+    public List<MeshRenderer> roadpointMeshes;
 
     void Start()
     {
@@ -203,6 +204,8 @@ public class UI_Manager : MonoBehaviour
     // sets UI to work space. Sets Model mode as active menu tab. Sets all Objects visible (in case they were hidden by the timeline slider)
     void GoToWorkMode() 
     {
+        ReanableRoadpoints();
+
         workPanel.SetActive(true);
         viewPanel.SetActive(false);
 
@@ -315,12 +318,42 @@ public class UI_Manager : MonoBehaviour
     // sets scene to presentation/view mode. Sets state to select. Sets timeline slider to max value so that everything is visible.
     void GoToViewMode()
     {
+        DisableRoadpoints();
         objectHandler.ClearSelected();
         workPanel.SetActive(false);
         viewPanel.SetActive(true);
         TimeSlider timeSliderScript = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
         timeSliderScript.slider.value = timeSliderScript.slider.maxValue;
         SceneInformation.ApplicationState = SceneInformation.AppState.Select;
+    }
+
+    void DisableRoadpoints()
+    {
+        GameObject[] roadpoints = GameObject.FindGameObjectsWithTag("Road Point");
+        foreach (GameObject point in roadpoints)
+        {
+            try { 
+                if (point.GetComponent<MeshRenderer>() != null)
+                {
+                    print("found mesh");
+                    MeshRenderer renderer = point.GetComponent<MeshRenderer>();
+                    print(renderer);
+                    roadpointMeshes.Add(renderer);
+                    print(roadpointMeshes.Count);
+                    renderer.enabled = false;
+                }
+            }
+            catch { }
+        }
+
+    }
+
+    void ReanableRoadpoints()
+    {
+        foreach (MeshRenderer renderer in roadpointMeshes)
+        {
+            renderer.enabled = true;
+        }
     }
 
 }
