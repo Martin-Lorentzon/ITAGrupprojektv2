@@ -189,7 +189,7 @@ public class TranslateGizmo : MonoBehaviour
                             obj.transform.position += Vector3.Scale(distance, axis);    // Move Selected objects by Distance
 
                             RaycastHit hit;
-                            if (Physics.Raycast(obj.transform.position + new Vector3(0, 5000, 0), Vector3.down, out hit, 10000, LayerMask.GetMask("Ground")))
+                            if (Physics.Raycast(obj.transform.position + new Vector3(0, 5000, 0), Vector3.down, out hit, 10000, LayerMask.GetMask("Ground", "Water")))
                             {
                                 if (tag != "Y")
                                 {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4642175934802283828}
   - component: {fileID: 135822466974068418}
   - component: {fileID: 7813300345836185222}
+  - component: {fileID: 1732469683559663419}
   m_Layer: 25
   m_Name: SA_StreetLight
   m_TagString: Untagged
@@ -114,3 +115,15 @@ CapsuleCollider:
   m_Height: 0.12
   m_Direction: 2
   m_Center: {x: -0.00000041967724, y: 0, z: 0.05545752}
+--- !u!114 &1732469683559663419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6587831785595235553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

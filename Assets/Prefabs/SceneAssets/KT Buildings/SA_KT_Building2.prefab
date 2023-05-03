@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6123568734958553645}
   - component: {fileID: 8295558065822138087}
   - component: {fileID: 5566771727218701435}
+  - component: {fileID: 2394414715980969388}
   m_Layer: 25
   m_Name: SA_KT_Building2
   m_TagString: Untagged
@@ -98,3 +99,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2733448660354597953, guid: 87d86be0e34e7b440802425e52faa5b3, type: 3}
+--- !u!114 &2394414715980969388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7502788535181369138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
