@@ -49,7 +49,12 @@ public class ObjectHandler : MonoBehaviour
 
         timeSlider = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
     }
-
+    public void ClearSelected()
+    {
+        Debug.Log("clear selected");
+        SceneInformation.selectedObjects.Clear();
+        OnSelectionChangedHit(new Vector3(0,0,0));
+    }
     public void Paste()
     {
         string clipboard = GUIUtility.systemCopyBuffer;
@@ -111,15 +116,16 @@ public class ObjectHandler : MonoBehaviour
             translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneInformation.selectedObjects.Clear();
-            OnSelectionChangedHit(new RaycastHit());
-        }
             
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneInformation.selectedObjects.Clear();
+            OnSelectionChangedHit(hits[0].point);
+        }
 
         bool inSelectState = SceneInformation.ApplicationState == SceneInformation.AppState.Select;
 
@@ -144,7 +150,7 @@ public class ObjectHandler : MonoBehaviour
                         ToggleSelectedObject(obj);
                     }
 
-                    OnSelectionChangedHit(hits[0]);
+                    OnSelectionChangedHit(hits[0].point);
                 }
             }
         }
@@ -245,10 +251,12 @@ public class ObjectHandler : MonoBehaviour
         }
     }
 
-    void OnSelectionChangedHit(RaycastHit hit)
+    void OnSelectionChangedHit(Vector3 hitpoint)
     {
         // Get all game objects in Scene Layer
-        Collider[] colliders = Physics.OverlapSphere(hit.point, 20000.0f, sceneLayer);
+        
+            Collider[] colliders = Physics.OverlapSphere(hitpoint, 20000.0f, sceneLayer);
+        
 
         // Iterate over the game objects
         foreach (Collider collider in colliders)
@@ -269,7 +277,7 @@ public class ObjectHandler : MonoBehaviour
             }
         }
 
-        translateGizmoInstance.transform.position = hit.transform.position;
+        translateGizmoInstance.transform.position = hitpoint;
         translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
     }
 }
