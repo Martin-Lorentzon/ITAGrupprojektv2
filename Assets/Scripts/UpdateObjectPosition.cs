@@ -24,7 +24,7 @@ public class UpdateObjectPosition : MonoBehaviour
                 Debug.Log("ye");
             }
         }
-        Debug.Log(allObjects.Length);
+        //Debug.Log(allObjects.Length);
         System.Array.Clear(allObjects,0, allObjects.Length-1);
     }
 }
