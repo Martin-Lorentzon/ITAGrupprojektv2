@@ -118,7 +118,7 @@ public class Scatter : MonoBehaviour
 
             RaycastHit hit;
             Physics.Raycast(cam.transform.position, (mouseWorldPos - cam.transform.position).normalized, out hit, 200f, groundLayer);
-            gameObject.transform.position = hit.point;
+            gameObject.transform.position = hit.point + new Vector3(0,10,0);
             
 
             switch (mode)
@@ -129,11 +129,18 @@ public class Scatter : MonoBehaviour
           
                     float opacity = Mathf.Lerp(0.05f, 0.95f, density);
                     gameObject.transform.localScale = new Vector3(brushSize, brushSize, brushSize) * 2;
-                    decal.fadeFactor = opacity;
-
-                    if (Input.GetMouseButton(0) && runCorutine == true && UILayerCheck.uiHover == false)
+                    if(UILayerCheck.uiHover == true)
                     {
-                        Debug.Log(hit.transform.gameObject.layer);
+                        decal.fadeFactor = 0f;
+                    }
+                    else { 
+                    decal.fadeFactor = opacity;
+                    }
+
+
+            if (Input.GetMouseButton(0) && runCorutine == true && UILayerCheck.uiHover == false)
+                    {
+                       
                         StartCoroutine(ScatterObjects(Mathf.Lerp(0.2f/brushSize, 0.0005f/brushSize, density)));
                     }
                     break;
@@ -149,6 +156,14 @@ public class Scatter : MonoBehaviour
                         instance.tag = "ScatterObject";
                         instance.layer = sceneAssetLayer;
                         instance.AddComponent<DontDestroyOnLoad>();
+                        float randomScale = UnityEngine.Random.Range(0.75f, 1.25f);
+                        float randomRotation = UnityEngine.Random.Range(1, 359);
+                        instance.transform.eulerAngles += new Vector3(0, randomRotation, 0);
+                        instance.transform.localScale *= randomScale; 
+                        instance.transform.position = hit.point;
+
+
+
                     }
                     break;
                    
@@ -222,6 +237,9 @@ public class Scatter : MonoBehaviour
                 instance.transform.localScale= instanceScale * randomScale;
                 instance.transform.position = hit.point + new Vector3(randomX, 1, randomZ);
                 Vector3 pos = instance.transform.position;
+                instance.tag = "ScatterObject";
+                instance.layer = sceneAssetLayer;
+                instance.AddComponent<DontDestroyOnLoad>();
                 RaycastHit downHit;
                 Physics.Raycast(pos, Vector3.down, out downHit, 100f, groundLayer);
                 if (downHit.collider.tag == "Plane")
@@ -229,10 +247,15 @@ public class Scatter : MonoBehaviour
                     instance.transform.position = downHit.point;
                     instance.transform.eulerAngles = new Vector3(instance.transform.eulerAngles.x, randomRotation, instance.transform.eulerAngles.z);
                 }
+                RaycastHit roadTestHit;
+                Physics.Raycast(pos, Vector3.down, out roadTestHit, 100f);
+                if (roadTestHit.collider.tag == "Road")
+                {
+                    Destroy(instance);
+                }
 
-                instance.tag = "ScatterObject";
-                instance.layer = sceneAssetLayer;
-                instance.AddComponent<DontDestroyOnLoad>();
+                Debug.Log(downHit.collider.tag);
+                
    
             }
         }
