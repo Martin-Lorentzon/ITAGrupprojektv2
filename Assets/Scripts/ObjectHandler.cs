@@ -70,7 +70,7 @@ public class ObjectHandler : MonoBehaviour
         // Paste Mesh Data
         CL3D.PasteModel(clipboard, true, out mesh, out name);
 
-        // Update Mesh Filter
+        // Update Mesh Filter.
         meshFilter.mesh = mesh;
         meshFilter.mesh.RecalculateNormals();
         meshFilter.mesh.RecalculateBounds();
@@ -156,7 +156,7 @@ public class ObjectHandler : MonoBehaviour
                 }
             }
         }
-        catch(Exception ex)
+        catch(Exception)
         {
             //Debug.LogException(ex);
         }
