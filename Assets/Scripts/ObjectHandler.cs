@@ -266,14 +266,14 @@ public class ObjectHandler : MonoBehaviour
             if (SceneInformation.selectedObjects.Contains(obj))
             {
                 obj.layer = 28;
-                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
-                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
+                catch (Exception) { /*Debug.LogException(ex);*/ }
             }
             else
             {
                 obj.layer = 25;
-                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
-                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
+                try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
+                catch (Exception) { /*Debug.LogException(ex);*/ }
             }
         }
 
