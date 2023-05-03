@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4912928713244475633}
   - component: {fileID: 7190786166093902907}
   - component: {fileID: 8361874211206293689}
+  - component: {fileID: 1360543780333489442}
   m_Layer: 25
   m_Name: SA_Bus1
   m_TagString: Untagged
@@ -102,3 +103,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3315714020306883048, guid: a4be80e18a6034444b0f5ddae9b53c95, type: 3}
+--- !u!114 &1360543780333489442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8703823773171602926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

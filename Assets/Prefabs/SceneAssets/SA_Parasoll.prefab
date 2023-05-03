@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8942565421010244195}
   - component: {fileID: 6628921068265481897}
   - component: {fileID: 2693550927025505336}
+  - component: {fileID: 5916558579391453681}
   m_Layer: 25
   m_Name: SA_Parasoll
   m_TagString: Untagged
@@ -99,3 +100,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8999911773206952699, guid: b78f17d974be65345a99ee36ff7d0aa6, type: 3}
+--- !u!114 &5916558579391453681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683274014578083708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
