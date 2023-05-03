@@ -156,7 +156,7 @@ public class ObjectHandler : MonoBehaviour
                 }
             }
         }
-        catch()
+        catch(Exception)
         {
             //Debug.LogException(ex);
         }
