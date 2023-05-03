@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class ObjectHandler : MonoBehaviour
@@ -12,6 +13,8 @@ public class ObjectHandler : MonoBehaviour
 
     public GameObject translateGizmoPrefab;
     private GameObject translateGizmoInstance;
+
+    public Button deleteButton;
 
 
     public GameObject cliboardObjectPrefab;
@@ -41,6 +44,8 @@ public class ObjectHandler : MonoBehaviour
         SceneInformation.moveSnapIncrement = 0f;
         SceneInformation.rotationSnapIncrement = 11.25f;
         SceneInformation.snapSpeed = 60f;
+
+        deleteButton.onClick.AddListener(delegate { DeleteObjects(); });
 
         timeSlider = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
     }
@@ -159,6 +164,26 @@ public class ObjectHandler : MonoBehaviour
             translateGizmoInstance.SetActive(false);
         else
             translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+    }
+
+    public void DeleteObjects()
+    {
+        List<GameObject> removeList = new List<GameObject>();
+        foreach (GameObject removeObj in SceneInformation.selectedObjects)
+        {
+            switch (removeObj.tag)
+            {
+                case ("Road Point"):
+                    break;
+                default:
+                    removeList.Add(removeObj);
+                    break;
+            }
+        }
+        foreach (GameObject destroyObj in removeList)
+            Destroy(destroyObj);
+        SceneInformation.selectedObjects.Clear();
+        translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
     }
 
     void ToggleSelectedObject(GameObject obj)
