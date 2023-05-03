@@ -881,6 +881,103 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5496798798811177790, guid: fa8e3f6d01c614b458d3d7917ba5abb6, type: 3}
   m_PrefabInstance: {fileID: 5496798797862579978}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2109915090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2109915094}
+  - component: {fileID: 2109915093}
+  - component: {fileID: 2109915092}
+  - component: {fileID: 2109915091}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &2109915091
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109915090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &2109915092
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109915090}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2109915093
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109915090}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &2109915094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109915090}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &312414016414619842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1973,7 +2070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6766352777223034244, guid: 370f368dc986cae45bf9e2289d370666, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.51
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6766352777223034244, guid: 370f368dc986cae45bf9e2289d370666, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2022,7 +2119,7 @@ PrefabInstance:
     - target: {fileID: 6766352777223034267, guid: 370f368dc986cae45bf9e2289d370666, type: 3}
       propertyPath: m_MaterialTemplate
       value: 
-      objectReference: {fileID: 2100000, guid: d6c4d13614035bf4eac5eb92e2937757, type: 2}
+      objectReference: {fileID: 2100000, guid: 6c45f7bac86aa824997280acd45057ab, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 370f368dc986cae45bf9e2289d370666, type: 3}
 --- !u!114 &7749190889125995875
@@ -2814,6 +2911,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1594772848613795190, guid: 8eb5cb60147fcb0428c8252f19156457, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1594772848613795190, guid: 8eb5cb60147fcb0428c8252f19156457, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1594772848646360220, guid: 8eb5cb60147fcb0428c8252f19156457, type: 3}
