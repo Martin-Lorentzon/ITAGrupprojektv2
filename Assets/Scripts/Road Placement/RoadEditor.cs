@@ -63,7 +63,7 @@ public class RoadEditor : MonoBehaviour
         if (inRoadEditState)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.SphereCastAll(ray, 0.15f, 20000f, GroundLayerMask);
+            RaycastHit[] hits = Physics.SphereCastAll(ray, 0.5f, 20000f, GroundLayerMask);
 
             if (hits.Length > 0 && Input.GetMouseButtonDown(0))
             {
@@ -89,7 +89,7 @@ public class RoadEditor : MonoBehaviour
         if (inRoadEditState)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
-            RaycastHit[] hits = Physics.SphereCastAll(ray, 0.15f, 20000f, GroundLayerMask);
+            RaycastHit[] hits = Physics.SphereCastAll(ray, 0.5f, 20000f, GroundLayerMask);
 
             newRoadSegment.transform.parent = newRoadContainer.transform;
 
