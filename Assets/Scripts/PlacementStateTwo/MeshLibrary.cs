@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class MeshLibrary : MonoBehaviour
 {
-
     public GameObject meshContainer;
     public List<Mesh> meshList;
     public MeshFilter meshFilter;
@@ -19,7 +18,7 @@ public class MeshLibrary : MonoBehaviour
     public List<Sprite> sprites;
 
     public GameObject button;
-    private Vector3 pos;
+    //private Vector3 pos;
     public GameObject UIpanel;
     public Camera cameraObj;
     public List<GameObject> prefabs;
@@ -31,11 +30,11 @@ public class MeshLibrary : MonoBehaviour
     void Start()
     {
 
-        prefab = prefabs[0];
-        meshFilter = prefabs[0].GetComponent<MeshFilter>();
+        //prefab = prefabs[0];
+        //meshFilter = prefabs[0].GetComponent<MeshFilter>();
         originPointOffset = meshFilter.sharedMesh.bounds.size.y / 2;
-        pos = (button.GetComponent<RectTransform>().position);
-        SetThumbnail();
+        //pos = (button.GetComponent<RectTransform>().position);
+        //SetThumbnail();
         sceneAssetLayer = LayerMask.NameToLayer("Scene Asset");
 
     }
@@ -43,7 +42,6 @@ public class MeshLibrary : MonoBehaviour
 
     void Update()
     {
-
         // on click: instansiate object at mouse cursor position on a plane (the plane needs a plane tag).
         // offsets y position by half the mesh size, so that the object is placed on the planes surface.
         // sets instance to be on scene asset layer
@@ -63,14 +61,12 @@ public class MeshLibrary : MonoBehaviour
                     instance = Instantiate(prefab, hit.point + new Vector3(0, originPointOffset, 0), prefab.transform.rotation);
                     SetMaterial();
                     instance.layer = sceneAssetLayer;
-                    prefab.AddComponent<DontDestroyOnLoad>();
 
                 }
             }
         }
 
     }
-
     
     // Körs vid start, hämtar asset preview thumbnails för objekt och sätter som sprites för knapparna.
     public void SetThumbnail()
@@ -79,28 +75,29 @@ public class MeshLibrary : MonoBehaviour
         {
             GameObject buttonInstance = Instantiate(button);
             buttons.Add(buttonInstance);
-            buttonInstance.GetComponent<RectTransform>().position = pos;
+            //buttonInstance.GetComponent<RectTransform>().position = pos;
 
             thumbnails.Add(null);
             sprites.Add(null);
-            thumbnails[i] = AssetPreview.GetAssetPreview(prefabs[i]);
-            sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 128f, 128f), new Vector2(0f, 0f));
+            //thumbnails[i] = AssetPreview.GetAssetPreview(prefabs[i]);
+            sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 256f, 128f), new Vector2(0f, 0f));
             buttons[i].GetComponent<Image>().sprite = sprites[i];
 
-            pos = pos + new Vector3(70, 0, 0);
+            //pos = pos + new Vector3(70, 0, 0);
             buttonInstance.transform.SetParent(UIpanel.transform);
 
         }
     }
 
-    public void AddThumbnail()
+    public void AddThumbnail(GameObject _tex = null)
     {
         for (int i = 0; i < SceneInformation.selectedObjects.Count; i++)
         {
-            Debug.Log("making button");
             GameObject buttonInstance = Instantiate(button);
             buttons.Add(buttonInstance);
-            buttonInstance.GetComponent<RectTransform>().position = pos;
+            //buttonInstance.GetComponent<RectTransform>().position = pos;
+            _tex.transform.SetParent(buttonInstance.transform);
+            _tex.transform.localPosition = Vector3.zero;
 
             thumbnails.Add(null);
             sprites.Add(null);
@@ -108,9 +105,8 @@ public class MeshLibrary : MonoBehaviour
             sprites[i] = Sprite.Create(thumbnails[i], new Rect(0f, 0f, 128f, 128f), new Vector2(0f, 0f));
             buttons[i].GetComponent<Image>().sprite = sprites[i];
 
-            pos = pos + new Vector3(70, 0, 0);
+            //pos = pos + new Vector3(70, 0, 0);
             buttonInstance.transform.SetParent(UIpanel.transform);
-
         }
     }
 
@@ -152,7 +148,8 @@ public class MeshLibrary : MonoBehaviour
 
     public void ChangeMesh(int idx)
     {
-        prefab = prefabs[idx];
+        Debug.Log(prefabs.Count);
+        prefab = prefabs[idx-1];
         originPointOffset = prefab.GetComponent<MeshFilter>().sharedMesh.bounds.size.y / 2;
 
     }

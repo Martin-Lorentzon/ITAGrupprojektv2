@@ -11,6 +11,7 @@ public class PointNPlaceSingle : MonoBehaviour
     GameObject objModel = null, something = null;
     [SerializeField]
     bool scaled = true, scaling = false, busy = false;
+    Vector3 point = Vector3.zero;
 
     float posOffset = 0f;
 
@@ -28,7 +29,7 @@ public class PointNPlaceSingle : MonoBehaviour
     public void Listening()
     {
         //SceneInformation.ApplicationState = SceneInformation.AppState.Placement;
-        objModel = buttonMesh.meshLibrary.prefabs[buttonMesh.GetButtonIdx];
+        objModel = buttonMesh.meshLibrary.prefabs[buttonMesh.GetButtonIdx-1];
         posOffset = 0f;
         PlaceOut();
         this.enabled = true;
@@ -51,6 +52,7 @@ public class PointNPlaceSingle : MonoBehaviour
         scaling = false;
         something = Instantiate(objModel);
         something.layer = 0;
+        SceneInformation.ApplicationState = SceneInformation.AppState.Placement;
         for (int i = 0; i < something.transform.childCount; i++)
         {
             GameObject child = something.transform.GetChild(i).gameObject;
@@ -61,32 +63,37 @@ public class PointNPlaceSingle : MonoBehaviour
 
     public bool Updating()
     {
+        Debug.Log(SceneInformation.ApplicationState);
+        SceneInformation.ApplicationState = SceneInformation.AppState.Nothing;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray,out hit, 20f,mask))
+        if (Physics.Raycast(ray,out hit, 1000f,mask)&& !Input.GetButtonDown("Fire1"))
         {
-            Vector3 point = hit.point;
+            point = hit.point;
 
             if (!scaling)
             {
                 if(Input.GetKeyDown(KeyCode.UpArrow)|| Input.GetKeyDown(KeyCode.DownArrow))
                 posOffset += Input.GetAxisRaw("Vertical")*.5f;
                 something.transform.position = point+Vector3.up*posOffset;
-
             }
         }
 
         if (scaling)
-            something.transform.localScale += new Vector3(0f, Input.GetAxis("Mouse Y") * 0.5f, 0f);
+            something.transform.localScale += new Vector3(0f, Input.GetAxis("Mouse Y") * 0.5f,0f);
 
         // When clicking and not scaling, then we're either changing position or height
         // When clicking and is scaling, removes the object and terminates the function
+        if (Physics.Raycast(ray, out hit, 1000f, maskTwo))
+        {
+            something.transform.SetParent( hit.transform);
+        }
         if (Input.GetButtonDown("Fire1"))
         {
-            if (Physics.Raycast(ray, out hit, 20f, maskTwo))
+            if (Physics.Raycast(ray, out hit, 1000f, maskTwo))
             {
-                something.transform.SetParent( hit.transform);
+                something.transform.SetParent(hit.transform);
             }
                 if (!scaling)
             {
@@ -102,7 +109,6 @@ public class PointNPlaceSingle : MonoBehaviour
             something = null;
 
             SceneInformation.ApplicationState = SceneInformation.AppState.Select;
-            Debug.Log(SceneInformation.ApplicationState);
             return true;
         }
         return false;

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
+// VAR FAN FÅR DEN PREFABS FÖR BILDEN. VAR ÄR BILD OBJECT KOPIAN GJORD
+// SÅ JAG KAN SÄTTA PÅ DEN!
 public class GetSetImage : MonoBehaviour
 {
     List<GameObject> prefabs = new List<GameObject>();
@@ -12,6 +14,13 @@ public class GetSetImage : MonoBehaviour
     public RenderTexture RT;
     public GameObject RenderCamera;
     public RawImage RI;
+
+    Texture2D texSend;
+
+    private void Start()
+    {
+        prefabs.Add(RI.gameObject);
+    }
 
     void GetImage()
     {
@@ -30,8 +39,8 @@ public class GetSetImage : MonoBehaviour
     {
         GameObject newest = Instantiate(prefab);
         prefabs.Add(newest);
-        newest.transform.parent = transform.GetChild(0);
-        newest.transform.position = RI.transform.position + Vector3.right*120f*(prefabs.Count);
+        newest.transform.SetParent(transform.GetChild(0));
+        //newest.transform.position = prefabs[0].transform.position + Vector3.right*120f*(prefabs.Count);
 
         Texture2D texture2D = new Texture2D(RT.width, RT.height);
         string path = Application.persistentDataPath + "/" + FileName + ".png";
@@ -39,10 +48,17 @@ public class GetSetImage : MonoBehaviour
 
         texture2D.LoadImage(bytes);
         texture2D.Apply();
-        RI.texture = texture2D;
-
+        prefabs[prefabs.Count-1].GetComponent<RawImage>().texture = texture2D;
+        texSend = texture2D;
     }
 
+    void OtherRenderProcess()
+    {
+        RenderCamera.SetActive(true);
+        GetImage();
+        RI.gameObject.SetActive(true);
+        SetImage();
+    }
     IEnumerator RenderProcess()
     {
         RenderCamera.SetActive(true);
@@ -58,6 +74,13 @@ public class GetSetImage : MonoBehaviour
 
     public void GetSetImage_btn()
     {
+        //StartCoroutine(RenderProcess());
+        OtherRenderProcess();
+    }
+    public GameObject GetSetImage_non()
+    {
+        //StartCoroutine(RenderProcess());
         StartCoroutine(RenderProcess());
+        return prefabs[prefabs.Count-1];
     }
 }

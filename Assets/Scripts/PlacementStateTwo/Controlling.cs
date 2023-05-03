@@ -8,7 +8,6 @@ public class Controlling : MonoBehaviour
     public GameObject planeObj;
     [SerializeField]
     bool busy = false;
-    PointNPlace placing;
 
     [SerializeField]
     LayerMask objLayer;

@@ -13,7 +13,7 @@ public class MeshButton : MonoBehaviour
 
     void Start()
     {
-        meshLibrary = GameObject.Find("MeshChanger").GetComponent<MeshLibrary>();
+        meshLibrary = GameObject.Find("Content").GetComponent<MeshLibrary>();
         for (int i = 0; i < meshLibrary.buttons.Count; i++)
         {
             if (meshLibrary.buttons[i] == gameObject)

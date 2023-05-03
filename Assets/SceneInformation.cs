@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SceneInformation : MonoBehaviour
 {
-    public enum AppState { Select, Placement, RoadEdit, Scatter };
+    public enum AppState { Select, Placement, RoadEdit, Scatter, Nothing };
     public static AppState ApplicationState;
 
     public static List<GameObject> selectedObjects;

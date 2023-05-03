@@ -117,7 +117,7 @@ public class ObjectHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneInformation.selectedObjects.Clear();
-            OnSelectionChangedHit(new RaycastHit());
+            OnSelectionChangedNone();
         }
             
 
@@ -253,6 +253,33 @@ public class ObjectHandler : MonoBehaviour
         }
 
         translateGizmoInstance.transform.position = hit.transform.position;
+        translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
+    }
+    void OnSelectionChangedNone()
+    {
+        // Get all game objects in Scene Layer
+        Collider[] colliders = Physics.OverlapSphere(Vector3.zero, 20000.0f, sceneLayer);
+
+        // Iterate over the game objects
+        foreach (Collider collider in colliders)
+        {
+            GameObject obj = collider.gameObject;
+
+            if (SceneInformation.selectedObjects.Contains(obj))
+            {
+                obj.layer = 28;
+                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 1f); }
+                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
+            }
+            else
+            {
+                obj.layer = 25;
+                //try { obj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Selected", 0f); }
+                //catch (Exception ex) { /*Debug.LogException(ex);*/ }
+            }
+        }
+
+        translateGizmoInstance.transform.position = Vector3.zero;
         translateGizmoInstance.SetActive(SceneInformation.selectedObjects.Count > 0);
     }
 }
