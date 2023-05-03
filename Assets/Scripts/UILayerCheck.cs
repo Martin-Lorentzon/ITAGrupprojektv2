@@ -35,7 +35,7 @@ public class UILayerCheck : MonoBehaviour
             {
             uiHover = false;
             }
-        Debug.Log(uiHover);
+
         
     }
 }
