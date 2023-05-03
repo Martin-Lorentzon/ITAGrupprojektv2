@@ -26,7 +26,6 @@ public class UI_Manager : MonoBehaviour
     public Button roadEditButton;
     public Button addRoadButton;
     public Button streetViewButton;
-    public Button deleteObjectButton;
 
 
     [Header("Sliders")]
@@ -40,8 +39,8 @@ public class UI_Manager : MonoBehaviour
     [Header("Others (do not set in inspector)")]
     public Image lightsIcon;
 
-    enum Modes { models, materials, roads, scatter, terrain };
-    enum Settings { roads, numTags, objSettings };
+    enum Modes {models, materials, roads, scatter, terrain};
+    enum Settings { roads, numTags };
 
     bool lightPanelOn = false;
 
@@ -50,10 +49,14 @@ public class UI_Manager : MonoBehaviour
     static GameObject activeToolButton;
 
     TimeSlider timeSliderScript;
-
+    ObjectHandler objectHandler;
+    //
+    public List<MeshRenderer> roadpointMeshes;
 
     void Start()
     {
+        objectHandler = FindAnyObjectByType<ObjectHandler>();
+
         viewPanel.SetActive(false);
         lightsPanel.SetActive(false);
 
@@ -70,7 +73,7 @@ public class UI_Manager : MonoBehaviour
         roadWidth.onValueChanged.AddListener(delegate { SetRoadWidth(); });
         addRoadButton.onClick.AddListener(delegate { RoadBuild(); });
         roadEditButton.onClick.AddListener(delegate { RoadEdit(); });
-        streetViewButton.onClick.AddListener(delegate { SceneManager.LoadScene("StreetViewScene"); });
+        streetViewButton.onClick.AddListener(delegate { SceneManager.LoadScene("StreetViewScene"); objectHandler.ClearSelected(); });
 
         timeSliderScript = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
         lightsIcon = lightsButton.transform.Find("Image").gameObject.GetComponent<Image>();
@@ -103,9 +106,8 @@ public class UI_Manager : MonoBehaviour
                     // show timeline tag settings if non-road object is selected and auto activate the input field 
                     settingsPanels[(int)Settings.roads].SetActive(false);
                     settingsPanels[(int)Settings.numTags].SetActive(true);
-                    settingsPanels[(int)Settings.objSettings].SetActive(true);
                     //timeSliderScript.userInput.ActivateInputField();
-
+                                          
                 }
             }
 
@@ -118,7 +120,7 @@ public class UI_Manager : MonoBehaviour
                 panel.SetActive(false);
             }
         }
-
+     
     }
 
 
@@ -140,13 +142,13 @@ public class UI_Manager : MonoBehaviour
 
     public void setActiveSettingsButton(GameObject button)
     {
-        button = activeSettingsButton;
-
-        foreach (GameObject obj in settingsButtons)
+       button = activeSettingsButton;
+       
+    foreach(GameObject obj in settingsButtons)
         {
             if (obj != activeSettingsButton)
-            {
-                ButtonStyle styleManager = obj.GetComponent<ButtonStyle>();
+            { 
+            ButtonStyle styleManager = obj.GetComponent<ButtonStyle>();
                 styleManager.buttonBaseStyle();
             }
         }
@@ -182,7 +184,7 @@ public class UI_Manager : MonoBehaviour
 
 
     // toggles the visibility of the light controls panel
-    void ShowLightControls()
+    void ShowLightControls() 
     {
         if (lightPanelOn == false)
         {
@@ -193,16 +195,18 @@ public class UI_Manager : MonoBehaviour
         else
         {
             lightPanelOn = false;
-            lightsPanel.SetActive(false);
+            lightsPanel.SetActive(false); 
             lightsIcon.color = new Color32(0, 128, 55, 255);
         }
 
     }
 
-
+    
     // sets UI to work space. Sets Model mode as active menu tab. Sets all Objects visible (in case they were hidden by the timeline slider)
-    void GoToWorkMode()
+    void GoToWorkMode() 
     {
+        ReanableRoadpoints();
+
         workPanel.SetActive(true);
         viewPanel.SetActive(false);
 
@@ -217,11 +221,11 @@ public class UI_Manager : MonoBehaviour
 
     void ModelMode()
     {
-        foreach (GameObject panel in toolPanels)
+        foreach (GameObject panel in toolPanels) 
         {
             panel.SetActive(false);
         }
-        toolPanels[(int)Modes.models].SetActive(true);
+        toolPanels[(int)Modes.models].SetActive(true);       
 
         SceneInformation.ApplicationState = SceneInformation.AppState.Select;
     }
@@ -254,7 +258,7 @@ public class UI_Manager : MonoBehaviour
         setActiveToolButton(addRoadButton.gameObject);
         ToolButtonStyle toolButtonStyle = addRoadButton.gameObject.GetComponent<ToolButtonStyle>();
         toolButtonStyle.ManualSelect();
-
+        
     }
 
     void TerrainMode()
@@ -309,12 +313,14 @@ public class UI_Manager : MonoBehaviour
         buttonStyle.ManualSelect();
 
         SceneInformation.ApplicationState = SceneInformation.AppState.Scatter;
-
+       
     }
 
     // sets scene to presentation/view mode. Sets state to select. Sets timeline slider to max value so that everything is visible.
     void GoToViewMode()
     {
+        DisableRoadpoints();
+        objectHandler.ClearSelected();
         workPanel.SetActive(false);
         viewPanel.SetActive(true);
         TimeSlider timeSliderScript = GameObject.Find("TimeSliderControl").GetComponent<TimeSlider>();
@@ -322,13 +328,33 @@ public class UI_Manager : MonoBehaviour
         SceneInformation.ApplicationState = SceneInformation.AppState.Select;
     }
 
+    void DisableRoadpoints()
+    {
+        GameObject[] roadpoints = GameObject.FindGameObjectsWithTag("Road Point");
+        foreach (GameObject point in roadpoints)
+        {
+            try { 
+                if (point.GetComponent<MeshRenderer>() != null)
+                {
+                    print("found mesh");
+                    MeshRenderer renderer = point.GetComponent<MeshRenderer>();
+                    print(renderer);
+                    roadpointMeshes.Add(renderer);
+                    print(roadpointMeshes.Count);
+                    renderer.enabled = false;
+                }
+            }
+            catch { }
+        }
 
-    //void DeleteObjects()
-    //{
-    //    for(int i = 0; i < SceneInformation.selectedObjects.Count; i++)
-    //    {
-    //        Destroy(SceneInformation.selectedObjects[i]);
-    //    }
-    //}
+    }
+
+    void ReanableRoadpoints()
+    {
+        foreach (MeshRenderer renderer in roadpointMeshes)
+        {
+            renderer.enabled = true;
+        }
+    }
 
 }
