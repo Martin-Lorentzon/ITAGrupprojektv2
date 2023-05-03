@@ -247,7 +247,9 @@ public class Scatter : MonoBehaviour
                     instance.transform.position = downHit.point;
                     instance.transform.eulerAngles = new Vector3(instance.transform.eulerAngles.x, randomRotation, instance.transform.eulerAngles.z);
                 }
-                if (downHit.collider.tag == "Road")
+                RaycastHit roadTestHit;
+                Physics.Raycast(pos, Vector3.down, out roadTestHit, 100f);
+                if (roadTestHit.collider.tag == "Road")
                 {
                     Destroy(instance);
                 }
