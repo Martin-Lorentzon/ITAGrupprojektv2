@@ -21,7 +21,7 @@ public class UpdateObjectPosition : MonoBehaviour
                 RaycastHit hit;
                 Physics.Raycast(new Vector3(objPos.x, 1000f, objPos.z), Vector3.down, out hit, 7000f, groundLayer);
                 obj.transform.position = hit.point;
-                Debug.Log("ye");
+                //Debug.Log("ye");
             }
         }
         //Debug.Log(allObjects.Length);

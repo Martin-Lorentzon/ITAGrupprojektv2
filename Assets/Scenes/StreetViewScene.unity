@@ -671,6 +671,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reflection Probe Group
       objectReference: {fileID: 0}
+    - target: {fileID: 4558863982546644649, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4558863982546644654, guid: d76bf0d8bd373ea4d827febbc02b17b8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -730,11 +734,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7239222693359454080, guid: 5d19aabc780e2fb42a70620d82c167cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.42
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 7239222693359454080, guid: 5d19aabc780e2fb42a70620d82c167cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.172
+      value: 11.55
       objectReference: {fileID: 0}
     - target: {fileID: 7239222693359454080, guid: 5d19aabc780e2fb42a70620d82c167cb, type: 3}
       propertyPath: m_LocalPosition.z
