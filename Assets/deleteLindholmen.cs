@@ -17,6 +17,16 @@ public class deleteLindholmen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             Destroy(lindholmel);
+
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(Vector3.zero, 20000f, Vector3.up, 0.1f, LayerMask.GetMask("Scene Asset"));
+
+            foreach (RaycastHit hit in hits)
+            {
+                Destroy(hit.transform.gameObject);
+            }
         }
+
+        
     }
 }
