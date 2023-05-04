@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2338607233866403019}
   - component: {fileID: 3476579072599652262}
   - component: {fileID: 3476579072599652261}
+  - component: {fileID: -5617862145864333124}
+  - component: {fileID: 7434509538535436305}
   m_Layer: 25
   m_Name: SA_SH_Building4
   m_TagString: Untagged
@@ -112,3 +114,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -626503635601995863, guid: 7cbf2eed592493441894cc8cce1a3f3b, type: 3}
+--- !u!114 &-5617862145864333124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4284219104730787102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7434509538535436305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4284219104730787102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

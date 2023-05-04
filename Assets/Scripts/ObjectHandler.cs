@@ -137,7 +137,7 @@ public class ObjectHandler : MonoBehaviour
         {
             if (inSelectState && Physics.Raycast(ray, out hits[0], Mathf.Infinity, sceneLayer))
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !UILayerCheck.uiHover)
                 {
                     GameObject obj = hits[0].transform.gameObject;
 

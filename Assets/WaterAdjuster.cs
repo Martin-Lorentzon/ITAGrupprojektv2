@@ -15,12 +15,12 @@ public class WaterAdjuster : MonoBehaviour
     public void Readjust()
     {
         st = ip.strength;
-        transform.position = new Vector3(0, (ad * st * 200) - 1.01f, 0);
+        transform.position = new Vector3(0, (ad * st * 200) - 1.1f, 0);
     }
 
     public void SetHeight(float adjust)
     {
         ad = adjust;
-        transform.position = new Vector3(0, (ad * st *200) - 1.01f, 0);
+        transform.position = new Vector3(0, (ad * st *200) - 1.1f, 0);
     }
 }

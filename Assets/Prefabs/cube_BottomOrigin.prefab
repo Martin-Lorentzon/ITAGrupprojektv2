@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 9203676521085307892}
   - component: {fileID: -4079641453227194008}
   - component: {fileID: -5199870620814102983}
+  - component: {fileID: 565491435450445355}
   m_Layer: 0
   m_Name: cube_BottomOrigin
   m_TagString: Untagged
@@ -307,6 +308,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &-5199870620814102983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602986837683825855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &565491435450445355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
