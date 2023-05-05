@@ -11,14 +11,6 @@ public class DontDestroyOnLoad : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        if (scene.name == "MainScene")
-        {
-            
-        }
-    }
 
     
 }

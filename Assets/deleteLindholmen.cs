@@ -5,6 +5,7 @@ using UnityEngine;
 public class deleteLindholmen : MonoBehaviour
 {
     public GameObject lindholmel;
+    public GameObject floor;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,7 @@ public class deleteLindholmen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             Destroy(lindholmel);
-
+            Destroy(floor);
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(Vector3.zero, 20000f, Vector3.up, 0.1f, LayerMask.GetMask("Scene Asset"));
 

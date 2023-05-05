@@ -805,6 +805,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &381247177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2444067059700070641, guid: 02a979ffcdfa3e049bff2d7931c716e2, type: 3}
+  m_PrefabInstance: {fileID: 2444067060127619586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &388876689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -872,10 +877,22 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2444067059700070646, guid: 02a979ffcdfa3e049bff2d7931c716e2, type: 3}
   m_PrefabInstance: {fileID: 2444067060127619586}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 381247177}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1da8471d91e031a42b1b5375a09459a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &444867321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381247177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cb3e73a70c43d4e880a0d44e218473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &508718668 stripped
@@ -1446,6 +1463,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560714369}
   m_CullTransparentMesh: 1
+--- !u!1 &1564775392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2799485323944340060, guid: 00ee40893b746a94eac4db98002a077f, type: 3}
+  m_PrefabInstance: {fileID: 571852408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1564775398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564775392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87b999bcf753e54488bd3ef01fdb650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1606295799 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5885674746535062911, guid: fa8e3f6d01c614b458d3d7917ba5abb6, type: 3}
@@ -1637,6 +1671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lindholmel: {fileID: 357879812}
+  floor: {fileID: 1564775392}
 --- !u!224 &2082950777 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2892308454660794820, guid: fa8e3f6d01c614b458d3d7917ba5abb6, type: 3}
